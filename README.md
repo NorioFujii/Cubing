@@ -12,5 +12,5 @@ Cube-game assysting tools
 </td></tr>
 </table>
 </details>
-  <img src="Cube3D.png" width=300>
+  <img src="Cube3D.PNG" width=300>
 </div>
