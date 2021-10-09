@@ -1,5 +1,5 @@
 # Cubing
-Cube-game assysting tools
+Cube-game assisting tools
 <div id="rotResol">
 <details><summary> 　<strong>Rotation symbol names and 3D Rubik's Cube result</strong>
 (<button type=button onclick="openSwin(this)">Sub wndow</button>)
