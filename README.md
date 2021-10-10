@@ -14,5 +14,5 @@ Cube-game assisting tools
 </details>
   <img src="Cube3D.PNG" width=300>
 </div>
-**  Part of this program is delived from next URL. Thank you.
-https://ruwix.com/the-rubiks-cube/notation/
+**  Part of this program is delived from next URL. Thank you.<br>
+    https://ruwix.com/the-rubiks-cube/notation/
