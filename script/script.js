@@ -81,7 +81,7 @@ function checkRot() {
             if (rote.charAt(1)=="*") {
                  Comment = rote.slice(2);
                  turnN=1;}
-            else if (rote.charAt(1)=="+") {
+            else if (rote.charAt(1)=="-") {
                  RotSft = parseInt(rote.slice(2));} 
             rote = Rotates.shift();
         }
