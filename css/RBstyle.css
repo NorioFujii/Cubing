@@ -36,13 +36,13 @@ body {
   margin: auto;
 }
 .commandb {
-  padding: 3px 7px;
+  padding: 3px 1px;
   float: left;
-  font-size: 14px;
-  margin: 1px 3px;
+  font-size: 12px;
+  margin: 1px 1px;
   font-family: arial;
   font-weight: bold;
-  border-radius: 4px;
+  border-radius: 2px;
   color: #fff;
   font--color: #ce4b42;
   cursor: pointer;
