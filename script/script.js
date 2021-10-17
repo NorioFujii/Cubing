@@ -57,7 +57,7 @@ function initnotscrambled(){
     Pause=false; Comment="";RotSft=0;Rotates=[]; turnN=1; clearTimeout(Tid);
     $("#comment").html("");  $("#turn").html("&nbsp;"); $("#rotate").html("&nbsp;");
     for(a[0]=0,j=0;6>j;j++)for(i=1;10>i;i++)a[i+9*j]=j+1;
-    -1==String(document.domain).indexOf("github")&&(a=0),kiir();
+    -1==String(document.domain).indexOf("noriofujii")&&(a=0),kiir();
     setTimeout("checkRot()",100);
 }
 function turn(a) {
