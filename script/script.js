@@ -109,7 +109,7 @@ function regRot(seq) {
 function quickIn(lang="en") {
     var clipdt="", rot, RotatesText = "";
     if (typeof parent.localStorage !== "undefined") clipdt = parent.localStorage.getItem("rot");
-    if ((clipdt=="") &&  (window.parent.getSelection() != null)) {
+    if ((!clipdt || (clipdt=="")) &&  (window.parent.getSelection() != null)) {
          clipdt = window.parent.getSelection().toString();
     }
     var wh = window.outerHeight;
