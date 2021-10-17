@@ -106,9 +106,9 @@ function regRot(seq) {
                 });
     return seqR;
 }
-function quickIn(lang="jp") {
+function quickIn(lang="en") {
     var clipdt="", rot, RotatesText = "";
-    if (typeof parent.ClipDT !== "undefined") clipdt = parent.ClipDT;
+    if (typeof parent.localStorage !== "undefined") clipdt = parent.localStorage.getitem("rot");
     if ((clipdt=="") &&  (window.parent.getSelection() != null)) {
          clipdt = window.parent.getSelection().toString();
     }
