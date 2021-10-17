@@ -67,13 +67,13 @@ function turn(a) {
 }
 function checkRot() {
     var rot;
-/*    if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
+    if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
         if (opener.Rotates.length>0) {
             rot = regRot(opener.Rotates.trim().split(" "));
             opener.Rotates = "";
             setRot(rot);
         }
-    }   */
+    }
     if ((Pause==false) && (Rotates.length>0)) {
         rote = Rotates.shift();
         if (rote.charAt(0)=="*") {
@@ -81,7 +81,7 @@ function checkRot() {
             if (rote.charAt(1)=="*") {
                  Comment = rote.slice(2);
                  turnN=1;}
-            else if (rote.charAt(1)=="-") {
+            else if (rote.charAt(1)=="+") {
                  RotSft = parseInt(rote.slice(2));} 
             rote = Rotates.shift();
         }
@@ -129,9 +129,13 @@ function setRot(rot) {
         rot.shift();
         rot.reverse();
         rotR = rot.map(function (value, index, array) {
-                if (value.charAt(0)=="*") return value;
+               if (value.charAt(0)=="*") {
+                   turnN += 2;
+                   return value;
+               }
                return (String.fromCharCode(value.charCodeAt(0) ^ 0x20)+value.charAt(1));
         });
+        turnN -= rot.length * 2;
     }
     Rotates = Rotates.concat(rotR);
 }
@@ -224,9 +228,17 @@ function bb(){
 function bi(){
     bor(),bor(),bor(),roti(),bor()}
 function scramble(){
-    for(i=0;100>i;i++)rand=Math.floor(12*Math.random()),0==rand&&uu(),1==rand&&ui(),2==rand&&ff(),3==rand&&fi(),4==rand&&dd(),5==rand&&di(),6==rand&&bb(),7==rand&&bi(),8==rand&&rr(),9==rand&&ri(),10==rand&&ll(),11==rand&&li();kiir()}
+    var i,j,rotS = "U,U',U2,F,F',F2,D,D',D2,B,B',B2,R,R',R2,L,L',L2".split(","),sym="";
+    for(a[0]=0,j=0;6>j;j++)for(i=1;10>i;i++)a[i+9*j]=j+1;
+    for(i=0;25>i;i++)rand=Math.floor(18*Math.random()),sym+=rotS[rand]+" ",
+        0==rand&&uu(),1==rand&&ui(),2==rand&&(uu(),uu()),3==rand&&ff(),4==rand&&fi(),5==rand&&(ff(),ff()),6==rand&&dd(),7==rand&&di(),8==rand&&(dd(),dd()),9==rand&&bb(),10==rand&&bi(),11==rand&&(bb(),bb()),12==rand&&rr(),13==rand&&ri(),14==rand&&(rr(),rr()),15==rand&&ll(),16==rand&&li(),17==rand&&(ll(),ll());
+    kiirRotLayer(wholecube,99),kiir();
+    if (opener && (typeof opener.ClipDT!=="undefined")) {
+            opener.ClipDT = sym;
+    }
+}
 var cubex=-20,cubey=340,cubez=0,segs="yo";
-a=new Array,s=new Array;
+a=new Array(),s=new Array();
 var i,j, speed=80,NxPaus=1000,
 layeru=[1,2,3,4,5,6,7,8,9,10,11,12,19,20,21,28,29,30,37,38,39],
 layerl=[10,11,12,13,14,15,16,17,18,1,4,7,19,22,25,46,49,52,39,42,45],
