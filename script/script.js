@@ -67,6 +67,7 @@ function turn(a) {
 }
 function checkRot() {
     var rot;
+    /*
     if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
         if (opener.Rotates.length>0) {
             rot = regRot(opener.Rotates.trim().split(" "));
@@ -74,6 +75,7 @@ function checkRot() {
             setRot(rot);
         }
     }
+    */
     if ((Pause==false) && (Rotates.length>0)) {
         rote = Rotates.shift();
         if (rote.charAt(0)=="*") {
@@ -141,8 +143,8 @@ function setRot(rot) {
 }
 function facerotate(a){
     setTimeout(function(){
-    11==a&&$("#rotLayer").css("transform","rotatey("+-(10*counter)+"deg)"),12==a&&$("#rotLayer").css("transform","rotatey("+10*counter+"deg)"),
-    13==a&&$("#rotLayer").css("transform","rotatey("+-(20*counter)+"deg)"),14==a&&$("#rotLayer").css("transform","rotatey("+20*counter+"deg)"),
+11==a&&$("#rotLayer").css("transform","rotatey("+-(10*counter)+"deg)"),12==a&&$("#rotLayer").css("transform","rotatey("+10*counter+"deg)"),
+13==a&&$("#rotLayer").css("transform","rotatey("+-(20*counter)+"deg)"),14==a&&$("#rotLayer").css("transform","rotatey("+20*counter+"deg)"),
 21==a&&$("#rotLayer").css("transform","rotatex("+-(10*counter)+"deg)"),22==a&&$("#rotLayer").css("transform","rotatex("+10*counter+"deg)"),
 23==a&&$("#rotLayer").css("transform","rotatex("+-(20*counter)+"deg)"),24==a&&$("#rotLayer").css("transform","rotatex("+20*counter+"deg)"),
 31==a&&$("#rotLayer").css("transform","rotatez("+10*counter+"deg)"),32==a&&$("#rotLayer").css("transform","rotatez("+-(10*counter)+"deg)"),
@@ -238,7 +240,7 @@ function scramble(){
     }
 }
 var cubex=-20,cubey=340,cubez=0,segs="yo";
-a=new Array(),s=new Array();
+var a=new Array(),s=new Array();
 var i,j, speed=80,NxPaus=1000,
 layeru=[1,2,3,4,5,6,7,8,9,10,11,12,19,20,21,28,29,30,37,38,39],
 layerl=[10,11,12,13,14,15,16,17,18,1,4,7,19,22,25,46,49,52,39,42,45],
