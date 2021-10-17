@@ -599,22 +599,23 @@ else:
   print("Solution not found.<br>")
 
 # scramble = "R' U' F R' B' F2 L2 D' U' L2 F2 D' L2 D' R B D2 L D2 F2 U2 L R' U' F"
-
+if v1:
+    print(v1+"<br>")
 scramble = v1 if v1 and v1!="" else "L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L"
 # scramble = "R' B' R2 L2 D' R2 U F2 L F U2 F U2 F2 D2 R2 B R2 F2 U2 D2"
 scrambled_state = scramble2state(scramble)
 search = Search(scrambled_state)
 depth = int(len(scramble.split(" "))/2+1) 
 start = time.time()
-solution = search.start_search(bgn_depth=14, max_length=23, timeout=2)
+solution = search.start_search(bgn_depth=4+depth, max_length=16+depth, timeout=2+int(depth/8))
 
-print(f"<a name=\"last\"></a>Finished! ({LastPast:.5f} sec.)<br>")
+print(f"Finished! ({LastPast:.5f} sec.)<br>")
 if solution:
-    print(f"Last Solution: **Solution {solution}")
-    print(f"<script type=text/javascript>")
-    print(f"  if (typeof parent.Rotates !== \"undefined\") parent.Rotates =\"**Solution {solution} *完了\";")
-    print(f"  location.hash = \"last\";")
-    print(f"</script>")
+    print(f"<a name=\"last\"></a>Last Solution: **Solution {solution}")
 else:
-    print("Solution not found.<br>")
-
+    print(f"<a name=\"last\"></a>Solution not found.<br>")
+print(f"<script type=text/javascript>")
+print(f"  if (typeof parent.Rotates !== \"undefined\") parent.Rotates =\"**Solution {solution} *完了\";")
+print(f"  if (parent.localStorage) parent.localStorage.setItem(\"rot\",\"**Solution {solution} *完了\");")
+print(f"  location.hash = \"last\";")
+print(f"</script>")
