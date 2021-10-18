@@ -106,9 +106,9 @@ function regRot(seq) {
                 });
     return seqR;
 }
-async function quickIn(lang="en") {
+function quickIn(lang="en") {
     var clipdt="", rot, RotatesText = "";
-    await navigator.clipboard.readText()
+    navigator.clipboard.readText()
     .then((text) => {
        clipdt = text;
        console.log('ペーストされたテキスト: ', text);
