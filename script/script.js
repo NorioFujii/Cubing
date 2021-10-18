@@ -106,7 +106,7 @@ function regRot(seq) {
                 });
     return seqR;
 }
-var clipdt="";
+const clipdt="";
 function quickIn(lang="en") {
     var rot, RotatesText = "";
     navigator.clipboard.readText()
