@@ -106,7 +106,7 @@ function regRot(seq) {
                 });
     return seqR;
 }
-function quickIn(lang="en") {
+async function quickIn(lang="en") {
     var rot, RotatesText = "";
     var clipdt = await navigator.clipboard.readText()
     .then((text) => {
