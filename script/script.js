@@ -113,7 +113,7 @@ function quickIn(lang="en") {
        clipdt = text;
     })
     .catch(err => {
-       console.error('', err);
+       console.error(text, err);
     });
     var wh = window.outerHeight;
     window.resizeTo(540, wh);
