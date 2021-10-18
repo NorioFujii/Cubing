@@ -111,7 +111,7 @@ function quickIn(lang="en") {
     var clipdt = navigator.clipboard.readText()
     .then((text) => {
         console.log(text);
-        return (text.toString());
+        await return (text.toString());
     })
     .catch(err => {
        console.error("text is nothing", err);
