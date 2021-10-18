@@ -114,7 +114,7 @@ function quickIn(lang="en") {
        clipdt = text;
     })
     .catch(err => {
-       console.error(text, err);
+       console.error("text is nothing", err);
     });
     var wh = window.outerHeight;
     window.resizeTo(540, wh);
