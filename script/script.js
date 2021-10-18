@@ -110,8 +110,8 @@ function quickIn(lang="en") {
     var rot, RotatesText = "";
     var clipdt = navigator.clipboard.readText()
     .then((text) => {
-        return text;
         console.log(text);
+        return text.toString();
     })
     .catch(err => {
        console.error("text is nothing", err);
