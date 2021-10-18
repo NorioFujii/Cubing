@@ -112,7 +112,6 @@ function quickIn(lang="en") {
     navigator.clipboard.readText()
     .then((text) => {
        clipdt = text;
-       console.log('ペーストされたテキスト: ', text);
     })
     .catch(err => {
        console.error(text, err);
