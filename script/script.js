@@ -106,12 +106,12 @@ function regRot(seq) {
                 });
     return seqR;
 }
+var clipdt = "";
 function quickIn(lang="en") {
     var rot, RotatesText = "";
-    var clipdt = "";
     navigator.clipboard.readText()
     .then((text) => {
-       clipdt = text;
+       global.clipdt = text;
     })
     .catch(err => {
        console.error("text is nothing", err);
