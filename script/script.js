@@ -106,21 +106,19 @@ function regRot(seq) {
                 });
     return seqR;
 }
-var clipdt = "";
 function quickIn(lang="en") {
     var rot, RotatesText = "";
-    $("#lskip").html("");
     navigator.clipboard.readText()
     .then((text) => {
-       $("#lskip").html(text);
+       const clipdt = text;
     })
     .catch(err => {
        console.error("text is nothing", err);
     });
     var wh = window.outerHeight;
     window.resizeTo(540, wh);
-    if (lang=="en") RotatesText = window.prompt("Input rotation symbols split by comma or space (xx2:twice)", $("#lskip").html());
-    else        RotatesText = window.prompt("区切（スペースorコンマ）の回転記号文字列を貼り付けてください。", $("#lskip").html());
+    if (lang=="en") RotatesText = window.prompt("Input rotation symbols split by comma or space (xx2:twice)", clipdt);
+    else        RotatesText = window.prompt("区切（スペースorコンマ）の回転記号文字列を貼り付けてください。", clipdt);
     parent.ClipDT = RotatesText;
     window.resizeTo(340, wh);
     if (RotatesText==null) RotatesText = ""; 
