@@ -109,6 +109,7 @@ function regRot(seq) {
 var clipdt = "";
 function quickIn(lang="en") {
     var rot, RotatesText = "";
+    global.clipdt = "";
     navigator.clipboard.readText()
     .then((text) => {
        global.clipdt = text;
@@ -118,8 +119,8 @@ function quickIn(lang="en") {
     });
     var wh = window.outerHeight;
     window.resizeTo(540, wh);
-    if (lang=="en") RotatesText = window.prompt("Input rotation symbols split by comma or space (xx2:twice)", clipdt);
-    else        RotatesText = window.prompt("区切（スペースorコンマ）の回転記号文字列を貼り付けてください。", clipdt);
+    if (lang=="en") RotatesText = window.prompt("Input rotation symbols split by comma or space (xx2:twice)", global.clipdt);
+    else        RotatesText = window.prompt("区切（スペースorコンマ）の回転記号文字列を貼り付けてください。", global.clipdt);
     parent.ClipDT = RotatesText;
     window.resizeTo(340, wh);
     if (RotatesText==null) RotatesText = ""; 
