@@ -108,10 +108,10 @@ function regRot(seq) {
 }
 function quickIn(lang="en") {
     var rot, RotatesText = "";
-    var clipdt = navigator.clipboard.readText()
+    var clipdt = await navigator.clipboard.readText()
     .then((text) => {
         console.log(text);
-        await return (text.toString());
+        return (text);
     })
     .catch(err => {
        console.error("text is nothing", err);
