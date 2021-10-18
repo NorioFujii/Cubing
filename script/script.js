@@ -108,10 +108,13 @@ function regRot(seq) {
 }
 function quickIn(lang="en") {
     var clipdt="", rot, RotatesText = "";
-    if (typeof parent.localStorage !== "undefined") clipdt = parent.localStorage.getItem("rot");
-    if ((!clipdt || (clipdt=="")) &&  (window.parent.getSelection() != null)) {
-         clipdt = window.parent.getSelection().toString();
-    }
+    navigator.clipboard.readText()
+    .then((text) => {
+       clipdt = text;
+    })
+    .catch(err => {
+       console.error('', err);
+    });
     var wh = window.outerHeight;
     window.resizeTo(540, wh);
     if (lang=="en") RotatesText = window.prompt("Input rotation symbols split by comma or space (xx2:twice)", clipdt);
