@@ -114,7 +114,7 @@ async function clipIn() {
     })
     .catch(err => {
        console.error("text is nothing", err);
-    });
+    }));
 }
 function quickIn(lang="en") {
     var rot, RotatesText = "";
