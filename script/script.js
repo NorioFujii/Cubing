@@ -48,7 +48,7 @@ function unfold(i,szin) {
     return (i>9&&i<19||i>27)?FaceF+i+szin+"f":i+szin+"e";
 }
 
-var Comment="", Tid = null, turnN=1;
+var Comment="", Tid = null, turnN=1, W = null;
 var Rotates = new Array();
 var RotSft = 0;
 function initnotscrambled(){
@@ -152,11 +152,11 @@ function pythonSolve() {
         if (rotation.charAt(0)=="*")
             rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
     }
-    w = window.open('https://mori1-hakua.tokyo//python/Cube2phase_Fast2.py?value1='+rotation,"Python","height=100,scrolling=yes");
+    W = window.open('https://mori1-hakua.tokyo//python/Cube2phase_Fast2.py?value1='+rotation,"Python","height=100,scrolling=yes");
     setTimeout('ckPython()',1000); 
 }
 function ckPython() {
-    if (!window.Python.closed) {
+    if (!W.closed) {
         setTimeout('ckPython()',1000);
         return;
     }
