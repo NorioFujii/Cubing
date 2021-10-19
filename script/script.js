@@ -164,7 +164,8 @@ async function ckPython() {
         setTimeout('ckPython()',1000);
         return;
     }
-    setRot(regRot(await clipIn().split(" ")));
+    var rot = await clipIn();
+    setRot(regRot(rot.split(" ")));
     clearTimeout(Tid);
     setTimeout("checkRot()",100)
 }
