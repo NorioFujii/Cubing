@@ -153,9 +153,9 @@ function pythonSolve() {
             rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
     }
     window.open('https://mori1-hakua.tokyo//python/Cube2phase_Fast2.py?value1='+rotation,"Python","height=100,scrolling=yes");
+    setRot(regRot(ClipDT.trim().split(" ")));
     clearTimeout(Tid);
     setTimeout("checkRot()",100)
-    setRot(ClipDT);
 }
 function facerotate(a){
     setTimeout(function(){
