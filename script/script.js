@@ -160,7 +160,7 @@ function ckPython(win) {
         setTimeout("ckPython("+win+")",1000);
         return;
     }
-    setRot(regRot(ClipDT.trim().split(" ")));
+    setRot(regRot(Rotates.trim().split(" ")));
     clearTimeout(Tid);
     setTimeout("checkRot()",100)
 }
