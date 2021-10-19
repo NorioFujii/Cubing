@@ -117,9 +117,9 @@ async function clipIn() {
         return ("");
     }));
 }
-function quickIn(lang="en") {
+async function quickIn(lang="en") {
     var rot, RotatesText = "";
-    var clipdt = clipIn();
+    var clipdt = await clipIn();
     var wh = window.outerHeight;
     window.resizeTo(540, wh);
     if (lang=="en") RotatesText = window.prompt("Input rotation symbols split by comma or space (xx2:twice)", clipdt);
@@ -159,12 +159,12 @@ function pythonSolve() {
     W = window.open('https://mori1-hakua.tokyo//python/Cube2phase_Fast2.py?value1='+rotation,"Python","height=100,scrolling=yes");
     setTimeout('ckPython()',1000); 
 }
-function ckPython() {
+async function ckPython() {
     if (!W.closed) {
         setTimeout('ckPython()',1000);
         return;
     }
-    setRot(regRot(clipIn().split(" ")));
+    setRot(regRot(await clipIn().split(" ")));
     clearTimeout(Tid);
     setTimeout("checkRot()",100)
 }
