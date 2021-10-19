@@ -113,7 +113,8 @@ async function clipIn() {
         return (text);
     })
     .catch(err => {
-       console.error("text is nothing", err);
+        console.error("text is nothing", err);
+        return ("");
     }));
 }
 function quickIn(lang="en") {
