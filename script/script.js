@@ -106,9 +106,8 @@ function regRot(seq) {
                 });
     return seqR;
 }
-async function quickIn(lang="en") {
-    var rot, RotatesText = "";
-    var clipdt = await navigator.clipboard.readText()
+async function clipIn() {
+    return (await navigator.clipboard.readText()
     .then((text) => {
         console.log(text);
         return (text);
@@ -116,6 +115,10 @@ async function quickIn(lang="en") {
     .catch(err => {
        console.error("text is nothing", err);
     });
+}
+function quickIn(lang="en") {
+    var rot, RotatesText = "";
+    var clipdt = clipIn();
     var wh = window.outerHeight;
     window.resizeTo(540, wh);
     if (lang=="en") RotatesText = window.prompt("Input rotation symbols split by comma or space (xx2:twice)", clipdt);
@@ -160,7 +163,7 @@ function ckPython() {
         setTimeout('ckPython()',1000);
         return;
     }
-    setRot(regRot(ClipDT.trim().split(" ")));
+    setRot(regRot(clipIn().split(" ")));
     clearTimeout(Tid);
     setTimeout("checkRot()",100)
 }
