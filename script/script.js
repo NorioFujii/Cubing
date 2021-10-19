@@ -153,11 +153,11 @@ function pythonSolve() {
             rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
     }
     w = window.open('https://mori1-hakua.tokyo//python/Cube2phase_Fast2.py?value1='+rotation,"Python","height=100,scrolling=yes");
-    setTimeout("ckPython("+w+")",1000); 
+    setTimeout('ckPython()',1000); 
 }
-function ckPython(win) {
-    if (!win.closed) {
-        setTimeout("ckPython("+win+")",1000);
+function ckPython() {
+    if (!Python.closed) {
+        setTimeout('ckPython()',1000);
         return;
     }
     setRot(regRot(Rotates.trim().split(" ")));
