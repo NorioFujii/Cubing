@@ -145,6 +145,15 @@ function setRot(rot) {
     }
     Rotates = Rotates.concat(rotR);
 }
+function pythonSolve() {
+    rotation = "";
+    if (ClipDT && (ClipDT!="")) {
+        rotation = encodeURIComponent(ClipDT.trim());
+        if (rotation.charAt(0)=="*")
+            rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
+    }
+    Window.open('https://mori1-hakua.tokyo//python/Cube2phase_Fast2.py?value1='+rotation,"Python");
+}
 function facerotate(a){
     setTimeout(function(){
 11==a&&$("#rotLayer").css("transform","rotatey("+-(10*counter)+"deg)"),12==a&&$("#rotLayer").css("transform","rotatey("+10*counter+"deg)"),
@@ -242,10 +251,12 @@ function scramble(){
     if (opener && (typeof opener.ClipDT!=="undefined")) {
             opener.ClipDT = sym;
     }
+    else navigator.clipboard.writeText(sym);
+    ClipDT = sym;
 }
 var cubex=-20,cubey=340,cubez=0,segs="yo";
 var a=new Array(),s=new Array();
-var i,j, speed=80,NxPaus=1000,
+var i,j, speed=80,NxPaus=1000,ClipDT="",
 layeru=[1,2,3,4,5,6,7,8,9,10,11,12,19,20,21,28,29,30,37,38,39],
 layerl=[10,11,12,13,14,15,16,17,18,1,4,7,19,22,25,46,49,52,39,42,45],
 layerf=[19,20,21,22,23,24,25,26,27,7,8,9,12,15,18,46,47,48,28,31,34],
