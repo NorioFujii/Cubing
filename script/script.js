@@ -156,7 +156,7 @@ function pythonSolve() {
     setTimeout('ckPython()',1000); 
 }
 function ckPython() {
-    if (!Python.closed) {
+    if (!window.Python.closed) {
         setTimeout('ckPython()',1000);
         return;
     }
