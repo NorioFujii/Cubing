@@ -615,9 +615,9 @@ if solution:
 else:
     print(f"<a name=\"last\"></a>Solution not found.<br>")
 print(f"<script type=text/javascript>")
+print(f"  navigator.clipboard.writeText(\"**Solution {solution} *end\");")
 print(f"  if (typeof parent.Rotates !== \"undefined\") parent.Rotates =\"**Solution {solution} *完了\";")
 print("  else if (parent.localStorage) {")
-print(f"      parent.localStorage.setItem(\"rot\",\"**Solution {solution} *完了\");")
-print("      history.go(-1);}")
+print("      if (window.name==\"Python\") setTimeout(\"window.close()\",200); else history.go(-1);}")
 print(f"  location.hash = \"last\";")
 print(f"</script>")
