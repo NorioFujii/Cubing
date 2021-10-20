@@ -68,7 +68,7 @@ function turn(a) {
 function checkRot() {
     var rot;
     if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
-        if (opener.Rotates.length>0) {
+        if (opener && opener.Rotates.length>0) {
             rot = regRot(opener.Rotates.trim().split(" "));
             opener.Rotates = "";
             setRot(rot);
