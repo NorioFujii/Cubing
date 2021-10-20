@@ -149,7 +149,7 @@ function setRot(rot) {
 }
 function pythonSolve() {
     rotation = "";
-    if (opener.ClipDT && (opener.ClipDT!="")) ClipDT = opener.ClipDT;
+    if (opener && opener.ClipDT && (opener.ClipDT!="")) ClipDT = opener.ClipDT;
     rotation = encodeURIComponent(ClipDT.trim());
     if (rotation.charAt(0)=="*")
         rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
