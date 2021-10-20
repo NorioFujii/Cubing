@@ -160,7 +160,7 @@ function pythonSolve() {
     setTimeout('ckPython()',1000); 
 }
 async function ckPython() {
-    if (!W.closed) {
+    if (!W.closed || (await clipIn()=="")) {
         setTimeout('ckPython()',1000);
         return;
     }
