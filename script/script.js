@@ -48,7 +48,7 @@ function unfold(i,szin) {
     return (i>9&&i<19||i>27)?FaceF+i+szin+"f":i+szin+"e";
 }
 
-var Comment="", Tid = null, turnN=1, W = null;
+var Comment="", Tid=null, turnN=1, ClipDT="", W=null;
 var Rotates = new Array();
 var RotSft = 0;
 function initnotscrambled(){
@@ -67,7 +67,6 @@ function turn(a) {
 }
 function checkRot() {
     var rot;
-    /*
     if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
         if (opener.Rotates.length>0) {
             rot = regRot(opener.Rotates.trim().split(" "));
@@ -75,7 +74,6 @@ function checkRot() {
             setRot(rot);
         }
     }
-    */
     if ((Pause==false) && (Rotates.length>0)) {
         rote = Rotates.shift();
         if (rote.charAt(0)=="*") {
@@ -151,16 +149,15 @@ function setRot(rot) {
 }
 function pythonSolve() {
     rotation = "";
-    if (ClipDT && (ClipDT!="")) {
-        rotation = encodeURIComponent(ClipDT.trim());
-        if (rotation.charAt(0)=="*")
-            rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
-    }
+    if (opener.ClipDT && (opener.ClipDT!="")) ClipDT = opener.ClipDT;
+    rotation = encodeURIComponent(ClipDT.trim());
+    if (rotation.charAt(0)=="*")
+        rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
     W = window.open('https://mori1-hakua.tokyo/python/Cube2phase_Fast2.py?value1='+rotation,"Python",'height=100,width=480,left='+(window.screenX+300)+',dependent=yes,scrollbars=no');
     setTimeout('ckPython()',1000); 
 }
 async function ckPython() {
-    if (!W.closed || (await clipIn()=="")) {
+        if (!W.closed || (await clipIn()=="")) {
         setTimeout('ckPython()',1000);
         return;
     }
@@ -262,16 +259,15 @@ function scramble(){
     for(a[0]=0,j=0;6>j;j++)for(i=1;10>i;i++)a[i+9*j]=j+1;
     for(i=0;25>i;i++)rand=Math.floor(18*Math.random()),sym+=rotS[rand]+" ",
         0==rand&&uu(),1==rand&&ui(),2==rand&&(uu(),uu()),3==rand&&ff(),4==rand&&fi(),5==rand&&(ff(),ff()),6==rand&&dd(),7==rand&&di(),8==rand&&(dd(),dd()),9==rand&&bb(),10==rand&&bi(),11==rand&&(bb(),bb()),12==rand&&rr(),13==rand&&ri(),14==rand&&(rr(),rr()),15==rand&&ll(),16==rand&&li(),17==rand&&(ll(),ll());
+    ClipDT = sym;
     kiirRotLayer(wholecube,99),kiir();
     if (opener && (typeof opener.ClipDT!=="undefined")) {
             opener.ClipDT = sym;
     }
-    else navigator.clipboard.writeText(sym);
-    ClipDT = sym;
 }
 var cubex=-20,cubey=340,cubez=0,segs="yo";
 var a=new Array(),s=new Array();
-var i,j, speed=80,NxPaus=1000,ClipDT="",
+var i,j, speed=80,NxPaus=1000,
 layeru=[1,2,3,4,5,6,7,8,9,10,11,12,19,20,21,28,29,30,37,38,39],
 layerl=[10,11,12,13,14,15,16,17,18,1,4,7,19,22,25,46,49,52,39,42,45],
 layerf=[19,20,21,22,23,24,25,26,27,7,8,9,12,15,18,46,47,48,28,31,34],
