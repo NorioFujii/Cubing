@@ -165,6 +165,8 @@ async function ckPython() {
     setRot(regRot(rot.split(" ")));
     clearTimeout(Tid);
     setTimeout("checkRot()",100)
+    if (opener && opener.document.getElementsByName('pythonQ')) 
+        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = rot;
 }
 function facerotate(a){
     setTimeout(function(){
