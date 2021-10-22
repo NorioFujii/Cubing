@@ -84,6 +84,16 @@ function checkRot() {
                  turnN=1;}
             else if (rote.charAt(1)=="+") {
                  RotSft = parseInt(rote.slice(2));} 
+            else if (rote.charAt(1)=="0") {
+                var i,j,rotS = "U,u,U2,F,f,F2,D,d,D2,B,b,B2,R,r,R2,L,l,L2".split(",");
+                for(a[0]=0,j=0;6>j;j++)for(i=1;10>i;i++)a[i+9*j]=j+1;
+                for(i in Rotates) {
+                    let rand = rotS.indexOf(Rotates[i]);
+                    0==rand&&uu(),1==rand&&ui(),2==rand&&(uu(),uu()),3==rand&&ff(),4==rand&&fi(),5==rand&&(ff(),ff()),6==rand&&dd(),7==rand&&di(),8==rand&&(dd(),dd()),9==rand&&bb(),10==rand&&bi(),11==rand&&(bb(),bb()),12==rand&&rr(),13==rand&&ri(),14==rand&&(rr(),rr()),15==rand&&ll(),16==rand&&li(),17==rand&&(ll(),ll());
+                }
+                kiirRotLayer(wholecube,99),kiir();
+                turnN=1,Rotates = [];
+            } 
             rote = Rotates.shift();
         }
         $("#comment").html(Comment);
