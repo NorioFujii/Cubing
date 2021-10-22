@@ -79,20 +79,22 @@ function checkRot() {
         rote = Rotates.shift();
         if (rote.charAt(0)=="*") {
             Comment = (Rotates.length==0)?"":rote.slice(1); 
-            if (rote.charAt(1)=="*") {
+            if (rote.charAt(1)=="*") {      // step reset 
                  Comment = rote.slice(2);
                  turnN=1;}
-            else if (rote.charAt(1)=="+") {
+            else if (rote.charAt(1)=="+") { // virtual Y rotation convert 
                  RotSft = parseInt(rote.slice(2));} 
-            else if (rote.charAt(1)=="0") {
-                var i,j,rotS = "U,u,U2,F,f,F2,D,d,D2,B,b,B2,R,r,R2,L,l,L2".split(",");
+            else if (rote.charAt(1)=="0") { // Cube setup without rotation
+                var i,j,rotS = "U,u,U2,F,f,F2,D,d,D2,B,b,B2,R,r,R2,L,l,L2,**".split(",");
                 for(a[0]=0,j=0;6>j;j++)for(i=1;10>i;i++)a[i+9*j]=j+1;
                 for(i in Rotates) {
-                    let rand = rotS.indexOf(Rotates[i]);
-                    0==rand&&uu(),1==rand&&ui(),2==rand&&(uu(),uu()),3==rand&&ff(),4==rand&&fi(),5==rand&&(ff(),ff()),6==rand&&dd(),7==rand&&di(),8==rand&&(dd(),dd()),9==rand&&bb(),10==rand&&bi(),11==rand&&(bb(),bb()),12==rand&&rr(),13==rand&&ri(),14==rand&&(rr(),rr()),15==rand&&ll(),16==rand&&li(),17==rand&&(ll(),ll());
+                    let rot = Rotates.shift();
+                    let rand = rotS.indexOf(rot.charAt(1)=="2"?rot.toUpperCase():rot);
+                    0==rand&&uu(),1==rand&&ui(),2==rand&&(uu(),uu()),3==rand&&ff(),4==rand&&fi(),5==rand&&(ff(),ff()),6==rand&&dd(),7==rand&&di(),8==rand&&(dd(),dd()),9==rand&&bb(),10==rand&&bi(),11==rand&&(bb(),bb()),12==rand&&rr(),13==rand&&ri(),14==rand&&(rr(),rr()),15==rand&&ll(),16==rand&&li(),17==rand&&(ll(),ll()),
+                   18==rand&&break;    
                 }
                 kiirRotLayer(wholecube,99),kiir();
-                turnN=1,Rotates = [];
+                turnN=1;
             } 
             rote = Rotates.shift();
         }
