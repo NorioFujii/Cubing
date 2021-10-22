@@ -91,7 +91,7 @@ function checkRot() {
                     let rot = Rotates.shift();
                     let rand = rotS.indexOf(rot.charAt(1)=="2"?rot.toUpperCase():rot);
                     0==rand&&uu(),1==rand&&ui(),2==rand&&(uu(),uu()),3==rand&&ff(),4==rand&&fi(),5==rand&&(ff(),ff()),6==rand&&dd(),7==rand&&di(),8==rand&&(dd(),dd()),9==rand&&bb(),10==rand&&bi(),11==rand&&(bb(),bb()),12==rand&&rr(),13==rand&&ri(),14==rand&&(rr(),rr()),15==rand&&ll(),16==rand&&li(),17==rand&&(ll(),ll()),
-                   18==rand&&break;    
+                    if (18==rand) break;    
                 }
                 kiirRotLayer(wholecube,99),kiir();
                 turnN=1;
