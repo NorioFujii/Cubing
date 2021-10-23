@@ -7,7 +7,8 @@ form = cgi.FieldStorage() # cgiオブジェクト作成
 v1 = form.getfirst('value1') # nameがvalue1の値を取得
 
 print ("Content-Type: text/html\n\n")
-print ("<!doctype html><br>")
+print ("<!doctype html>\n");
+print ("<html><body><br>");
 #
 import os , pickle    
 class State:
@@ -584,21 +585,6 @@ class Search:
                 return True
             depth += 1
 LastPast = 0;
-solved_state2 = scramble2state("F U2 F' U' F U' F'")
-scramble = "F U2 F' U' F U' F'"
-scrambled_state = scramble2state(scramble)
-## solved_state = solved_state2
-search = Search(scrambled_state)
-start = time.time()
-solution = search.start_search()
-LastPast = time.time() - start;
-print(f"Finished! ({LastPast:.4f} sec.)<br>")
-if solution:
-  print(f"Last Solution: {solution}.<br>")
-else:
-  print("Solution not found.<br>")
-
-# scramble = "R' U' F R' B' F2 L2 D' U' L2 F2 D' L2 D' R B D2 L D2 F2 U2 L R' U' F"
 if v1:
     print(v1+"<br>")
 scramble = v1 if v1 and v1!="" else "L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L"
@@ -608,16 +594,14 @@ search = Search(scrambled_state)
 depth = int(len(scramble.split(" "))/2+1) 
 start = time.time()
 solution = search.start_search(bgn_depth=4+depth, max_length=16+depth, timeout=2+int(depth/8))
-
+LastPast = time.time() - start;
 print(f"Finished! ({LastPast:.5f} sec.)<br>")
 if solution:
     print(f"<a name=\"last\"></a>Last Solution: **Solution {solution}")
 else:
-    print(f"<a name=\"last\"></a>Solution not found.<br>")
-print(f"<script type=text/javascript>")
-print(f"  navigator.clipboard.writeText(\"**Solution {solution} *end\");")
-print(f"  if (typeof parent.Rotates !== \"undefined\") parent.Rotates =\"**Solution {solution} *完了\";")
-print("  else if (parent.localStorage) {")
-print("      if (window.name==\"Python\") setTimeout(\"window.close()\",200); else history.go(-1);}")
-print(f"  location.hash = \"last\";")
-print(f"</script>")
+    print("<a name=\"last\"></a>Solution not found.<br>")
+print("<script type=text/javascript>")
+print(f"  navigator.clipboard.writeText(\"**Solution {solution} *完了\");")
+print("  if (window.name==\"Python\") setTimeout(\"window.close()\",200);")
+print("  else setTimeout(\"location.hash='last'\",100);")
+print("</script></body></html>\n")
