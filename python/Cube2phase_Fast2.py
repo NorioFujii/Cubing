@@ -584,7 +584,7 @@ class Search:
                 print(f"Found solution ({len(self.current_solution_ph1) + len(self.current_solution_ph2)} length)<br>")
                 return True
             depth += 1
-LastPast = 0;
+LastPast = 0
 if v1:
     print(v1+"<br>")
 scramble = v1 if v1 and v1!="" else "L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L"
