@@ -3,8 +3,7 @@ function rotCube(){
     transform:segs});
 }
 function rotCubeY(){
-    segs="rotateX("+cubex+"deg) rotateY("+cubey+"deg) rotateZ("+cubez+"deg) translateX(0) translateY(0) translateZ(0)",$(".cube").css({
-    transform:segs});
+    rotCube();
     kiirRotLayer(wholecube,99);
     kiir();
 }
