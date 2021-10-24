@@ -161,13 +161,17 @@ function setRot(rot) {
     Rotates = Rotates.concat(rotR);
 }
 function pythonSolve() {
-    rotation = "";
-    if (opener && opener.ClipDT && (opener.ClipDT!="")) ClipDT = opener.ClipDT;
+    window.open('python/computing.html',"Python",'height=140,width=480,left='+(window.screenX+300)+',dependent=yes,scrollbars=no');
+    setTimeout('goPython()',100); 
+}
+function goPython() {
+    var rotation = "";
+    if (opener.ClipDT && (opener.ClipDT!="")) ClipDT = opener.ClipDT;
     rotation = encodeURIComponent(ClipDT.trim());
     if (rotation.charAt(0)=="*")
         rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
-    W = window.open('https://mori1-hakua.tokyo/python/Cube2phase_Fast2.py?value1='+rotation,"Python",'height=140,width=480,left='+(window.screenX+300)+',dependent=yes,scrollbars=no');
-    setTimeout('ckPython()',1000); 
+    W = window.open('https://mori1-hakua.tokyo/python/Cube2phase_Fast3.py?value1='+rotation,"Python");
+    setTimeout('ckPython()',100); 
 }
 async function ckPython() {
         if (!W.closed || (await clipIn()=="")) {
