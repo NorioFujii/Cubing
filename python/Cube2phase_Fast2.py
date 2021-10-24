@@ -597,11 +597,14 @@ solution = search.start_search(bgn_depth=4+depth, max_length=16+depth, timeout=2
 LastPast = time.time() - start;
 print(f"Finished! ({LastPast:.5f} sec.)<br>")
 if solution:
+    Steps = str(len(solution.split(" "))) + "steps"
     print(f"<a name=\"last\"></a>Last Solution: **Solution {solution}")
 else:
+    Steps = "None"
     print("<a name=\"last\"></a>Solution not found.<br>")
 print("<script type=text/javascript>")
-print(f"  navigator.clipboard.writeText(\"**Solution {solution} *完了\");")
-print("  if (window.name==\"Python\") setTimeout(\"window.close()\",200);")
-print("  else setTimeout(\"location.hash='last'\",100);")
+print("  location.hash='last';")
+print(f"  navigator.clipboard.writeText(\"**Solution_{LastPast:.2f}(Sec) {solution} *Finished\");")
+print(f"  if (({LastPast:.3f}<1.0) && (confirm('{Steps}: Retry more time range({LastPast:.3f}S)?'))) location.hash='last',location.reload(true);")
+print("  else if (window.name==\"Python\") setTimeout(\"window.close()\",200);")
 print("</script></body></html>\n")
