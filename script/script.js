@@ -170,7 +170,7 @@ function goPython() {
     rotation = encodeURIComponent(ClipDT.trim());
     if (rotation.charAt(0)=="*")
         rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
-    W = window.open('https://mori1-hakua.tokyo/python/Cube2phase_Fast3.py?value1='+rotation,"Python");
+    W = window.open('https://mori1-hakua.tokyo/python/Cube2phase_Fast2.py?value1='+rotation,"Python");
     setTimeout('ckPython()',100); 
 }
 async function ckPython() {
