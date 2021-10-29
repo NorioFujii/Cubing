@@ -330,10 +330,10 @@ function mousedragRotate(element){
             let diff_y = $(target).data("y") - event.pageY;
             if ((diff_x + diff_y) !== 0) {
                 $(target).data("move", true);
-                cubex += parseInt(diff_y);
+                cubex += parseInt(diff_y / 10);
                 if (cubex<-85) cubex = -85;
                 if (cubex>-5)  cubex = -5;
-                cubey -= parseInt(diff_x);
+                cubey -= parseInt(diff_x / 10);
                 rotCubeY();
                 $(target).data("move", false);
             } else { return; };
