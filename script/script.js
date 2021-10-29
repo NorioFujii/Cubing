@@ -324,7 +324,7 @@ function mousedragRotate(element){
 
     // Wide area event
     $(document).mousemove(function (event) {
-        if (!$(target).data("move")) {
+        if (($(target).data("down")) && (!$(target).data("move"))) {
             event.preventDefault();
             let diff_x = $(target).data("x") - event.pageX;
             let diff_y = $(target).data("y") - event.pageY;
