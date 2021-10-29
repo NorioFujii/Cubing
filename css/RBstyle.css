@@ -192,8 +192,8 @@ body {
     -moz-transform: rotatey(0deg);
     -webkit-transform: rotatey(0deg);
 }
-#comment {
-    font-color: green;
+.lower {
+    color: green;
 }
 
 .hiddenmezo {
