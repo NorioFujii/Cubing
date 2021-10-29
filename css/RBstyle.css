@@ -31,6 +31,26 @@ body {
 .ruwixpic:hover {
   opacity: 0.7;
 }
+.flex_test-box {
+    display: flex;              /* フレックスボックスにする */
+    flex-wrap: wrap;            /* 折り返し指定 */
+    align-content:stretch;      /* 折り返し時の配置指定 */
+    padding:  10px;             /* 余白指定 */
+}
+ 
+.flex_test-item {
+    padding: 10px;
+    color:  #fff;               /* 文字色 */
+    margin:  10px;              /* 外側の余白 */
+    border-radius:  5px;        /* 角丸指定 */
+    width: 220px;               /* 幅指定 */
+}
+ 
+.flex_test-item:nth-child(1) {
+}
+ 
+.flex_test-item:nth-child(2) {
+}
 .commands {
   width: 275px;
   margin: auto;
