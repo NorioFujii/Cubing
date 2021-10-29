@@ -324,17 +324,18 @@ function mousedragRotate(element){
 
     // Wide area event
     $(document).mousemove(function (event) {
-        if ($(target).data("down")) {
+        if (!$(target).data("move")) {
             event.preventDefault();
-            let diff_x = parseInt($(target).data("x") - event.pageX);
-            let diff_y = parseInt($(target).data("y") - event.pageY);
+            let diff_x = $(target).data("x") - event.pageX;
+            let diff_y = $(target).data("y") - event.pageY;
             if ((diff_x + diff_y) !== 0) {
                 $(target).data("move", true);
-                cubex += diff_y / 2;
+                cubex += parseInt(diff_y);
                 if (cubex<-85) cubex = -85;
                 if (cubex>-5)  cubex = -5;
-                cubey -= diff_x / 2;
+                cubey -= parseInt(diff_x);
                 rotCubeY();
+                $(target).data("move", false);
             } else { return; };
             return false
         }
