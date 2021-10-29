@@ -51,7 +51,7 @@ var Comment="", Tid=null, turnN=1, ClipDT="", W=null;
 var Rotates = new Array();
 var RotSft = 0;
 function initnotscrambled(){
-    window.resizeTo(320,640);
+    window.resizeTo(580,440);
     speed=80; if (NxPaus<1100) NxPaus=1000;
     if (turnN==16) NxPaus=1500;
     Pause=false; Comment="";RotSft=0;Rotates=[]; turnN=1; clearTimeout(Tid);
@@ -276,7 +276,7 @@ function bi(){
 function scramble(){
     var i,j,rotS = "U,U',U2,F,F',F2,D,D',D2,B,B',B2,R,R',R2,L,L',L2".split(","),sym="";
     for(a[0]=0,j=0;6>j;j++)for(i=1;10>i;i++)a[i+9*j]=j+1;
-    for(i=0;25>i;i++)rand=Math.floor(18*Math.random()),sym+=rotS[rand]+" ",
+    for(i=0;22>i;i++)rand=Math.floor(18*Math.random()),sym+=rotS[rand]+" ",
         0==rand&&uu(),1==rand&&ui(),2==rand&&(uu(),uu()),3==rand&&ff(),4==rand&&fi(),5==rand&&(ff(),ff()),6==rand&&dd(),7==rand&&di(),8==rand&&(dd(),dd()),9==rand&&bb(),10==rand&&bi(),11==rand&&(bb(),bb()),12==rand&&rr(),13==rand&&ri(),14==rand&&(rr(),rr()),15==rand&&ll(),16==rand&&li(),17==rand&&(ll(),ll());
     ClipDT = sym;
     kiirRotLayer(wholecube,99),kiir();
@@ -301,6 +301,50 @@ Pause=false, FaceF="",counter=0;
 var Maprote = new Map([["F","FLBR"], ["f","flbr"],["L","LBRF"], ["l","lbrf"],
                        ["B","BRFL"], ["b","brfl"],["R","RFLB"], ["r","rflb"],
                        ["M","MsmS"], ["m","mSMs"],["S","SmsM"], ["s","sMSm"]]);
+function mousedragRotate(element){
+    let target; // 動かす対象
+    let e = element ;
+        $(e).mousedown(function (event) {
+            event.preventDefault();
+            target = $(e); // 動かす対象
+            $(e).data({
+                "down": true,
+                "move": false,
+                "x": event.clientX,
+                "y": event.clientY,
+                "scrollleft": $(e).scrollLeft(),
+                "scrolltop": $(e).scrollTop(),
+            });
+            return false
+        });
+        // move後のlink無効
+        $(e).click(function (event) {
+            if ($(e).data("move")) {
+                return false
+            }
+        });
+
+    // list要素内/外でのevent
+    $(document).mousemove(function (event) {
+        if ($(target).data("down")) {
+            event.preventDefault();
+            let move_x = $(target).data("x") - event.clientX;
+            let move_y = $(target).data("y") - event.clientY;
+            if (move_x !== 0 || move_y !== 0) {
+                $(target).data("move", true);
+                cubex += parseInt(move_y / 15);
+                if (cubex<-85) cubex = -85;
+                if (cubex>-5)  cubex = -5;
+                cubey -= parseInt(move_x / 15);
+                rotCubeY();
+            } else { return; };
+            return false
+        }
+    }).mouseup(function (event) {
+        $(target).data("down", false);
+        return false;
+    });
+}
 $(document).ready(function(){
     initnotscrambled(),
   $(".rotateU").mousedown(function(){
@@ -378,4 +422,6 @@ $(document).ready(function(){
   $(".rotateYiview").mouseup(function(){
     cubey-=5,rotCubeY()}),
   $(".rotateZiview").mouseup(function(){
-    cubez-=5,rotCube()})});
+    cubez-=5,rotCube()}),
+  mousedragRotate($(".cube"));
+});
