@@ -310,8 +310,8 @@ function mousedragRotate(element){
             $(e).data({
                 "down": true,
                 "move": false,
-                "x": event.clientX,
-                "y": event.clientY,
+                "x": event.pageX,
+                "y": event.pageY,
             });
             return false
         });
@@ -326,14 +326,14 @@ function mousedragRotate(element){
     $(document).mousemove(function (event) {
         if ($(target).data("down")) {
             event.preventDefault();
-            let move_x = $(target).data("x") - event.clientX;
-            let move_y = $(target).data("y") - event.clientY;
-            if (move_x !== 0 || move_y !== 0) {
+            let diff_x = parseInt($(target).data("x") - event.pageX);
+            let diff_y = parseInt($(target).data("y") - event.pageY);
+            if ((diff_x + diff_y) !== 0) {
                 $(target).data("move", true);
-                cubex += move_y;
+                cubex += diff_y / 2;
                 if (cubex<-85) cubex = -85;
                 if (cubex>-5)  cubex = -5;
-                cubey -= move_x;
+                cubey -= diff_x / 2;
                 rotCubeY();
             } else { return; };
             return false
