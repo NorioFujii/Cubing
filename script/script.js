@@ -302,29 +302,27 @@ var Maprote = new Map([["F","FLBR"], ["f","flbr"],["L","LBRF"], ["l","lbrf"],
                        ["B","BRFL"], ["b","brfl"],["R","RFLB"], ["r","rflb"],
                        ["M","MsmS"], ["m","mSMs"],["S","SmsM"], ["s","sMSm"]]);
 function mousedragRotate(element){
-    let target; // 動かす対象
+    let target; // Moving target
     let e = element ;
         $(e).mousedown(function (event) {
             event.preventDefault();
-            target = $(e); // 動かす対象
+            target = $(e); // Moving target
             $(e).data({
                 "down": true,
                 "move": false,
                 "x": event.clientX,
                 "y": event.clientY,
-                "scrollleft": $(e).scrollLeft(),
-                "scrolltop": $(e).scrollTop(),
             });
             return false
         });
-        // move後のlink無効
+        // link cancel after move
         $(e).click(function (event) {
             if ($(e).data("move")) {
                 return false
             }
         });
 
-    // list要素内/外でのevent
+    // Wide area event
     $(document).mousemove(function (event) {
         if ($(target).data("down")) {
             event.preventDefault();
@@ -332,10 +330,10 @@ function mousedragRotate(element){
             let move_y = $(target).data("y") - event.clientY;
             if (move_x !== 0 || move_y !== 0) {
                 $(target).data("move", true);
-                cubex += parseInt(move_y / 15);
+                cubex += move_y;
                 if (cubex<-85) cubex = -85;
                 if (cubex>-5)  cubex = -5;
-                cubey -= parseInt(move_x / 15);
+                cubey -= move_x;
                 rotCubeY();
             } else { return; };
             return false
