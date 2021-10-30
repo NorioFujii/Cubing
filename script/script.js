@@ -301,48 +301,91 @@ Pause=false, FaceF="",counter=0;
 var Maprote = new Map([["F","FLBR"], ["f","flbr"],["L","LBRF"], ["l","lbrf"],
                        ["B","BRFL"], ["b","brfl"],["R","RFLB"], ["r","rflb"],
                        ["M","MsmS"], ["m","mSMs"],["S","SmsM"], ["s","sMSm"]]);
+
 function mousedragRotate(element){
     let target; // Moving target
     let e = element ;
+    if (typeof window.touchEvent === "undefined") {
         $(e).mousedown(function (event) {
             event.preventDefault();
             target = $(e); // Moving target
-            $(e).data({
+            $(target).data({
                 "down": true,
                 "move": false,
                 "x": event.pageX,
                 "y": event.pageY,
+                "nx": event.pageX,
+                "ny": event.pageY
             });
             return false
         });
-        // link cancel after move
+        // link disable after move action
         $(e).click(function (event) {
-            if ($(e).data("move")) {
-                return false
+            if ($(target).data("move")) {
+               return false
             }
         });
-
-    // Wide area event
-    $(document).mousemove(function (event) {
-        if (($(target).data("down")) && (!$(target).data("move"))) {
+        $(document).mouseup(function (event) {
+            $(target).data("down", false);
+            return false;
+        });
+        // list要素内/外でのevent
+        $(document).mousemove(function (event) {
+          if ($(target).data("down")) {
             event.preventDefault();
-            let diff_x = $(target).data("x") - event.pageX;
-            let diff_y = $(target).data("y") - event.pageY;
-            if ((diff_x + diff_y) !== 0) {
-                $(target).data("move", true);
-                cubex += parseInt(diff_y / 10);
-                if (cubex<-85) cubex = -85;
-                if (cubex>-5)  cubex = -5;
-                cubey -= parseInt(diff_x / 10);
-                rotCubeY();
-                $(target).data("move", false);
-            } else { return; };
+            $(target).data("nx", event.pageX);
+            $(target).data("ny", event.pageY);
+            return emove(1);
+          }
+        });
+    }
+    const Area1 = document.getElementsByClassName(e.slice(1))[0];
+    if (typeof window.touchEvent !== undefined) { 
+        Area1.addEventListener("touchstart", () => {
+            event.preventDefault();
+            target = $(e); // Moving target
+            $(target).data({
+                "down": true,
+                "move": false,
+                "x": event.changedTouches[0].pageX,
+                "y": event.changedTouches[0].pageY,
+                "nx": event.changedTouches[0].pageX,
+                "ny": event.changedTouches[0].pageY
+            });
             return false
+        });
+        Area1.addEventListener("touchmove", () => {
+            if ($(target).data("down")) {
+                event.preventDefault();  // Suppless scroll
+                $(target).data("nx", event.changedTouches[0].pageX);
+                $(target).data("ny", event.changedTouches[0].pageY);
+            }
+        });
+        Area1.addEventListener("touchend", () => {
+            emove(5);
+            $(target).data("down", false);
+            return false;
+        });
+    }
+    function emove(dev) {
+        let diff_x = parseInt($(target).data("x") - $(target).data("nx"));
+        let diff_y = parseInt($(target).data("y") - $(target).data("ny")); 
+        $("#comment").html(diff_x + "," + diff_y);
+        if ((!$(target).data("move")) && (diff_x+diff_y!=0)) {
+            $(target).data("move", true);
+            $(target).data("x", $(target).data("nx"));
+            $(target).data("y", $(target).data("ny"));
+            cubex += diff_y / dev;
+            if (cubex<-85)  cubex = -85;
+            if (cubex> -5)  cubex =  -5;
+            cubey -= diff_x / dev;
+            if (cubey<290)  cubey = 290;
+            if (cubey>420)  cubey = 420; 
+            rotCubeY();
+            $(target).data("move", false);
         }
-    }).mouseup(function (event) {
-        $(target).data("down", false);
         return false;
-    });
+    }
 }
 $(document).ready(function(){
     initnotscrambled(),
@@ -399,28 +442,28 @@ $(document).ready(function(){
   $(".rotateKiir").mousedown(function(){
     kiir()}),
   $(".rotateXview").mousedown(function(){
-    cubex+=5,rotCube()}),
+    if (cubex<-5) cubex+=5,rotCube()}),
   $(".rotateYview").mousedown(function(){
-    cubey+=5,rotCubeY()}),
+    if (cubey<420) cubey+=5,rotCubeY()}),
   $(".rotateZview").mousedown(function(){
     cubez+=5,rotCube()}),
   $(".rotateXview").mouseup(function(){
-    cubex+=5,rotCube()}),
+    if (cubex<-5) cubex+=5,rotCube()}),
   $(".rotateYview").mouseup(function(){
-    cubey+=5,rotCubeY()}),
+    if (cubey<420) cubey+=5,rotCubeY()}),
   $(".rotateZview").mouseup(function(){
     cubez+=5,rotCube()}),
   $(".rotateXiview").mousedown(function(){
-    cubex-=5,rotCube()}),
+    if (cubex>-85) cubex-=5,rotCube()}),
   $(".rotateYiview").mousedown(function(){
-    cubey-=5,rotCubeY()}),
+    if (cubey>290) cubey-=5,rotCubeY()}),
   $(".rotateZiview").mousedown(function(){
     cubez-=5,rotCube()}),
   $(".rotateXiview").mouseup(function(){
-    cubex-=5,rotCube()}),
+    if (cubex>-85) cubex-=5,rotCube()}),
   $(".rotateYiview").mouseup(function(){
-    cubey-=5,rotCubeY()}),
+    if (cubey>290) cubey-=5,rotCubeY()}),
   $(".rotateZiview").mouseup(function(){
     cubez-=5,rotCube()}),
-  mousedragRotate($(".cube"));
+  mousedragRotate(".cube");
 });
