@@ -22,13 +22,13 @@ function accel(){
     else speed=80, NxPaus=1000;
 }
 function kiir(){
-    var r="", i , v;
+    let r="", i , v;
     for(i=1;i<55;i++)
         r+='<div class="field mezo mezo'+unfold(i," szin")+a[i]+'"><span>'+i+"</span></div>";
     $("#cubeFields").html(r);
 }
 function kiirRotLayer(r,e){
-    var odiv, i, t, o="";
+    let odiv, i, t, o="";
     for(i=0;i<r.length;i++) {
         t="#cubeFields .mezo"+unfold(r[i],"").slice(0,-1), $(t).hide();
         o+='<div class="layer mezo mezo'+unfold(r[i]," szin")+a[r[i]]+'"><span>'+r[i]+"</span></div>";
@@ -40,8 +40,6 @@ function kiirRotLayer(r,e){
     $("#rotLayer").html(o);
 }
 function unfold(i,szin) {
-    if (cubey<290) cubey+=5;
-    else if (cubey>420) cubey-=5;
     if (cubey<355) return (i>9&&i<19||i>36)?FaceF+i+szin+"f":i+szin+"e";
     if (cubey>365) return (i>27)?FaceF+i+szin+"f":i+szin+"e";
     return (i>9&&i<19||i>27)?FaceF+i+szin+"f":i+szin+"e";
@@ -67,7 +65,7 @@ function turn(a) {
     setTimeout("checkRot()",100);
 }
 function checkRot() {
-    var rot;
+    let rot;
     if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
         if (opener && opener.Rotates.length>0) {
             rot = regRot(opener.Rotates.trim().split(" "));
@@ -85,7 +83,8 @@ function checkRot() {
             else if (rote.charAt(1)=="+") { // virtual Y rotation convert 
                  RotSft = parseInt(rote.slice(2));} 
             else if (rote.charAt(1)=="0") { // Cube setup without rotation
-                var i,j,rotS = "U,u,U2,F,f,F2,D,d,D2,B,b,B2,R,r,R2,L,l,L2,**".split(",");
+                let i,j;
+                const rotS = "U,u,U2,F,f,F2,D,d,D2,B,b,B2,R,r,R2,L,l,L2,**".split(",");
                 for(a[0]=0,j=0;6>j;j++)for(i=1;10>i;i++)a[i+9*j]=j+1;
                 while (Rotates.length>0) {
                     let rot = Rotates.shift();
@@ -110,7 +109,7 @@ function checkRot() {
     Tid = setTimeout("checkRot()",NxPaus);
 }
 function regRot(seq) {
-    var seqR = seq.map(function (value, index, array) {
+    let seqR = seq.map(function (value, index, array) {
                        return ((value.charAt(1)=="'")?
                                 String.fromCharCode(value.charCodeAt(0) ^ 0x20)+value.charAt(2):
                                 value);
@@ -129,9 +128,9 @@ async function clipIn() {
     }));
 }
 async function quickIn(lang="en") {
-    var rot, RotatesText = "";
-    var clipdt = await clipIn();
-    var wh = window.outerHeight;
+    let rot, RotatesText = "";
+    let clipdt = await clipIn();
+    let wh = window.outerHeight;
     window.resizeTo(540, wh);
     if (lang=="en") RotatesText = window.prompt("Input rotation symbols split by comma or space (xx2:twice)", clipdt);
     else        RotatesText = window.prompt("区切（スペースorコンマ）の回転記号文字列を貼り付けてください。", clipdt);
@@ -145,7 +144,7 @@ async function quickIn(lang="en") {
     setTimeout("checkRot()",100);
 }
 function setRot(rot) {
-    var rotR = rot;
+    let rotR = rot;
     if (rot[0]=="!") {
         rot.shift();
         rot.reverse();
@@ -165,7 +164,7 @@ function pythonSolve() {
     setTimeout('goPython()',100); 
 }
 function goPython() {
-    var rotation = "";
+    let rotation = "";
     if (opener && opener.ClipDT && (opener.ClipDT!="")) ClipDT = opener.ClipDT;
     rotation = encodeURIComponent(ClipDT.trim());
     if (rotation.charAt(0)=="*")
@@ -178,7 +177,7 @@ async function ckPython() {
         setTimeout('ckPython()',1000);
         return;
     }
-    var rot = await clipIn();
+    let rot = await clipIn();
     setRot(regRot(rot.split(" ")));
     clearTimeout(Tid);
     setTimeout("checkRot()",100)
@@ -274,7 +273,8 @@ function bb(){
 function bi(){
     bor(),bor(),bor(),roti(),bor()}
 function scramble(){
-    var i,j,rotS = "U,U',U2,F,F',F2,D,D',D2,B,B',B2,R,R',R2,L,L',L2".split(","),sym="";
+    let i,j,sym="";
+    const rotS = "U,U',U2,F,F',F2,D,D',D2,B,B',B2,R,R',R2,L,L',L2".split(",");
     for(a[0]=0,j=0;6>j;j++)for(i=1;10>i;i++)a[i+9*j]=j+1;
     for(i=0;22>i;i++)rand=Math.floor(18*Math.random()),sym+=rotS[rand]+" ",
         0==rand&&uu(),1==rand&&ui(),2==rand&&(uu(),uu()),3==rand&&ff(),4==rand&&fi(),5==rand&&(ff(),ff()),6==rand&&dd(),7==rand&&di(),8==rand&&(dd(),dd()),9==rand&&bb(),10==rand&&bi(),11==rand&&(bb(),bb()),12==rand&&rr(),13==rand&&ri(),14==rand&&(rr(),rr()),15==rand&&ll(),16==rand&&li(),17==rand&&(ll(),ll());
@@ -284,10 +284,11 @@ function scramble(){
         opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = sym;
         if (typeof opener.ClipDT!=="undefined") opener.ClipDT = sym;
     }
+    else $("#comment").html(sym);
 }
-var cubex=-20,cubey=340,cubez=0,segs="yo";
+var cubex=-20,cubey=340,cubez=0,segs="yo", speed=80,NxPaus=1000;
 var a=new Array(),s=new Array();
-var i,j, speed=80,NxPaus=1000,
+const
 layeru=[1,2,3,4,5,6,7,8,9,10,11,12,19,20,21,28,29,30,37,38,39],
 layerl=[10,11,12,13,14,15,16,17,18,1,4,7,19,22,25,46,49,52,39,42,45],
 layerf=[19,20,21,22,23,24,25,26,27,7,8,9,12,15,18,46,47,48,28,31,34],
@@ -296,8 +297,8 @@ layerb=[37,38,39,40,41,42,43,44,45,30,33,36,10,13,16,1,2,3,52,53,54],
 layerd=[46,47,48,49,50,51,52,53,54,25,26,27,16,17,18,25,26,27,34,35,36,43,44,45],
 layerm=[2,5,8,20,23,26,47,50,53,38,41,44],layere=[13,14,15,22,23,24,31,32,33,40,41,42],
 layers=[4,5,6,11,14,17,29,32,35,49,50,51],
-wholecube=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54],
-Pause=false, FaceF="",counter=0;
+wholecube=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54];
+var Pause=false, FaceF="",counter=0;
 var Maprote = new Map([["F","FLBR"], ["f","flbr"],["L","LBRF"], ["l","lbrf"],
                        ["B","BRFL"], ["b","brfl"],["R","RFLB"], ["r","rflb"],
                        ["M","MsmS"], ["m","mSMs"],["S","SmsM"], ["s","sMSm"]]);
