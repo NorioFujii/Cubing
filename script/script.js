@@ -330,7 +330,7 @@ function mousedragRotate(element){
             $(target).data("down", false);
             return false;
         });
-        // list要素内/外でのevent
+        // event of global area
         $(document).mousemove(function (event) {
           if ($(target).data("down")) {
             event.preventDefault();
