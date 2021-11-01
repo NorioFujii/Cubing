@@ -12,7 +12,7 @@ Cube-game assisting tools
 </td></tr>
 </table>
 </details>
-  <img src="Cube3D.PNG" width=300>
+  <img src="Cube3D.PNG" width=500>
 </div>
 **  Part of this program is delived from next URL. Thank you.<br>
     https://ruwix.com/the-rubiks-cube/notation/
