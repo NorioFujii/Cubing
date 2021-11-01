@@ -77,13 +77,14 @@ function checkRot() {
     }
     if ((Pause==false) && (Rotates.length>0)) {
         rote = Rotates.shift();
-        if (rote.charAt(0)=="*") {
-            Comment = (Rotates.length==0)?"":rote.slice(1); 
+        while (rote.charAt(0)=="*") {
             if (rote.charAt(1)=="*") {      // step reset 
                  Comment = rote.slice(2);
                  turnN=1;}
             else if (rote.charAt(1)=="+") { // virtual Y rotation convert 
                  RotSft = parseInt(rote.slice(2));} 
+            else if (rote.charAt(1)=="-") { // Turn count decrement 
+                 turnN -= parseInt(rote.slice(2));} 
             else if (rote.charAt(1)=="0") { // Cube setup without rotation
                 let i,j;
                 const rotS = "U,u,U2,F,f,F2,D,d,D2,B,b,B2,R,r,R2,L,l,L2,**".split(",");
@@ -96,10 +97,11 @@ function checkRot() {
                 }
                 kiirRotLayer(wholecube,99),kiir();
                 turnN=1;
-            } 
+            }
+            else Comment = (Rotates.length==0)?"":rote.slice(1);  
             rote = Rotates.shift();
         }
-        $("#comment").html(Comment);
+         $("#comment").html(Comment);
         if (rote) {
             $("#turn").html(String(turnN));
             $("#rotate").html((rote.charCodeAt(0) & 0x20)>0?String.fromCharCode(rote.charCodeAt(0) ^ 0x20)+"'"+rote.charAt(1):rote);
