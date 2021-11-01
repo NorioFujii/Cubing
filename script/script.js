@@ -67,7 +67,8 @@ function turn(a) {
 }
 function checkRot() {
     let rot;
-    if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
+    if ((String(document.domain).indexOf("noriofujii")>0) &&
+        ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed))) {
         if (opener && opener.Rotates.length>0) {
             rot = regRot(opener.Rotates.trim().split(" "));
             opener.Rotates = "";
