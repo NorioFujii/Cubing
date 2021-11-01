@@ -5,12 +5,22 @@ cgitb.enable()
 import cgi
 form = cgi.FieldStorage() # cgiオブジェクト作成
 v1 = form.getfirst('value1') # nameがvalue1の値を取得
+v2 = form.getfirst('value2') # nameがvalue2の値を取得
+import random
+import sys, functools
+print = functools.partial(print, flush='True')
+print = functools.partial(print, end="\r")
 
 print ("Content-Type: text/html\n\n")
-print ("<!doctype html>\n");
-print ("<html><body><br>");
+print(
+"""<!doctype html>\n
+<html><head>
+</head><body><br>
+"""
+)
 #
-import os , pickle    
+import os , time, pickle 
+  
 class State:
     """
     ルービックキューブの状態を表すクラス
@@ -33,12 +43,12 @@ class State:
         return State(new_cp, new_co, new_ep, new_eo)
 
 
-# 完成状態を表すインスタンス
+# 完成状態【初期値】を表すインスタンス
 solved_state = State(
     [0, 1, 2, 3, 4, 5, 6, 7],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 )
 
 # 18種類の1手操作を全部定義する
@@ -75,7 +85,6 @@ for face_name in faces:
     moves[face_name + '2'] = moves[face_name].apply_move(moves[face_name])
     moves[face_name + '\''] = moves[face_name].apply_move(moves[face_name]).apply_move(moves[face_name])
 ## print(move_names)
-
 
 def scramble2state(scramble):
     """
@@ -134,7 +143,6 @@ def co_to_index(co):
         index += co_i
     return index
 
-
 def index_to_co(index):
     co = [0] * 8
     sum_co = 0
@@ -151,7 +159,6 @@ def eo_to_index(eo):
         index *= 2
         index += eo_i
     return index
-
 
 def index_to_eo(index):
     eo = [0] * 12
@@ -172,7 +179,6 @@ def calc_combination(n, r):
         ret //= r - i
     return ret
 
-
 def e_combination_to_index(comb):
     index = 0
     r = 4
@@ -181,7 +187,6 @@ def e_combination_to_index(comb):
             index += calc_combination(i, r)
             r -= 1
     return index
-
 
 def index_to_e_combination(index):
     combination = [0] * 12
@@ -202,7 +207,6 @@ def cp_to_index(cp):
                 index += 1
     return index
 
-
 def index_to_cp(index):
     cp = [0] * 8
     for i in range(6, -1, -1):
@@ -221,7 +225,6 @@ def ud_ep_to_index(ep):
             if ep[i] > ep[j]:
                 index += 1
     return index
-
 
 def index_to_ud_ep(index):
     ep = [0] * 8
@@ -242,7 +245,6 @@ def e_ep_to_index(eep):
                 index += 1
     return index
 
-
 def index_to_e_ep(index):
     eep = [0] * 4
     for i in range(4 - 2, -1, -1):
@@ -252,7 +254,6 @@ def index_to_e_ep(index):
             if eep[j] >= eep[i]:
                 eep[j] += 1
     return eep
-
 
 import time
 print("Computing co_move_table<br>")
@@ -460,7 +461,6 @@ move_names_to_index_ph2 = {move_name: i for i, move_name in enumerate(move_names
 
 ## import timeout_decorator
 
-
 class Search:
     def __init__(self, state):
         self.initial_state = state
@@ -475,9 +475,9 @@ class Search:
         found = False
         if time.time() - self.start > self.timeout :
             return True
-        if depth == 0 and co_index == 0 and eo_index == 0 and e_comb_index == 0:
+        if (depth + co_index + eo_index + e_comb_index) == 0:
             last_move = self.current_solution_ph1[-1] if self.current_solution_ph1 else None
-            if last_move is None or last_move in ("R", "L", "F", "B", "R'", "L'", "F'", "B'"):
+            if last_move not in ("U", "D", "U'", "D'"):  # last_move is None or 
                 # print(f"# Found phase 1 solution {" ".join(self.current_solution_ph1)} (length={len(self.current_solution_ph1)})<br>")
                 state = self.initial_state
                 for move_name in self.current_solution_ph1:
@@ -491,7 +491,7 @@ class Search:
             return False
 
         prev_move = self.current_solution_ph1[-1] if self.current_solution_ph1 else None
-        for move_name in move_names:
+        for move_name in random.sample(move_names,len(move_names)):
             if not is_move_available(prev_move, move_name):
                 continue
             self.current_solution_ph1.append(move_name)
@@ -505,7 +505,7 @@ class Search:
 
     def depth_limited_search_ph2(self, cp_index, udep_index, eep_index, depth):
         global LastPast
-        if depth == 0 and cp_index == 0 and udep_index == 0 and eep_index == 0:
+        if (depth + cp_index + udep_index + eep_index) == 0:
             # print(f"# Found phase 2 solution {" ".join(self.current_solution_ph2)} (length={len(self.current_solution_ph2)})<br>")
             solution = " ".join(self.current_solution_ph1) + " " + " ".join(self.current_solution_ph2)
             LastPast = time.time() - self.start
@@ -568,7 +568,7 @@ class Search:
         while depth <= self.max_solution_length :
             print(f"# Start searching phase 1 length {depth}<br>")
             if self.depth_limited_search_ph1(co_index, eo_index, e_comb_index, depth):
-                print(f"Found solution ({len(self.current_solution_ph1) + len(self.current_solution_ph2)} length)<br>")
+                print(f"Found solution1 ({len(self.current_solution_ph1) + len(self.current_solution_ph2)} length)<br>")
                 return
             depth += 1
         return None
@@ -579,14 +579,13 @@ class Search:
         eep_index = e_ep_to_index(state.ep[:4])
         depth = 0
         while depth <= self.max_solution_length - len(self.current_solution_ph1):
-#            print(f"# Start searching phase 2 length {depth}<br>")
+            print(f"# Start searching phase 2 length {depth}<br>")
             if self.depth_limited_search_ph2(cp_index, udep_index, eep_index, depth):
-                print(f"Found solution ({len(self.current_solution_ph1) + len(self.current_solution_ph2)} length)<br>")
+                print(f"Found solution2 ({len(self.current_solution_ph1) + len(self.current_solution_ph2)} length)<br>")
                 return True
             depth += 1
+
 LastPast = 0
-if v1:
-    print(v1+"<br>")
 scramble = v1 if v1 and v1!="" else "L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L"
 # scramble = "R' B' R2 L2 D' R2 U F2 L F U2 F U2 F2 D2 R2 B R2 F2 U2 D2"
 scrambled_state = scramble2state(scramble)
@@ -594,7 +593,7 @@ search = Search(scrambled_state)
 depth = int(len(scramble.split(" "))/2+1) 
 start = time.time()
 solution = search.start_search(bgn_depth=4+depth, max_length=16+depth, timeout=2+int(depth/8))
-LastPast = time.time() - start;
+
 print(f"Finished! ({LastPast:.5f} sec.)<br>")
 if solution:
     Steps = str(len(solution.split(" "))) + "steps"
@@ -602,12 +601,12 @@ if solution:
 else:
     Steps = "None"
     print("<a name=\"last\"></a>Solution not found.<br>")
-print("<script type=text/javascript>")
-print("  location.hash='last';")
-print(f"  navigator.clipboard.writeText(\"**Solution_{LastPast:.2f}(Sec) {solution} *Finished\");")
-print("  setTimeout(\"RetOrClose()\",200);")
-print("function RetOrClose() {")
-print(f"    if (({LastPast:.3f}<1.0) && (confirm('{Steps}: Retry more time range({LastPast:.3f}S)?'))) location.reload(true);")
-print("    else window.close();")
-print("}")
-print("</script></body></html>")
+print("<script type=text/javascript>"
+      "  location.hash='last';"
+     f"  navigator.clipboard.writeText(\"**Solution_{LastPast:.2f}(s) {solution} *Fin\");"
+      "  setTimeout(\"RetOrClose()\",100);"
+      "function RetOrClose() {"
+     f"    if (({LastPast:.3f}<1.0) && (confirm('{Steps}: Retry more time range({LastPast:.3f}S)?'))) location.reload(true);"
+      "    else setTimeout(\"window.close()\",100);"
+      "}" 
+      "</script></body></html>")
