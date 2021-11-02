@@ -49,7 +49,7 @@ var Comment="", Tid=null, turnN=1, ClipDT="", W=null;
 var Rotates = new Array();
 var RotSft = 0;
 function initnotscrambled(){
-    if (window.outerWidth>500) window.resizeTo(580,440);
+    if (window.outerWidth>500) window.resizeTo(600,440);
     else                       window.resizeTo(380,640);
     speed=80; if (NxPaus<1100) NxPaus=1000;
     if (turnN==16) NxPaus=1500;
