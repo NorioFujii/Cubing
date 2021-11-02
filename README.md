@@ -6,7 +6,7 @@ Cube-game assisting tools
 
 <table><tr><td>　</td><td><a target="_blank" height="40px" width="800px" scrolling="yes" frameborder="0" href="https://noriofujii.github.io/Solve-method/Monogusa-Method.html">New solving method "Monogusa"</a>
 </td></tr>
-<tr><td>　</td><td><a target="cube3d" height="540px" width="300px" scrolling="no" frameborder="0" href="https://noriofujii.github.io/Cubing/unfold-cube.html">3D CUBE</a> The tool is opened in NEW window.(CTRL+click or <a target="_blank" href="/NorioFujii/Cubing/deployments/activity_log?environment=github-pages" data-view-component="true" class="Link--primary mx-2">
+<tr><td>　</td><td><a target="cube3d" height="540px" width="300px" scrolling="no" frameborder="0" href="https://noriofujii.github.io/Cubing/unfold-cube.html">3D CUBE</a> The tool is opened in NEW window.(CTRL+click or <a target="_blank" href="https://github.com/NorioFujii/Cubing/deployments/activity_log?environment=github-pages" data-view-component="true" class="Link--primary mx-2">
     github-pages
 </a>)
 </td><tr><td>　</td><td>Scramble-A:<span> L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L <button type="button" onclick="RotCopy(this)">(-copy)</button></span><br>
