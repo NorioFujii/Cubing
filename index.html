@@ -7,9 +7,10 @@
 <script type="text/javascript">
 function goNew() {
         if (window.outerWidth>500)
-            swin = window.open ("cube-unfold.html", "cube3d", 'width=580,height=200,dependent=yes,left='+(window.screenX+400)+',scrollbars=no');
+            swin = window.open ("unfold-cube.html", "cube3d", 'width=580,height=200,dependent=yes,left='+(window.screenX+400)+',scrollbars=no');
         else
-            swin = window.open ("cube-unfold.html", "cube3d", 'width=320,height=580,dependent=yes,left='+(window.screenX+400)+',scrollbars=no');
+            swin = window.open ("unfold-cube.html", "cube3d", 'width=320,height=580,dependent=yes,left='+(window.screenX+400)+',scrollbars=no');
+        setTimeout("cube3d.focus()",200);
 }
 </script>
 </head>
