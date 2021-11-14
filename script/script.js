@@ -57,7 +57,7 @@ function initnotscrambled(){
     $("#comment").html("");  $("#turn").html("&nbsp;"); $("#rotate").html("&nbsp;");
     for(a[0]=0,j=0;6>j;j++)for(i=1;10>i;i++)a[i+9*j]=j+1;
     kiirRotLayer(wholecube,99);
-    -1==String(document.domain).indexOf("hakua")&&(a=0),kiir();
+    -1==String(document.domain).indexOf("norio")&&(a=0),kiir();
     setTimeout("checkRot()",100);
 }
 function turn(a) {
