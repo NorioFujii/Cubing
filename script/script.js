@@ -40,6 +40,7 @@ function kiirRotLayer(r,e){
     $("#rotLayer").html(o);
 }
 function unfold(i,szin) {
+    if (FaceF=="") return i+szin+"e";
     if (cubey<355) return (i>9&&i<19||i>36)?FaceF+i+szin+"f":i+szin+"e";
     if (cubey>365) return (i>27)?FaceF+i+szin+"f":i+szin+"e";
     return (i>9&&i<19||i>27)?FaceF+i+szin+"f":i+szin+"e";
@@ -393,11 +394,11 @@ function mousedragRotate(element){
             $(target).data("x", $(target).data("nx"));
             $(target).data("y", $(target).data("ny"));
             cubex += diff_y / dev;
-            if (cubex<-85)  cubex = -85;
-            if (cubex> -5)  cubex =  -5;
+            if ((FaceF!="")&&(cubex<-85))  cubex = -85;
+            if ((FaceF!="")&&(cubex> -5))  cubex =  -5;
             cubey -= diff_x / dev;
-            if (cubey<290)  cubey = 290;
-            if (cubey>420)  cubey = 420; 
+            if ((FaceF!="")&&(cubey<290))  cubey = 290;
+            if ((FaceF!="")&&(cubey>420))  cubey = 420; 
             rotCubeY();
             $(target).data("move", false);
         }
