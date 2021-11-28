@@ -169,7 +169,7 @@ function pythonSolve() {
 }
 function goPython() {
     let rotation = "";
-    if (opener && opener.ClipDT && (opener.ClipDT!="")) ClipDT = opener.ClipDT;
+ //   if (opener && opener.ClipDT && (opener.ClipDT!="")) ClipDT = opener.ClipDT;
     rotation = encodeURIComponent(ClipDT.trim());
     if (rotation.charAt(0)=="*")
         rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
@@ -296,8 +296,8 @@ function scramble(){
     ClipDT = sym;
     kiirRotLayer(wholecube,99),kiir();
     if (opener) {
-        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = sym;
-        if (typeof opener.ClipDT!=="undefined") opener.ClipDT = sym;
+//        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = sym;
+//        if (typeof opener.ClipDT!=="undefined") opener.ClipDT = sym;
     }
     else $("#comment").html(sym);
 }
