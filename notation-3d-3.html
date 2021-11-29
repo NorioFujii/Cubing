@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8"/>
+	<meta name="apple-mobile-web-app-title" content="Rubik's Cube Notation"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="3D Rubik's Cube Notation widget"/>
+	<meta name="Keywords" content="Rubik's,Cube,notation">	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<SCRIPT SRC="js/script3.js"></SCRIPT>
+	<link rel="stylesheet" type="text/css" href="css/RBstyle3.css" />
+	<title>3D Rubik's Cube Notation Widget floating</title>
+</head>
+<body onunload="parent.swin=null;">
+  <div class="flex_test-box">
+    <div class="flex_test-item">
+        <div class="wrap">
+		<div class="cube">
+			<div id="cubeFields">
+			</div>
+			<div id="rotLayer">
+			</div>
+		</div>
+	</div><p id="lskip" style="display: none;"><br></p><br>
+        <span id="turn" class="lower">&nbsp;</span>&nbsp;&nbsp;<span id="rotate" class="lower">&nbsp;</span>
+      　<span id="comment" class="lower">&nbsp;</span>
+
+	<div class="commands">
+		<div class="commandExplain" onDBLclick='Disp="block";$(".mezo span").css("display",Disp)'>拡張機能:</div>
+		<button class="commandb" type=button onclick="faceFloat()">翼開放</button>
+		<button class="commandb" type=button onclick="initnotscrambled()">初期化</button>
+		<button class="commandb" type=button onclick="scramble()">3x3スクランブル</button>
+		<button class="commandb" type=button onclick="pause()">休止</button>
+		<button class="commandb" type=button onclick="accel()">変速</button>
+		<button class="commandb" type=button onclick="quickIn()">記号列入力（）</button>
+		<button class="commandb" type=button onclick="pythonSolve()" id="solve3" disabled>3x3ソルブ</button>
+		<button class="commandb" type=button onclick="scramble4()">4x4スクランブル</button>
+		<button class="commandb" type=button onclick="parityAlt()" id="parity" disabled>4x4・パリティ自動補正</button>
+		<button class="commandb" type=button onclick="edgeExchg()">4x4・Ｗエッジ交換</button>
+	</div>
+    </div>
+    <div class="flex_test-item">
+        <div class="commands">
+
+		<div class="commandExplain">各面時計廻し:</div>
+		<div class="rotateU">U</div>
+		<div class="rotateL">L</div>
+		<div class="rotateF">F</div>
+		<div class="rotateR">R</div>
+		<div class="rotateB">B</div>
+		<div class="rotateD">D</div>
+
+		<div class="commandExplain">各面反時計廻し:</div>
+		<div class="rotateUi">U'</div>
+		<div class="rotateLi">L'</div>
+		<div class="rotateFi">F'</div>
+		<div class="rotateRi">R'</div>
+		<div class="rotateBi">B'</div>
+		<div class="rotateDi">D'</div>
+
+		<div class="commandExplain">内面一層時計廻し:</div>
+		<div class="rotateu">u</div>
+		<div class="rotatel">l</div>
+		<div class="rotatef">f</div>
+		<div class="rotater">r</div>
+		<div class="rotateb">b</div>
+		<div class="rotated">d</div>
+
+		<div class="commandExplain">内面一層反時計廻し:</div>
+		<div class="rotateui">u'</div>
+		<div class="rotateli">l'</div>
+		<div class="rotatefi">f'</div>
+		<div class="rotateri">r'</div>
+		<div class="rotatebi">b'</div>
+		<div class="rotatedi">d'</div>
+
+		<div class="commandExplain">二連層正逆廻し: </div>
+		<div class="rotateLw">Lw</div>
+		<div class="rotateLwi">Lw'</div>
+                <div class="rotateM">M</div>
+		<div class="rotateMi">M'</div>
+		<div class="rotateRw">Rw</div>
+		<div class="rotateRwi">Rw'</div>
+		
+		<div class="commandExplain">キューブ全体回転: </div>
+		<div class="rotateX">X</div>
+		<div class="rotateXi">X'</div>
+		<div class="rotateY">Y</div>
+		<div class="rotateYi">Y'</div>
+		<div class="rotateZ">Z</div>
+		<div class="rotateZi">Z'</div>
+		
+		<div class="commandExplain">キューブ全体微回転 (視点変更):</div>
+		<div class="rotateXview">X&#x21bb;</div>
+		<div class="rotateXiview">X'&#x21bb;</div>
+		<div class="rotateYview">Y&#x21bb;</div>
+		<div class="rotateYiview">Y'&#x21bb;</div>
+		<div class="rotateZview">Z&#x21bb;</div>
+		<div class="rotateZiview">Z'&#x21bb;</div>
+	
+		<div class="commandExplain">マクロ機能回転 (パーム):</div>
+		<div class="rotateMacro" onclick="RotCopy(&quot;R' U' F' U F R&quot;)">&#x21bb;&#x21bb;Ｍ</div>
+		<div class="rotateMacro" onclick="RotCopy(&quot;R' U' R U' R' U' 2R&quot;)">左&#x21bb;&#x21bb;</div>
+		<div class="rotateMacro" onclick="RotCopy(&quot;L U L' U L U2 L'&quot;)">右&#x21bb;&#x21bb;</div>
+		<div class="rotateMacro" onclick="RotCopy(&quot;L R' U' R U L' U' R' U R&quot;)">隣&#x21bb;</div>
+		<div class="rotateMacro" onclick="RotCopy(&quot;M2 U M2 U2 M2 U M2&quot;)">左迎</div>
+		<div class="rotateMacro" onclick="RotCopy(&quot;M2 U' M' U2 M U' M2&quot;)">右迎</div>
+	
+
+	</div>
+    </div>
+</div>	<br><br>
+	
+</body>
+
+</html>
