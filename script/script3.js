@@ -151,7 +151,7 @@ function checkRot() {
         while (rote && (rote.charAt(0)=="*")) {
             if (rote.charAt(1)=="*") {      // step reset 
                  Comment = rote.slice(2);
-                 turnN=1;}
+                 check33(); turnN=1;}
             else if (rote.charAt(1)=="+") { // virtual Y rotation convert 
                  RotSft = parseInt(rote.slice(2));} 
             else if (rote.charAt(1)=="-") { // Turn count decrement 
