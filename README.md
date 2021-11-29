@@ -6,9 +6,11 @@ Cube-game assisting tools
 
 <table><tr><td>　</td><td><a target="_blank" height="40px" width="800px" scrolling="yes" frameborder="0" href="https://noriofujii.github.io/Solve-method/Monogusa-Method.html">New solving method "Monogusa"</a>
 </td></tr>
-<tr><td>　</td><td><a target="cube3d" height="380px" width="580px" scrolling="no" frameborder="0" href="https://noriofujii.github.io/Cubing/unfold-cube.html">3D CUBE</a> The tool is opened in NEW window by CTRL. (<a href="https://noriofujii.github.io/Cubing">Tool</a> for direct open)
-</td><tr><td>　</td><td>Scramble-A:<span> L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L <button type="button" onclick="RotCopy(this)">(-copy)</button></span><br>
-</td><tr><td>　</td><td>Scramble-B:<span> R' U' F L F2 L2 B2 R F2 R2 F2 R' B' R' D U' F2 U2 R F U2 B' R' U' F <button type="button" onclick="RotCopy(this)">(-copy)</button></span><br>
+<tr><td>　</td><td><a target="_blank" height="40px" width="800px" scrolling="yes" frameborder="0" href="https://noriofujii.github.io/Solve-method/ルービックキューブ4x4ものぐさ法.html">Solving method "Monogusa4x4"</a>(Japanese)
+</td></tr>
+  <tr><td>　</td><td><a target="cube3d" height="380px" width="580px" scrolling="no" frameborder="0" href="https://noriofujii.github.io/Cubing/unfold-cube.html">3D CUBE</a> The tool is opened in NEW window by CTRL. (<a href="https://noriofujii.github.io/Cubing">Tool</a> for direct open)
+</td></tr><tr><td>　</td><td>Scramble-A:<span> L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L <button type="button" onclick="RotCopy(this)">(-copy)</button></span><br>
+</td></tr><tr><td>　</td><td>Scramble-B:<span>  l2 B2 l B U' D' b' R2 u r' F2 d' B2 u2 U2 D l' D r2 R b2 B2 b L2 L' B' b2 f' F d l' f R2 R2 F F' r u D F' R' r2 R2 b2 B2 B2 f' R b b <button type="button" onclick="RotCopy(this)">(-copy)</button></span><br>
 </td></tr>
 </table>
 </details>
