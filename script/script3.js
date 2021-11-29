@@ -128,7 +128,7 @@ function initnotscrambled(){
     $("#comment").html("");  $("#turn").html("&nbsp;"); $("#rotate").html("&nbsp;");
     for(a[0]=0,j=0;6>j;j++)for(i=1;17>i;i++)a[i+16*j]=j+1;
     kiirRotLayer(wholecube,99);
-    -1==String(document.domain).indexOf("hakua")&&(a=0),kiir();
+    -1==String(document.domain).indexOf("norio")&&(a=0),kiir();
     setTimeout("checkRot()",100);
     $(".mezo span").css("display",Disp);
 }
@@ -139,13 +139,13 @@ function turn(a) {
 }
 function checkRot() {
     let rot;
-    if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
+/*    if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
         if (opener && opener.Rotates.length>0) {
             rot = regRot(opener.Rotates.trim().split(" "));
             opener.Rotates = "";
             setRot(rot);
         }
-    }
+    }  */
     if ((Pause==false) && (Rotates.length>0)) {
         rote = Rotates.shift();
         while (rote && (rote.charAt(0)=="*")) {
@@ -251,7 +251,7 @@ function check33() {
                                                   else Yd++;
     for (i=0;i<20;i+=2) if (a[c[i]]!=a[c[i+1]]) return;
     $("#solve3").attr('disabled',false);
-    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
+//    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
     if ((Yd==0)&&((Ye & 1)==1)) $("#parity").attr('disabled',false);
 }
 function pythonSolve() {
@@ -261,14 +261,14 @@ function pythonSolve() {
 var preRot = "";
 function goPython() {
     let rotation = "";
-    if (opener && opener.ClipDT && (opener.ClipDT!="")) {
+/*    if (opener && opener.ClipDT && (opener.ClipDT!="")) {
         ClipDT = opener.ClipDT;
         rotation = encodeURIComponent(ClipDT.trim());
         if (rotation.charAt(0)=="*")
             rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
         W = window.open('https://mori1-hakua.tokyo/python/Cube2phase_Fast3.py?value1='+rotation,"Python");
     }
-    else {
+    else { */
         let r=new Array(1,17,68,4,65,52,16,49,36,13,33,20,93,80,29,96,64,77,84,48,61,81,32,45);
         let e=new Array(72,76,21,25,69,73,56,60,40,44,53,57,37,41,24,28,2,3,66,67,8,12,50,51,14,15,34,35,5,9,18,19,94,95,78,79,88,92,62,63,82,83,46,47,85,89,30,31);
         let cx8=new Array(10,20,12,6,60,120,72,36);
@@ -299,7 +299,7 @@ function goPython() {
         let q = 'value1='+corner+'&value2='+corner_d+'&value3='+edge+'&value4='+edge_d;
 //        alert(corner+','+corner_d+','+edge+','+edge_d);
         W = window.open('https://mori1-hakua.tokyo/python/Cube2phase_Fast3.py?'+q ,"Python");
-    }
+//    }
     setTimeout('ckPython()',100); 
 }
 async function ckPython() {
@@ -312,8 +312,8 @@ async function ckPython() {
     setRot(regRot(rot.trim().split(" ")));
     clearTimeout(Tid);
     setTimeout("checkRot()",100)
-    if (opener && opener.document.getElementsByName('pythonQ')) 
-        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = preRot+" "+rot;
+//    if (opener && opener.document.getElementsByName('pythonQ')) 
+//        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = preRot+" "+rot;
     $("#solve3").attr('disabled',true);
 }
 function facerotate(a, tm) {
@@ -479,7 +479,7 @@ function Rwi() {
 function scramble(){
     scramble3();
     $("#solve3").attr('disabled',false);
-    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
+//   if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
 }
 function scramble3(){
     let i,j,sym="";
