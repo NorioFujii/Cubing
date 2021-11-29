@@ -477,8 +477,8 @@ function Rwi() {
     mr(),ri()}
 
 function scramble(){
-    scramble3();
     $("#solve3").attr('disabled',false);
+    scramble3();
 //   if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
 }
 function scramble3(){
