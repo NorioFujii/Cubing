@@ -8,14 +8,14 @@ function parityAlt() {
     Rotates = Rotates.concat(regRot(NP.split(",")));
 }
 function edgeExchg() {
-    let ruflV="l2,U2,F2,l2,F2,U2,l2", ruflH="l2,B2,U2,l2,U2,B2,l2";
-    let crosH="Rw',F,U',R,F',U,Rw", crosV="Rw',D,F',R,D',F,Rw";
+    let ruflV="l2,U2,F2,l2,F2,U2,l2,**", ruflH="l2,B2,U2,l2,U2,B2,l2,**";
+    let crosH="Rw',F,U',R,F',U,Rw,**", crosV="Rw',D,F',R,D',F,Rw,**";
 
     if ((a[34]==a[35])&&(a[14]==a[81])) Rotates = Rotates.concat(regRot(ruflV.split(",")));
     else if ((a[14]==a[15]) && (a[33]==a[66])) Rotates = Rotates.concat(regRot(ruflH.split(",")));
     else {
-        if ((a[2]!=a[3])&&(a[14]==a[3])&&(a[15]==a[2])) Rotates = Rotates.concat(regRot(crosH.split(",")));   
-        else if ((a[34]!=a[35])&&(a[34]==a[47])&&(a[35]==a[46])) Rotates = Rotates.concat(regRot(crosV.split(",")));
+        if ((a[2]!=a[3])&&(a[14]==a[2])&&(a[15]==a[3])) Rotates = Rotates.concat(regRot(crosH.split(",")));   
+        else if ((a[34]!=a[35])&&(a[34]==a[46])&&(a[35]==a[47])) Rotates = Rotates.concat(regRot(crosV.split(",")));
     }
 }
 function rotCube(){
@@ -238,7 +238,7 @@ function setRot(rot) {
 }
 const White=1,Orange=2,Green=3,Red=4,Blue=5,Yellow=6,ccoW=new Array(22,38,54,70,22),ccoY=new Array(22,70,54,38,22);
 const c=new Array(6,7,10,11,22,23,26,27,38,39,42,43,54,55,58,59,70,71,74,75);
-const e=new Array(72,76,21,25,69,73,56,60,40,44,53,57,37,41,24,28,2,3,67,66,8,12,50,51,14,15,34,35,5,9,18,19,94,95,79,78,88,92,62,63,82,83,46,47,85,89,31,30);
+const e=new Array(72,76,21,25,69,73,56,60,40,44,53,57,37,41,24,28,2,3,67,66,8,12,51,50,14,15,34,35,5,9,18,19,94,95,79,78,88,92,62,63,82,83,46,47,85,89,31,30);
 
 function check33() {
     let i,diff, Yd=0,Ye=0;
@@ -253,6 +253,44 @@ function check33() {
     $("#solve3").attr('disabled',false);
 //    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
     if ((Yd==0)&&((Ye & 1)==1)) $("#parity").attr('disabled',false);
+}
+function next44() {
+    let i,j=0,lo="",div;
+    for (i=0;i<48;i+=4) {
+//        if (e[i]==37) continue;
+        div = findSame(i,a[37],a[24]);  // find same color post as left
+        if (div!="") lo += div, j += 1;
+        div = findSame(i,a[24],a[37]);  // find same color post as left
+        if (div!="") lo += div, j += 1;
+        if (j>7) break;
+        div = findSame(i,a[14],a[34]);  // find same color post as right
+        if (div!="") lo += div, j += 1;
+        div = findSame(i,a[34],a[14]);  // find same color post as right
+        if (div!="") lo += div, j += 1;
+        if (j>7) break;
+    }
+    $("#rotLayer").html(lo);
+    flush(500);
+}
+function findSame(i,c1,c2) {
+    let ri=0,s1,s2,t1,t2,lo="";
+    if ((a[e[i+1]]==c1)&&(a[e[i+3]]==c2)) ri = i+1;
+    else if ((a[e[i]]==c1)&&(a[e[i+2]]==c2)) ri = i;
+    else return "";
+
+    s1 = unfold(e[ri]," szin");
+    s2 = unfold(e[ri+2]," szin");
+    t1="#cubeFields .mezo"+ s1.slice(0,-6);
+    t2="#cubeFields .mezo"+ s2.slice(0,-6);
+    lo += '<div class="mezo'+ s1 +a[e[ri]]+' layer mezo" style="transform:'+$(t1).css('transform')+'"><span>'+e[ri]+'</span></div>';
+    lo += '<div class="mezo'+ s2 +a[e[ri+2]]+' layer mezo" style="transform:'+$(t2).css('transform')+'"><span>'+e[ri+2]+'</span></div>';
+    $(t1).hide();$(t2).hide();
+    return lo;
+}
+function flush(tm) {
+    setTimeout(function(){
+        $("#rotLayer").fadeToggle();
+        counter++;6>counter?flush(tm):($("#rotLayer").html(""), kiir(),counter=0)},tm); // 
 }
 function pythonSolve() {
     window.open('python/computing.html',"Python",'height=140,width=480,left='+(window.screenX+300)+',dependent=yes,scrollbars=no');
@@ -273,8 +311,7 @@ function goPython() {
         let cx8=new Array(10,20,12,6,60,120,72,36);
         let cx12=new Array(17,29,19,11,11,9,7,5,41,34,27,20);
         let i, corner="[", corner_d="[", edge="[", edge_d="[", c0=new Array();
-        preRot=""; if (a[6]==Yellow) { preRot="X2"; bor2(); }
-        while (a[38]!=Green) {preRot+=" Y";fd(); }
+        if (a[6]==Yellow) { bor2(); while (a[38]!=Green) fd(); }
         for (i=0;i<24;i+=3) {
             c0[0]=a[r[i]],c0[1]=a[r[i+1]],c0[2]=a[r[i+2]];
             ix = cx8.indexOf(c0[0] * c0[1] * c0[2]); if (ix<0) alert("ix<0 in cx8");
@@ -285,7 +322,7 @@ function goPython() {
         for (i=0;i<48;i+=4) {
             c0[0]=a[e[i]]; c0[1]=a[e[i+2]];
             ix = cx12.indexOf(c0[0] * c0[1] + c0[0]+ c0[1]);
-        if (ix<0) alert("ix<0 in cx12"); 
+            if (ix<0) alert("ix<0 in cx12"); 
             if ((ix==3) && ((c0[0]==White) || (c0[1]==White))) ix = 4; 
 
             if (((c0[0]==White) || (c0[0]==Yellow)) ||
