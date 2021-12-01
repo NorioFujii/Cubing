@@ -305,7 +305,7 @@ function flush(tm) {
 function flush33(tm) {
     setTimeout(function(){
         $("#solve3").css('background-color',counter%2?'#ce4b42':'#ccc');
-        counter++;8>counter?flush33(tm):counter=0},tm); // 
+        counter++;8>counter?flush33(tm):($("#solve3").css('background-color',""),counter=0)},tm); // 
 }
 function pythonSolve() {
     window.open('python/computing.html',"Python",'height=140,width=480,left='+(window.screenX+300)+',dependent=yes,scrollbars=no');
