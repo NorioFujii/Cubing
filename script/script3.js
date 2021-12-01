@@ -558,11 +558,12 @@ function scramble4(){
 function symset(sym) {
     ClipDT = sym;
     kiirRotLayer(wholecube,99),kiir();
-    if (opener) {
+//    if (opener) {
 //        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = sym;
-        if (typeof opener.ClipDT!=="undefined") opener.ClipDT = sym;
-    }
-    else $("#comment").html(sym);
+//        if (typeof opener.ClipDT!=="undefined") opener.ClipDT = sym;
+//    }
+//    else
+        $("#comment").html(sym);
 }
 const
 layeru=[ 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16,17,18,19,20,33,34,35,36,49,50,51,52,65,66,67,68],
