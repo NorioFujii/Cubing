@@ -255,6 +255,7 @@ function check33() {
     if ((Yd==0)&&((Ye & 1)==1)) $("#parity").attr('disabled',false);
 }
 function next44() {
+    if ($('#solve3').prop('disabled')==false) { flush33(200);return; }
     let i,j=0,s1,s2,t1,t2,lo="",kuro="#888",div;
     for (i=0;i<24;i+=2) if (a[c[i]]!=a[c[i+1]]) {
         s1 = unfold(c[i]," szin");
@@ -300,6 +301,11 @@ function flush(tm) {
     setTimeout(function(){
         $("#rotLayer").toggle();
         counter++;8>counter?flush(tm):($("#rotLayer").html(""), kiir(),counter=0)},tm); // 
+}
+function flush33(tm) {
+    setTimeout(function(){
+        $("#solve3").css('background-color',counter%2?'#ce4b42':'#ccc');
+        counter++;8>counter?flush33(tm):counter=0},tm); // 
 }
 function pythonSolve() {
     window.open('python/computing.html',"Python",'height=140,width=480,left='+(window.screenX+300)+',dependent=yes,scrollbars=no');
