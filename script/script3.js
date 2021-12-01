@@ -257,25 +257,25 @@ function check33() {
 function next44() {
     let i,j=0,lo="",div;
     for (i=0;i<48;i+=4) {
-//        if (e[i]==37) continue;
-        div = findSame(i,a[37],a[24]);  // find same color post as left
+        div = findSame(i,37,24);  // find same color post as left
         if (div!="") lo += div, j += 1;
-        div = findSame(i,a[24],a[37]);  // find same color post as left
+        div = findSame(i,24,37);  // find same color post as left
         if (div!="") lo += div, j += 1;
         if (j>7) break;
-        div = findSame(i,a[14],a[34]);  // find same color post as right
+        div = findSame(i,14,34);  // find same color post as right
         if (div!="") lo += div, j += 1;
-        div = findSame(i,a[34],a[14]);  // find same color post as right
+        div = findSame(i,34,14);  // find same color post as right
         if (div!="") lo += div, j += 1;
         if (j>7) break;
     }
     $("#rotLayer").html(lo);
-    flush(500);
+    flush(200);
 }
-function findSame(i,c1,c2) {
-    let ri=0,s1,s2,t1,t2,lo="";
-    if ((a[e[i+1]]==c1)&&(a[e[i+3]]==c2)) ri = i+1;
-    else if ((a[e[i]]==c1)&&(a[e[i+2]]==c2)) ri = i;
+function findSame(i,p1,p2) {
+    let ri=0,s1,s2,t1,t2,lo="",kuro="#022";
+    if ((p1&0xfc)==(e[i]&0xfc)) kuro = "#888";
+    if ((a[e[i+1]]==a[p1])&&(a[e[i+3]]==a[p2])) ri = i+1;
+    else if ((a[e[i]]==a[p1])&&(a[e[i+2]]==a[p2])) ri = i;
     else return "";
 
     s1 = unfold(e[ri]," szin");
@@ -284,13 +284,13 @@ function findSame(i,c1,c2) {
     t2="#cubeFields .mezo"+ s2.slice(0,-6);
     lo += '<div class="mezo'+ s1 +a[e[ri]]+' layer mezo" style="transform:'+$(t1).css('transform')+'"><span>'+e[ri]+'</span></div>';
     lo += '<div class="mezo'+ s2 +a[e[ri+2]]+' layer mezo" style="transform:'+$(t2).css('transform')+'"><span>'+e[ri+2]+'</span></div>';
-    $(t1).css("background-color", "#022");$(t2).css("background-color", "#022");
+    $(t1).css("background-color", kuro);$(t2).css("background-color", kuro);
     return lo;
 }
 function flush(tm) {
     setTimeout(function(){
-        $("#rotLayer").fadeToggle();
-        counter++;6>counter?flush(tm):($("#rotLayer").html(""), kiir(),counter=0)},tm); // 
+        $("#rotLayer").toggle();
+        counter++;8>counter?flush(tm):($("#rotLayer").html(""), kiir(),counter=0)},tm); // 
 }
 function pythonSolve() {
     window.open('python/computing.html',"Python",'height=140,width=480,left='+(window.screenX+300)+',dependent=yes,scrollbars=no');
