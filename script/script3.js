@@ -237,7 +237,7 @@ function setRot(rot) {
     Rotates = Rotates.concat(rotR);
 }
 const White=1,Orange=2,Green=3,Red=4,Blue=5,Yellow=6,ccoW=new Array(22,38,54,70,22),ccoY=new Array(22,70,54,38,22);
-const c=new Array(6,7,10,11,22,23,26,27,38,39,42,43,54,55,58,59,70,71,74,75);
+const c=new Array(6,7,10,11,22,23,26,27,38,39,42,43,54,55,58,59,70,71,74,75,86,87,90,91);
 const e=new Array(72,76,21,25,69,73,56,60,40,44,53,57,37,41,24,28,2,3,67,66,8,12,51,50,14,15,34,35,5,9,18,19,94,95,79,78,88,92,62,63,82,83,46,47,85,89,31,30);
 
 function check33() {
@@ -249,14 +249,23 @@ function check33() {
     for (i=0;i<46;i+=2) if (a[e[i]]!=a[e[i+1]]) return;
                         else if (a[e[i]]==Yellow) if ((i>15)&&(i<32)) Ye++;
                                                   else Yd++;
-    for (i=0;i<20;i+=2) if (a[c[i]]!=a[c[i+1]]) return;
+    for (i=0;i<24;i+=2) if (a[c[i]]!=a[c[i+1]]) return;
     $("#solve3").attr('disabled',false);
 //    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
     if ((Yd==0)&&((Ye & 1)==1)) $("#parity").attr('disabled',false);
 }
 function next44() {
-    let i,j=0,lo="",div;
-    for (i=0;i<48;i+=4) {
+    let i,j=0,s1,s2,t1,t2,lo="",kuro="#888",div;
+    for (i=0;i<24;i+=2) if (a[c[i]]!=a[c[i+1]]) {
+        s1 = unfold(c[i]," szin");
+        s2 = unfold(c[i+1]," szin");
+        t1="#cubeFields .mezo"+ s1.slice(0,-6);
+        t2="#cubeFields .mezo"+ s2.slice(0,-6);
+        lo += '<div class="mezo'+ s1+ a[c[i]]+' layer mezo" style="transform:'+$(t1).css('transform')+'"><span>'+c[i]+'</span></div>';
+        lo += '<div class="mezo'+ s2+ a[c[i+1]]+' layer mezo" style="transform:'+$(t2).css('transform')+'"><span>'+c[i+1]+'</span></div>';
+        $(t1).css("background-color", kuro);$(t2).css("background-color", kuro);
+    }
+    if (lo=="") for (i=0;i<48;i+=4) {
         div = findSame(i,37,24);  // find same color post as left
         if (div!="") lo += div, j += 1;
         div = findSame(i,24,37);  // find same color post as left
