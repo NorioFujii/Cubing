@@ -284,7 +284,7 @@ function findSame(i,c1,c2) {
     t2="#cubeFields .mezo"+ s2.slice(0,-6);
     lo += '<div class="mezo'+ s1 +a[e[ri]]+' layer mezo" style="transform:'+$(t1).css('transform')+'"><span>'+e[ri]+'</span></div>';
     lo += '<div class="mezo'+ s2 +a[e[ri+2]]+' layer mezo" style="transform:'+$(t2).css('transform')+'"><span>'+e[ri+2]+'</span></div>';
-    $(t1).hide();$(t2).hide();
+    $(t1).css("background-color", "#022");$(t2).css("background-color", "#022");
     return lo;
 }
 function flush(tm) {
@@ -292,6 +292,11 @@ function flush(tm) {
         $("#rotLayer").fadeToggle();
         counter++;6>counter?flush(tm):($("#rotLayer").html(""), kiir(),counter=0)},tm); // 
 }
+function pythonSolve() {
+    window.open('python/computing.html',"Python",'height=140,width=480,left='+(window.screenX+300)+',dependent=yes,scrollbars=no');
+    setTimeout('goPython()',100); 
+}
+
 function pythonSolve() {
     window.open('python/computing.html',"Python",'height=140,width=480,left='+(window.screenX+300)+',dependent=yes,scrollbars=no');
     setTimeout('goPython()',100); 
