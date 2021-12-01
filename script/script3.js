@@ -559,7 +559,7 @@ function symset(sym) {
     ClipDT = sym;
     kiirRotLayer(wholecube,99),kiir();
     if (opener) {
-        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = sym;
+//        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = sym;
         if (typeof opener.ClipDT!=="undefined") opener.ClipDT = sym;
     }
     else $("#comment").html(sym);
