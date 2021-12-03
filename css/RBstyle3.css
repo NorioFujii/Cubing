@@ -164,26 +164,25 @@ button:disabled {
     background-color: rgba(2, 2, 2, 1);
 }
 
-.mezo              span {
-	display:          none;
+.field span {
+	display: none;
 }
-
-/*
-*/
-.mezof {	
-                   border-color: #808080;
-	}
-
-
+.mezo  span {
+	display: none;
+}
+.szine0{	background-color: #888;	}
 .szine1{	background-color: #FFF;	}	
 .szine2{	background-color: #FF6907;	}	
 .szine3{	background-color: #00A75D;	}	
 .szine4{	background-color: #B60101;	}
 .szine5{	background-color: #213DFD;	}
 .szine6{	background-color: #FFD500;	}
+.szine9{	background-color: #022;	}
+.szinf0{	background-color: #888;	}
 .szinf1{	background-color: #FFF;	}	
 .szinf2{	background-color: #FFBD8C;	}	
 .szinf3{	background-color: #88DCB6;	}	
 .szinf4{	background-color: #E38989;	}
 .szinf5{	background-color: #99A6FE;	}
 .szinf6{	background-color: #FFF288;	}
+.szinf9{	background-color: #022;	}
