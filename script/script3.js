@@ -6,7 +6,7 @@ function parityAlt() {
     let PP = "r2,B2,U2,l,U2,r',U2,r,U2,F2,r,F2,l',B2,r2";
     let NP = "Rw,U2,X,Rw,U2,Rw,U2,Rw',U2,X',Rw,U2,Rw',U2,Rw,U2,Rw',U2,Rw'";
     $("#parity").attr('disabled',true);
-    Rotates = Rotates.concat(regRot((YdF==0)?NP.split(","):PP.split(",")));
+    Rotates = Rotates.concat(regRot((YdF==1)?PP.split(","):NP.split(",")));
 }
 function edgeExchg() {
     let ruflV="l2,U2,F2,l2,F2,U2,l2,**", ruflH="l2,B2,U2,l2,U2,B2,l2,**";
