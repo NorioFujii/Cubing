@@ -177,14 +177,15 @@ function checkRot() {
                  turnN -= parseInt(rote.slice(2));} 
             else if (rote.charAt(1)=="0") { // Cube setup without rotation
                 let i,j;
-                const rotS = "U,u,U2,Mu,mu,Mu2,F,f,F2,Mf,mf,Mf2,D,d,D2,Md,md,Md2,B,b,B2,Mb,mb,Mb2,R,r,R2,Mr,mr,Mr2,L,l,L2,Ml,ml,Ml2,**".split(",");
+                const rotS = "U,u,U2,Mu,mu,Mu2,F,f,F2,Mf,mf,Mf2,D,d,D2,Md,md,Md2,B,b,B2,Mb,mb,Mb2,R,r,R2,Mr,mr,Mr2,L,l,L2,Ml,ml,Ml2,X,x,Rw,rw,**".split(",");
                 for(a[0]=0,j=0;6>j;j++)for(i=1;17>i;i++)a[i+16*j]=j+1;
                 while (Rotates.length>0) {
                     let rot = Rotates.shift();
                     let rand = rotS.indexOf(rot);if (rand<0) alert('Error '+rot);
                     0==rand&&uu(),1==rand&&ui(),2==rand&&u2(),3==rand&&Mu(),4==rand&&mu(),5==rand&&(mu(),mu()),6==rand&&ff(),7==rand&&fi(),8==rand&&(ff(),ff()),9==rand&&Mf(),10==rand&&mf(),11==rand&&(mf(),mf()),12==rand&&dd(),13==rand&&di(),14==rand&&(dd(),dd()),15==rand&&Md(),16==rand&&md(),17==rand&&(md(),md()),
-                    18==rand&&bb(),19==rand&&bi(),20==rand&&(bb(),bb()),21==rand&&Mb(),22==rand&&mb(),23==rand&&(mb(),mb()),24==rand&&rr(),25==rand&&ri(),26==rand&&(rr(),rr()),27==rand&&Mr(),28==rand&&mr(),29==rand&&(mr(),mr()),30==rand&&ll(),31==rand&&li(),32==rand&&(ll(),ll()),33==rand&&Ml(),34==rand&&ml(),35==rand&&(ml(),ml());
-                    if (36==rand) break;    
+                    18==rand&&bb(),19==rand&&bi(),20==rand&&(bb(),bb()),21==rand&&Mb(),22==rand&&mb(),23==rand&&(mb(),mb()),24==rand&&rr(),25==rand&&ri(),26==rand&&(rr(),rr()),27==rand&&Mr(),28==rand&&mr(),29==rand&&(mr(),mr()),30==rand&&ll(),31==rand&&li(),32==rand&&(ll(),ll()),33==rand&&Ml(),34==rand&&ml(),35==rand&&(ml(),ml()),
+                    36==rand&&(bor2(),bor()),37==rand&&bor(),38==rand&&(rr(),Mr()),39==rand&&(rr(),mr());    
+                    if (40==rand) break;    
                 }
                 kiirRotLayer(wholecube,99),kiir();
                 turnN=1;
