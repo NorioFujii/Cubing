@@ -3,9 +3,10 @@ function RotCopy(rot){
     setRot(regRot((rot + " **").split(" "))); // "*0 "+ 
 }
 function parityAlt() {
-    let NP="Rw,U2,X,Rw,U2,Rw,U2,Rw',U2,X',Rw,U2,Rw',U2,Rw,U2,Rw',U2,Rw'";
+    let PP = "r2,B2,U2,l,U2,r',U2,r,U2,F2,r,F2,l',B2,r2";
+    let NP = "Rw,U2,X,Rw,U2,Rw,U2,Rw',U2,X',Rw,U2,Rw',U2,Rw,U2,Rw',U2,Rw'";
     $("#parity").attr('disabled',true);
-    Rotates = Rotates.concat(regRot(NP.split(",")));
+    Rotates = Rotates.concat(regRot((YdF==0)?NP.split(","):PP.split(",")));
 }
 function edgeExchg() {
     let ruflV="l2,U2,F2,l2,F2,U2,l2,**", ruflH="l2,B2,U2,l2,U2,B2,l2,**";
@@ -30,6 +31,13 @@ function rotCubeXY(){
 function faceFloat(){
     if (FaceF=="") FaceF = "f", $("#lskip").show();
     else FaceF = "", $("#lskip").hide();
+    kiirRotLayer(wholecube,99);
+    kiir();
+}
+function faceNum(){
+    if (Disp=="none") Disp = "block", Face = "F",$(".mezo span").css("display",Disp);
+    else if (Face=="F") Face = "N";
+    else Face = "F";
     kiirRotLayer(wholecube,99);
     kiir();
 }
@@ -69,18 +77,19 @@ function kiir(){
     $(".mezo span").css("display",Disp);
 }
 function createFaces(no,x,y,z,rotate) {
-    let r="",i,j,x1,y1,z1,x4,y4,z4;
-    rotate=="X(-90deg)"&&z<0&&(x1=26,y1=0,z1=0,x4=0,y4=0,z4=26);
-    rotate=="X(-90deg)"&&z>0&&(x1=26,y1=0,z1=0,x4=0,y4=0,z4=-26);
-    rotate=="Y(-90deg)"&&z<0&&(x1=0,y1=0,z1=26,x4=0,y4=26,z4=0);
-    rotate=="Y(-90deg)"&&z>0&&(x1=0,y1=0,z1=-26,x4=0,y4=26,z4=0);
-    rotate=="X(0deg)"&&z>0&&(x1=26,y1=0,z1=0,x4=0,y4=26,z4=0);
-    rotate=="X(0deg)"&&z<0&&(x1=-26,y1=0,z1=0,x4=0,y4=26,z4=0);
+    let r="",i,j,x1,y1,z1,x4,y4,z4,udfbrl;
+    rotate=="X(-90deg)"&&z<0&&(x1=26,y1=0,z1=0,x4=0,y4=0,z4=26,udfbrl="U");
+    rotate=="X(-90deg)"&&z>0&&(x1=26,y1=0,z1=0,x4=0,y4=0,z4=-26,udfbrl="D");
+    rotate=="Y(-90deg)"&&z<0&&(x1=0,y1=0,z1=26,x4=0,y4=26,z4=0,udfbrl="L");
+    rotate=="Y(-90deg)"&&z>0&&(x1=0,y1=0,z1=-26,x4=0,y4=26,z4=0,udfbrl="R");
+    rotate=="X(0deg)"&&z>0&&(x1=26,y1=0,z1=0,x4=0,y4=26,z4=0,udfbrl="F");
+    rotate=="X(0deg)"&&z<0&&(x1=-26,y1=0,z1=0,x4=0,y4=26,z4=0,udfbrl="B");
     for (i=0;i<4;i++)
         for (j=0;j<4;j++) {
             let segs = " matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,"+(x+i*x4+j*x1)+","+(y+i*y4+j*y1)+","+(z+i*z4+j*z1)+",1) rotate"+rotate ;
             let clsN = (no>100?(no-100+i*4+j):(no+i*4+j));
-            r+='<div class="mezo'+ unfold(clsN," szin")+a[clsN]+ ' field mezo" style="transform:'+segs+'"><span>'+clsN+'</span></div>';
+            r+='<div class="mezo'+ unfold(clsN," szin")+a[clsN]+ ' field mezo" style="transform:'+segs+
+               '"><span>'+(Face=="F"?"&nbsp;"+udfbrl:clsN) +'</span></div>';
         }
     return r;
 }            
@@ -89,7 +98,7 @@ function kiirRotLayer(r,e){
     for(i=0;i<r.length;i++) {
         s = unfold(r[i]," szin");
         t="#cubeFields .mezo"+ s.slice(0,-6);
-        lo += '<div class="mezo'+ s +a[r[i]]+' layer mezo" style="transform:'+$(t).css('transform')+'"><span>'+r[i]+'</span></div>';
+        lo += '<div class="mezo'+ s +a[r[i]]+' layer mezo" style="transform:'+$(t).css('transform')+'">'+$(t).html()+'</div>';
         $(t).hide();
     }
     if (e==99) { $("#rotLayer").html(lo); return;}
@@ -112,7 +121,7 @@ var a=new Array(),s=new Array();
 var Maprote = new Map([["F","FLBR"], ["f","flbr"],["L","LBRF"], ["l","lbrf"],
                        ["B","BRFL"], ["b","brfl"],["R","RFLB"], ["r","rflb"],
                        ["M","MsmS"], ["m","mSMs"],["S","SmsM"], ["s","sMSm"]]);
-var Disp="none", Pause=false, FaceF="",counter=0;
+var Disp="none", Pause=false, Face="F", FaceF="", counter=0;
 var Comment="", Tid=null, turnN=1, ClipDT="", W=null;
 var Rotates = new Array();
 var RotSft = 0;
@@ -122,7 +131,7 @@ function initnotscrambled(){
     else                       window.resizeTo(580,440);
     speed=80; if (NxPaus<1100) NxPaus=1000;
     if (turnN==16) NxPaus=1500;
-    Disp="none"; Pause=false; Comment="";RotSft=0;Rotates=[]; turnN=1; clearTimeout(Tid);
+    Disp="none"; Pause=false; Face="F"; Comment="";RotSft=0;Rotates=[]; turnN=1; clearTimeout(Tid);
     $("#solve3").attr('disabled',true);
     $("#parity").attr('disabled',true);
     $("#comment").html("");  $("#turn").html("&nbsp;"); $("#rotate").html("&nbsp;");
@@ -152,6 +161,16 @@ function checkRot() {
             if (rote.charAt(1)=="*") {      // step reset 
                  Comment = rote.slice(2);
                  check33(); turnN=1;}
+            else if (rote.charAt(1)=="#") { // flushing important post #mmnn of 4x4
+                let kuro="#888", i=parseInt(rote.slice(2,4)), j=parseInt(rote.slice(4,6));
+                s1 = unfold(i," szin");
+                s2 = unfold(j," szin");
+                t1="#cubeFields .mezo"+ s1.slice(0,-6);
+                t2="#cubeFields .mezo"+ s2.slice(0,-6);
+                lo += '<div class="mezo'+s1+0+' field mezo" style="transform:'+$(t1).css('transform')+';"></div>';
+                lo += '<div class="mezo'+s2+0+' field mezo" style="transform:'+$(t2).css('transform')+';"></div>';
+                $(t1).css("background-color",newcolor); $(t2).css("background-color",newcolor);
+                $("#rotLayer").html(lo); flush(200,4); setTimeout("checkRot()",1000); return; }
             else if (rote.charAt(1)=="+") { // virtual Y rotation convert 
                  RotSft = parseInt(rote.slice(2));} 
             else if (rote.charAt(1)=="-") { // Turn count decrement 
@@ -178,7 +197,7 @@ function checkRot() {
             $("#turn").html(String(turnN));
             $("#rotate").html((rote.charCodeAt(0) & 0x20)>0?String.fromCharCode(rote.charCodeAt(0) ^ 0x20)+"'"+rote.charAt(1):rote);
             rot = Maprote.get(rote.charAt(0));
-            rote = ((rot)?rot.charAt(RotSft):rote.charAt(0)) +rote.slice(1);
+            rote = ((typeof rot==='string')?rot.charAt(RotSft):rote.charAt(0)) +rote.slice(1);
             turnStart(rote);
         }
     }
@@ -239,32 +258,40 @@ function setRot(rot) {
 const White=1,Orange=2,Green=3,Red=4,Blue=5,Yellow=6,ccoW=new Array(22,38,54,70,22),ccoY=new Array(22,70,54,38,22);
 const c=new Array(6,7,10,11,22,23,26,27,38,39,42,43,54,55,58,59,70,71,74,75,86,87,90,91);
 const e=new Array(72,76,21,25,69,73,56,60,40,44,53,57,37,41,24,28,2,3,67,66,8,12,51,50,14,15,34,35,5,9,18,19,94,95,79,78,88,92,62,63,82,83,46,47,85,89,31,30);
+var YdF;
 
 function check33() {
+    if (counter>0) return;
     let i,diff, Yd=0,Ye=0;
+    YdF = 0;
     $("#solve3").attr('disabled',true);
     if (a[6]==White)       { for (i=0;i<4 ;i++)  diff=a[ccoW[i+1]]-a[ccoW[i]];if((diff!=1)&&(diff!=-3))return; }
     else if (a[6]==Yellow) { for (i=0;i<4 ;i++)  diff=a[ccoY[i+1]]-a[ccoY[i]];if((diff!=1)&&(diff!=-3))return; }
-    else return;
-    for (i=0;i<46;i+=2) if (a[e[i]]!=a[e[i+1]]) return;
-                        else if (a[e[i]]==Yellow) if ((i>15)&&(i<32)) Ye++;
-                                                  else Yd++;
+//    else return;
+    for (i=0;i<46;i+=2) { if (a[e[i]]!=a[e[i+1]]) return;
+                          else if (a[e[i]]==a[6]) if (e[i]<16) Ye++;
+                                                  else if ((i>17) && (i<32)) Yd++; }
     for (i=0;i<24;i+=2) if (a[c[i]]!=a[c[i+1]]) return;
     $("#solve3").attr('disabled',false);
 //    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
-    if ((Yd==0)&&((Ye & 1)==1)) $("#parity").attr('disabled',false);
+    if ((Yd==1)&&(Ye==3) || ((Ye & 1)==1)) {
+        $("#parity").attr('disabled',false);
+        YdF = Yd;
+    }
 }
 function next44() {
+    if (counter>0) return;
     if ($('#solve3').prop('disabled')==false) { flush33(200);return; }
-    let i,j=0,s1,s2,t1,t2,lo="",kuro="#888",div;
+    
+    let i,j=0,s1,s2,t1,t2,lo="",kuro="#888",div,newcolor="transparent";
     for (i=0;i<24;i+=2) if (a[c[i]]!=a[c[i+1]]) {
         s1 = unfold(c[i]," szin");
         s2 = unfold(c[i+1]," szin");
         t1="#cubeFields .mezo"+ s1.slice(0,-6);
         t2="#cubeFields .mezo"+ s2.slice(0,-6);
-        lo += '<div class="mezo'+ s1+ a[c[i]]+' layer mezo" style="transform:'+$(t1).css('transform')+'"><span>'+c[i]+'</span></div>';
-        lo += '<div class="mezo'+ s2+ a[c[i+1]]+' layer mezo" style="transform:'+$(t2).css('transform')+'"><span>'+c[i+1]+'</span></div>';
-        $(t1).css("background-color", kuro);$(t2).css("background-color", kuro);
+        lo += '<div class="mezo'+ s1+ 0 +' layer mezo" style="transform:'+$(t1).css('transform')+'"></div>';
+        lo += '<div class="mezo'+ s2+ 0 +' layer mezo" style="transform:'+$(t2).css('transform')+'"></div>';
+        $(t1).css("background-color",newcolor); $(t2).css("background-color",newcolor);
     }
     if (lo=="") for (i=0;i<48;i+=4) {
         div = findSame(i,37,24);  // find same color post as left
@@ -282,8 +309,8 @@ function next44() {
     flush(200);
 }
 function findSame(i,p1,p2) {
-    let ri=0,s1,s2,t1,t2,lo="",kuro="#022";
-    if ((p1&0xfc)==(e[i]&0xfc)) kuro = "#888";
+    let ri=0,s1,s2,t1,t2,lo="",kuro=9, newcolor="transparent";
+    if ((p1&0xfc)==(e[i]&0xfc)) kuro = 0;
     if ((a[e[i+1]]==a[p1])&&(a[e[i+3]]==a[p2])) ri = i+1;
     else if ((a[e[i]]==a[p1])&&(a[e[i+2]]==a[p2])) ri = i;
     else return "";
@@ -292,26 +319,27 @@ function findSame(i,p1,p2) {
     s2 = unfold(e[ri+2]," szin");
     t1="#cubeFields .mezo"+ s1.slice(0,-6);
     t2="#cubeFields .mezo"+ s2.slice(0,-6);
-    lo += '<div class="mezo'+ s1 +a[e[ri]]+' layer mezo" style="transform:'+$(t1).css('transform')+'"><span>'+e[ri]+'</span></div>';
-    lo += '<div class="mezo'+ s2 +a[e[ri+2]]+' layer mezo" style="transform:'+$(t2).css('transform')+'"><span>'+e[ri+2]+'</span></div>';
-    $(t1).css("background-color", kuro);$(t2).css("background-color", kuro);
+    lo += '<div class="mezo'+ s1 + kuro +' layer mezo" style="transform:'+$(t1).css('transform')+'"></div>';
+    lo += '<div class="mezo'+ s2 + kuro +' layer mezo" style="transform:'+$(t2).css('transform')+'"></div>';
+    $(t1).css("background-color",newcolor); $(t2).css("background-color",newcolor);
     return lo;
 }
-function flush(tm) {
+function flush(tm,cnt=8) {
+    counter++;
     setTimeout(function(){
         $("#rotLayer").toggle();
-        counter++;8>counter?flush(tm):($("#rotLayer").html(""), kiir(),counter=0)},tm); // 
+        cnt>counter?flush(tm,cnt):($("#rotLayer").html(""), kiir(),counter=0)},tm); // 
 }
-function flush33(tm) {
+function flush33(tm,cnt=8) {
+    counter++;
     setTimeout(function(){
         $("#solve3").css('background-color',counter%2?'#ce4b42':'#ccc');
-        counter++;8>counter?flush33(tm):($("#solve3").css('background-color',""),counter=0)},tm); // 
+        cnt>counter?flush33(tm,cnt):($("#solve3").css('background-color',""),counter=0)},tm); // 
 }
 function pythonSolve() {
     window.open('python/computing.html',"Python",'height=140,width=480,left='+(window.screenX+300)+',dependent=yes,scrollbars=no');
     setTimeout('goPython()',100); 
 }
-
 function pythonSolve() {
     window.open('python/computing.html',"Python",'height=140,width=480,left='+(window.screenX+300)+',dependent=yes,scrollbars=no');
     setTimeout('goPython()',100); 
@@ -330,8 +358,9 @@ function goPython() {
         let r=new Array(1,17,68,4,65,52,16,49,36,13,33,20,93,80,29,96,64,77,84,48,61,81,32,45);
         let cx8=new Array(10,20,12,6,60,120,72,36);
         let cx12=new Array(17,29,19,11,11,9,7,5,41,34,27,20);
-        let i, corner="[", corner_d="[", edge="[", edge_d="[", c0=new Array();
-        if (a[6]==Yellow) { bor2(); while (a[38]!=Green) fd(); }
+        let i, ix, dx, corner="[", corner_d="[", edge="[", edge_d="[", c0=new Array();
+        preRot=""; if (a[6]==Yellow) { preRot="X2"; bor2(); }
+        while (a[38]!=Green) {preRot+=" Y";fd(); }
         for (i=0;i<24;i+=3) {
             c0[0]=a[r[i]],c0[1]=a[r[i+1]],c0[2]=a[r[i+2]];
             ix = cx8.indexOf(c0[0] * c0[1] * c0[2]); if (ix<0) alert("ix<0 in cx8");
