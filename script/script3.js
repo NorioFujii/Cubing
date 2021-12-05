@@ -6,7 +6,10 @@ function parityAlt() {
     let PP = "r2,B2,U2,l,U2,r',U2,r,U2,F2,r,F2,l',B2,r2";
     let NP = "Rw,U2,X,Rw,U2,Rw,U2,Rw',U2,X',Rw,U2,Rw',U2,Rw,U2,Rw',U2,Rw'";
     $("#parity").attr('disabled',true);
-    Rotates = Rotates.concat(regRot((YdF==1)?PP.split(","):NP.split(",")));
+    if (YdF==1) {
+        while (YtF>0) fd(),YtF--;
+        Rotates = Rotates.concat(regRot(PP.split(",")));
+    } else Rotates = Rotates.concat(regRot(NP.split(",")));
 }
 function edgeExchg() {
     let ruflV="l2,U2,F2,l2,F2,U2,l2,**", ruflH="l2,B2,U2,l2,U2,B2,l2,**";
@@ -259,7 +262,7 @@ function setRot(rot) {
 const White=1,Orange=2,Green=3,Red=4,Blue=5,Yellow=6,ccoW=new Array(22,38,54,70,22),ccoY=new Array(22,70,54,38,22);
 const c=new Array(6,7,10,11,22,23,26,27,38,39,42,43,54,55,58,59,70,71,74,75,86,87,90,91);
 const e=new Array(72,76,21,25,69,73,56,60,40,44,53,57,37,41,24,28,2,3,67,66,8,12,51,50,14,15,34,35,5,9,18,19,94,95,79,78,88,92,62,63,82,83,46,47,85,89,31,30);
-var YdF;
+var YdF,YtF;
 
 function check33() {
     if (counter>0) return;
@@ -271,11 +274,11 @@ function check33() {
 //    else return;
     for (i=0;i<46;i+=2) { if (a[e[i]]!=a[e[i+1]]) return;
                           else if (a[e[i]]==a[6]) if (e[i]<16) Ye++;
-                                                  else if ((i>17) && (i<32)) Yd++; }
+                                                  else if ((i>17) && (i<32)) Yd++,YtF=(10-(i-18)/4) & 3; }
     for (i=0;i<24;i+=2) if (a[c[i]]!=a[c[i+1]]) return;
     $("#solve3").attr('disabled',false);
 //    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
-    if ((Yd==1)&&(Ye==3) || ((Ye & 1)==1)) {
+    if ((Yd+Ye==4)&&((Ye & 1)==1)) {
         $("#parity").attr('disabled',false);
         YdF = Yd;
     }
@@ -360,8 +363,10 @@ function goPython() {
         let cx8=new Array(10,20,12,6,60,120,72,36);
         let cx12=new Array(17,29,19,11,11,9,7,5,41,34,27,20);
         let i, ix, dx, corner="[", corner_d="[", edge="[", edge_d="[", c0=new Array();
-        preRot=""; if (a[6]==Yellow) { preRot="X2"; bor2(); }
-        while (a[38]!=Green) {preRot+=" Y";fd(); }
+        preRot=""; if (a[6]!=White) for (i=0;(i<4)&&(a[6]!=White);i++) { preRot+=" x"; bor(); }
+                   if (preRot.length==8) { preRot="";for (i=0;(i<4)&&(a[6]!=White);i++) {preRot+=" Z"; fd(),bor(),fd3(); }}
+        for (i=0;(i<4)&&(a[38]!=Green);i++) {preRot+=" Y";fd(); }
+        kiirRotLayer(wholecube,99),kiir();
         for (i=0;i<24;i+=3) {
             c0[0]=a[r[i]],c0[1]=a[r[i+1]],c0[2]=a[r[i+2]];
             ix = cx8.indexOf(c0[0] * c0[1] * c0[2]); if (ix<0) alert("ix<0 in cx8");
@@ -393,14 +398,14 @@ async function ckPython() {
         setTimeout('ckPython()',1000);
         return;
     }
-    let rot = await clipIn();
-
+    let rot = await clipIn() + " **";
+    navigator.clipboard.writeText("");
+    $("#solve3").attr('disabled',true);
     setRot(regRot(rot.trim().split(" ")));
     clearTimeout(Tid);
     setTimeout("checkRot()",100)
 //    if (opener && opener.document.getElementsByName('pythonQ')) 
 //        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = preRot+" "+rot;
-    $("#solve3").attr('disabled',true);
 }
 function facerotate(a, tm) {
     var w = tm * 10 * counter;
