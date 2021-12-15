@@ -315,7 +315,7 @@ function check33() {
                           else if (a[e[i]]==a[6]) if (e[i]<16) Ye++;
                                                   else if ((i>17) && (i<32)) Yd++,YtF=(10-(i-18)/4) & 3; }
     $("#solve3").attr('disabled',false);
-    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
+//    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
     if ((Yd+Ye==4)&&((Ye & 1)==1)) {
         $("#parity").attr('disabled',false);
         YdF = Yd;
@@ -607,7 +607,7 @@ function Rwi() {
 function scramble(){
     scramble3();
     $("#solve3").attr('disabled',false);
-    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
+//    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
 }
 function scramble3(){
     let i,j,sym="";
@@ -630,11 +630,11 @@ function scramble4(){
 function symset(sym) {
     ClipDT = sym;
     kiirRotLayer(wholecube,99),kiir();
-    if (opener) {
+//    if (opener) {
 //        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = sym;
 //        if (typeof opener.ClipDT!=="undefined") opener.ClipDT = sym;
-    }
-    else $("#comment").html(sym);
+//    } else
+    $("#comment").html(sym);
 }
 const
 layeru=[ 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16,17,18,19,20,33,34,35,36,49,50,51,52,65,66,67,68],
