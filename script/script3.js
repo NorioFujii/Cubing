@@ -1,6 +1,9 @@
-function RotCopy(rot){
-//    if (location.search!="?mode=clipin") navigator.clipboard.writeText(rot);
-    setRot(regRot((rot + " **").split(" "))); // "*0 "+ 
+async function RotCopy(rot){
+    let rote = rot;
+    if (rot!="") navigator.clipboard.writeText(rot);
+    else rote = await clipIn();
+        
+    setRot(regRot((rote + " **").split(" "))); // "*0 "+ 
     clearTimeout(Tid);
     setTimeout("checkRot();",100);
 }
