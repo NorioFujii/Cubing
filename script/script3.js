@@ -1,8 +1,7 @@
 async function RotCopy(rot){
     let rote = rot;
-    if (rot!="") navigator.clipboard.writeText(rot);
-    else rote = await clipIn();
-        
+    if (rot=="") rote = await clipIn();
+    navigator.clipboard.writeText(rot);   
     setRot(regRot((rote + " **").split(" "))); // "*0 "+ 
     clearTimeout(Tid);
     setTimeout("checkRot();",100);
