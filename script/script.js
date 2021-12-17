@@ -82,7 +82,7 @@ function checkRot() {
     } */
     if ((Pause==false) && (Rotates.length>0)) {
         rote = Rotates.shift();
-        while (rote.charAt(0)=="*") {
+        while (rote && rote.charAt(0)=="*") {
             if (rote.charAt(1)=="*") {      // step reset 
                  Comment = rote.slice(2);
                  turnN=1;}
@@ -109,9 +109,9 @@ function checkRot() {
         $("#comment").html(Comment);
         if (rote) {
             $("#turn").html(String(turnN));
-            $("#rotate").html((rote.charCodeAt(0) & 0x20)>0?String.fromCharCode(rote.charCodeAt(0) ^ 0x20)+"'"+rote.charAt(1):rote);
+            $("#rotate").html((rote.charCodeAt(0) & 0x20)>0?String.fromCharCode(rote.charCodeAt(0) ^ 0x20)+"'"+rote.slice(1):rote);
             rot = Maprote.get(rote.charAt(0));
-            rote = ((rot)?rot.charAt(RotSft):rote.charAt(0)) +rote.charAt(1);
+            rote = ((rot)?rot.charAt(RotSft):rote.charAt(0)) +rote.slice(1);
             turnStart(rote);
         }
     }
