@@ -1,3 +1,8 @@
+function RotCopy(rot){
+    setRot(regRot((rot + " **").split(" "))); // "*0 "+ 
+    clearTimeout(Tid);
+    setTimeout("checkRot();",100);
+}
 function rotCube(){
     segs="rotateX("+cubex+"deg) rotateY("+cubey+"deg) rotateZ("+cubez+"deg) translateX(0) translateY(0) translateZ(0)",$(".cube").css({
     transform:segs});
