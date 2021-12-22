@@ -104,6 +104,7 @@ function kiir(){
     r+=unfold(65,"").charAt(0)!="f"?createFaces(65, 81,-46,-52,"X(0deg)"):  createFaces(165,118,-13,-215,"X(0deg)");
     r+=unfold(81,"").charAt(0)!="f"?createFaces(81,  3, 45, 39,"X(-90deg)"):createFaces(181,-26,118,  13,"X(-90deg)");
     $("#cubeFields").html(r);
+    $("#rotLayer").html("");
     $(".mezo span").css("display",Disp);
 }
 function createFaces(no,x,y,z,rotate) {
