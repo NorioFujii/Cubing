@@ -421,8 +421,9 @@ function goPython() {
             if ((ix==3) && ((c0[0]==White) || (c0[1]==White))) ix = 4; 
 
             if (((c0[0]==White) || (c0[0]==Yellow)) ||
-                ((c0[0]==Blue)  && (ix<2))          ||
-                ((c0[0]==Green) && (ix<4)))     dx = 0;
+                (!((c0[1]==White) || (c0[1]==Yellow)) &&
+                 ((c0[0]==Blue)  && (ix<2))          ||
+                 ((c0[0]==Green) && (ix<4))))     dx = 0;
             else dx = 1;
             edge   += ix + ((i>41)?"]":",");
             edge_d += dx + ((i>41)?"]":",");
