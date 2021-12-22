@@ -34,6 +34,7 @@ function kiir(){
     for(i=1;i<55;i++)
         r+='<div class="field mezo mezo'+unfold(i," szin")+a[i]+'"><span>'+i+"</span></div>";
     $("#cubeFields").html(r);
+    $("#rotLayer").html("");
 }
 function kiirRotLayer(r,e){
     let odiv, i, t, o="";
