@@ -619,7 +619,7 @@ else:
 estime += 2
 print("<script type=text/javascript>"
       "  location.hash='last';"
-     f"  navigator.clipboard.writeText(\"**Solution_{LastPast:.2f}(s) {solution} *Fin\");"
+     f"  navigator.clipboard.writeText(\"*Solution_{LastPast:.2f}(s) {solution} *Fin\");"
       "  setTimeout(\"RetOrClose()\",100);"
       "function RetOrClose() {"
      f"    if (({LastPast:.3f}<1.0) && (confirm('{Steps}: Retry more time range({LastPast:.3f}S)?')))"
