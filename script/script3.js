@@ -403,10 +403,10 @@ function goPython() {
         let cx8=new Array(10,20,12,6,60,120,72,36);
         let cx12=new Array(17,29,19,11,11,9,7,5,41,34,27,20);
         let i, ix, dx, corner="[", corner_d="[", edge="[", edge_d="[", c0=new Array();
-        preRot=""; if (a[6]!=White) for (i=0;(i<4)&&(a[6]!=White);i++) { preRot+=" x"; bor(); }
-                   if (preRot.length==8) { preRot="";for (i=0;(i<4)&&(a[6]!=White);i++) {preRot+=" Z"; fd(),bor(),fd3(); }}
-        for (i=0;(i<4)&&(a[38]!=Green);i++) {preRot+=" Y";fd(); }
-        kiirRotLayer(wholecube,99),kiir();
+        preRot=""; if (a[6]!=White) for (i=0;(i<4)&&(a[6]!=White);i++) { preRot+=" X'"; bor(); }
+                   if (i==4) { preRot="";for (i=0;(i<4)&&(a[6]!=White);i++) {preRot+=" Z'"; fd3(),bor(),fd(); }}
+        for (i=0;(i<4)&&(a[38]!=Green);i++) {preRot+=" Y'"; fd3(); }
+//        kiirRotLayer(wholecube,99),kiir();
         for (i=0;i<24;i+=3) {
             c0[0]=a[r[i]],c0[1]=a[r[i+1]],c0[2]=a[r[i+2]];
             ix = cx8.indexOf(c0[0] * c0[1] * c0[2]); if (ix<0) alert("ix<0 in cx8");
@@ -432,6 +432,12 @@ function goPython() {
 //        alert(corner+','+corner_d+','+edge+','+edge_d);
         W = window.open('https://mori1-hakua.tokyo/python/Cube2phase_Fast3.py?'+q ,"Python");
 //    }
+    speed=40,NxPaus=500;
+    if (preRot!="") {
+        setRot(regRot(("! "+preRot.trim()).split(" ")));
+        setRot(regRot(preRot.trim().split(" ")));
+    }
+    Pause = false;
     setTimeout('ckPython()',100); 
 }
 async function ckPython() {
@@ -439,7 +445,7 @@ async function ckPython() {
         setTimeout('ckPython()',1000);
         return;
     }
-    let rot = await clipIn() + " **";
+    let rot = await clipIn();
     navigator.clipboard.writeText("");
     $("#solve3").attr('disabled',true);
     setRot(regRot(rot.trim().split(" ")));
