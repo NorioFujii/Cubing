@@ -29,17 +29,18 @@
       　<span id="comment" class="lower">&nbsp;</span>
 
 	<div class="commands">
-		<div class="commandExplain" onDBLclick='Disp="block";$(".mezo span").css("display",Disp)'>拡張機能:</div>
+		<div class="commandExplain" onDBLclick='faceNum()'>拡張機能:</div>
 		<button class="commandb" type=button onclick="faceFloat()">翼開放</button>
 		<button class="commandb" type=button onclick="initnotscrambled()">初期化</button>
 		<button class="commandb" type=button onclick="scramble()">3x3スクランブル</button>
 		<button class="commandb" type=button onclick="pause()">休止</button>
-		<button class="commandb" type=button onclick="accel()">変速</button>
+		<button class="commandb" type=button onclick="accel()" onDBLclick="accel(usft=false)">変速</button>
 		<button class="commandb" type=button onclick="quickIn()">記号列入力（）</button>
 		<button class="commandb" type=button onclick="pythonSolve()" id="solve3" disabled>3x3ソルブ</button>
 		<button class="commandb" type=button onclick="scramble4()">4x4スクランブル</button>
-		<button class="commandb" type=button onclick="parityAlt()" id="parity" disabled>4x4・パリティ自動補正</button>
-		<button class="commandb" type=button onclick="edgeExchg()">4x4・Ｗエッジ交換</button>
+		<button class="commandb" type=button onclick="next44()">4x4次</button>
+		<button class="commandb" type=button onclick="parityAlt()" id="parity" disabled>パリティ自動補正</button>
+		<button class="commandb" type=button onclick="edgeExchg()" id="edgeEx">4x4対向エッジ交換</button>
 	</div>
     </div>
     <div class="flex_test-item">
@@ -103,11 +104,11 @@
 	
 		<div class="commandExplain">マクロ機能回転 (パーム):</div>
 		<div class="rotateMacro" onclick="RotCopy(&quot;R' U' F' U F R&quot;)">&#x21bb;&#x21bb;Ｍ</div>
-		<div class="rotateMacro" onclick="RotCopy(&quot;R' U' R U' R' U' 2R&quot;)">左&#x21bb;&#x21bb;</div>
-		<div class="rotateMacro" onclick="RotCopy(&quot;L U L' U L U2 L'&quot;)">右&#x21bb;&#x21bb;</div>
+		<div class="rotateMacro" onclick="RotCopy(&quot;R' U' R U' R' U' 2R U' R U&quot;)">左&#x21bb;&#x21bb;</div>
+		<div class="rotateMacro" onclick="RotCopy(&quot;L U L' U L U2 L' U&quot;)">右&#x21bb;&#x21bb;</div>
 		<div class="rotateMacro" onclick="RotCopy(&quot;L R' U' R U L' U' R' U R&quot;)">隣&#x21bb;</div>
-		<div class="rotateMacro" onclick="RotCopy(&quot;M2 U M2 U2 M2 U M2&quot;)">左迎</div>
-		<div class="rotateMacro" onclick="RotCopy(&quot;M2 U' M' U2 M U' M2&quot;)">右迎</div>
+		<div class="rotateMacro" onclick="RotCopy(&quot;M2 U M U2 M' U M2&quot;)">左迎</div>
+		<div class="rotateMacro" onclick="RotCopy(&quot;M2 U' M U2 M' U' M2&quot;)">右迎</div>
 	
 
 	</div>
