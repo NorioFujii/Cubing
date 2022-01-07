@@ -22,9 +22,130 @@ function edgeExchg() {
     if ((a[34]==a[35])&&((a[14]==a[81])||(a[15]==a[84]))) Rotates = Rotates.concat(regRot(ruflV));
     else if ((a[14]==a[15])&&((a[33]==a[66])||(a[36]==a[67]))) Rotates = Rotates.concat(regRot(ruflH));
     else {
-        if ((a[2]!=a[3])&&(a[14]==a[2])&&(a[15]==a[3])) Rotates = Rotates.concat(regRot(crosH));   
-        else if ((a[34]!=a[35])&&(a[34]==a[46])&&(a[35]==a[47])) Rotates = Rotates.concat(regRot(crosV));
+        if ((colorEg(2)==colorEg(14))&&(colorEg(3)==colorEg(15))) Rotates = Rotates.concat(regRot(crosH));   
+        else if ((colorEg(14)==colorEg(82))&&(colorEg(15)==colorEg(83))) Rotates = Rotates.concat(regRot(crosV));
     }
+}
+function colorEg(post) {
+    let idx = eg.indexOf(post)&0xfe;
+    return a[eg[idx]]*a[eg[idx+1]]+a[eg[idx]]+a[eg[idx+1]];
+}
+function edgePair() {
+    const pairRot="r' U L' U' r *ペア結成 *#1415343521257276 U *#14153435";
+    if ((Rotates.length>0)||(counter>0)) {
+        setTimeout("edgePair()",1000);
+        return true;
+    }
+    let post, target;
+    if (colorEg(14)==colorEg(15)) { 
+        if (colorEg(8)==colorEg(12)) { Rotates.push("*次に期待"),turn("U"); return; }
+        else uu();
+    } 
+    if (colorEg(37)==colorEg(41)) {
+        if (colorEg(15)==colorEg(3)) flush33(200,8,"#edgeEx");
+        else if (colorEg(40)!=colorEg(44)) Rotates.push("*次に期待"),turn("f");
+        else if (colorEg(46)!=colorEg(47)) Rotates.push("*次に期待"),turn("F");
+        else if (colorEg(69)!=colorEg(73)) Rotates.push("*次に期待"),turn("r");
+        return;
+    }
+    Comment = "";
+    target = colorEg(37);
+    if (colorEg(15)!=target) {
+        post = edgeSrch(37, target, 15);
+        edgePair(); return;
+    }
+    target = colorEg(14);
+    if (colorEg(3)!=target) {
+        post = edgeSrch(14, target, 3);
+        edgePair(); return;
+    }
+    if (opener && opener.document.getElementsByName('pythonQ')) 
+        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = pairRot;
+    Rotates = Rotates.concat(regRot(pairRot.split(" ")));
+    edgePair();return;  // 
+}
+function edgeSrch(p1,c1,p3) {
+    const move15=new Array("B2 R' U","","B' U2","","B U2","","R' U","","R U","","L' F' L","","Pass","","Pass","","U2","","B' R' U","","U","","R' B U2","","F R F' U","","None","","L' B' L U2","","U'","","B R' U","","B2 U2","","R2 U","","R' B U2","","L' F2 L","","D' L' F L","","L' F L","","L2 U' L2","");
+    const move03=new Array("B'","","B2 R D B2","","R D B2","","B","","R2 B","","R2 R D B2","","Pass","","U' L' U","","B' R D B2","","None","","R B","","R2 D B2","","Pass","","Pass","","F' U F","","U2 R U2 B","","B2","","D' R' B","","R' B","","D B2","","D2 R' B","","D2 B2","","D' B2","","D2 R' B","");
+    let p2=-1,i,s1,s2,t1,t2,cmnt,lo="",kuro=9, newcolor="transparent";
+
+    for (i=0;i<48;i+=2) {
+        if ((eg[i]==p1) || (c1!=colorEg(eg[i]))) continue;
+        p2 = i;
+        break;
+    }
+    if (p2<0) alert('Pair edge not found');
+    cmnt = "*#"+("0"+p3).slice(-2)+("0"+eg[p2]).slice(-2)+ " ";
+    cmnt += p3==15?move15[p2]:move03[p2];
+    if (opener && opener.document.getElementsByName('pythonQ')) {
+        parent.ClipDT = cmnt.slice(7);
+        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = cmnt;
+    }
+    Rotates = Rotates.concat(regRot(cmnt.split(" ")));
+    return eg[p2];
+}
+// const White=8,Orange=2,Green=3,Red=4,Blue=5,Yellow=6;
+const cr=new Array(10,11,7,6,26,27,23,22,42,43,39,38,58,59,55,54,74,75,71,70,90,91,87,86);  // center rotate
+function cent6(color=White) {
+    if ((Rotates.length>0)||(counter>0)) {
+        setTimeout("cent6("+color+")",1000);
+        return true;
+    }
+    if (centr(color)) { cent6(color); return; }
+
+    if (color==White) {
+        turn("X2"),setTimeout("cent6("+Yellow+")",500);}
+    else if (color==Yellow) {
+        turn("z"),setTimeout("cent6("+Red+")",500);}
+    else if (color==Red) {
+        turn("X"),setTimeout("cent6("+Blue+")",500);}
+    else if (color==Blue) {
+        turn("X"),setTimeout("cent6("+Orange+")",500);}
+    else if (color==Orange) {
+        Comment="中央寄せ完了！",Rotates.unshift("X");}  // ,setTimeout("cent6("+Green+")",500);}
+ 
+    return true;
+}
+function centr(Ccolor) {
+    let i=true;
+    let cmnt="*中央寄せ("+"橙緑赤青黄白白".charAt(Ccolor-2)+")";
+    
+    if ((Rotates.length>0)||(counter>0)) {
+        setTimeout("centr("+Ccolor+")",1000);
+        return true;
+    } else {
+      if (a[10]!=Ccolor) { 
+        preRot=cmnt,i = cntrSrch(0,Ccolor);
+      } else if ((a[10]==Ccolor)&&(a[6]!=Ccolor)) {
+        preRot=cmnt,i = cntrSrch(4,Ccolor);
+      } else if ((a[10]==Ccolor)&&(a[6]==Ccolor)) {
+        preRot="U2 "+cmnt,i = cntrSrch(4,Ccolor);
+      }
+      if (!i) return null;
+      setTimeout("centr("+Ccolor+")",1000);
+      return true;
+    }
+    preRot=cmnt,i = cntrSrch(4,Ccolor);
+    if (!i) return null;
+    return true;
+}
+function cntrSrch(st,c1) {
+    let i,j,k;
+
+    for (i=st;i<24;i++) if (a[cr[i]]==c1) {
+        j = i % 4 ;
+        k = i >> 2;
+        console.log(i,j);
+               if      (k==0) { if(j==0)preRot+=" U'"; else while (j>1){ j--;preRot+=" U"; } preRot+=" U";}          //  uu();
+               else if (k==2) { if(j==0)preRot+=" F'"; else while (j>1){ j--;preRot+=" F"; } preRot+=" r U r'";}     //  Mr(); 
+               else if (k==3) { if(j==0)preRot+=" R'"; else while (j>1){ j--;preRot+=" R"; } preRot+=" U' b U b' U";}    //  Mb(); 
+               else if (k==1) { if(j==0)preRot+=" L'"; else while (j>1){ j--;preRot+=" L"; } preRot+=" U f U f' U'";}  //  Mf(); 
+               else if (k==4) { if(j==0)preRot+=" B'"; else while (j>1){ j--;preRot+=" B"; } preRot+=" U2 l U l' U2";}  //  Ml(); 
+               else if (k==5) { if(j==0)preRot+=" D'"; else while (j>1){ j--;preRot+=" D"; } preRot+=" r2 U r2";}    //  Mr(),Mr(); 
+        if (preRot!="") Rotates = Rotates.concat(regRot(preRot.trim().split(" "))),turn("*");
+        return true;
+    }
+    return null;
 }
 function rotCube(){
     let segs=" translate3d(0,0,0) rotateX("+cubex+"deg) rotateY("+cubey+"deg) rotateZ("+cubez+"deg)";
@@ -167,12 +288,12 @@ function initnotscrambled(){
     $("#solve3").attr('disabled',true);
     $("#parity").attr('disabled',true);
     $("#comment").html("");  $("#turn").html("&nbsp;"); $("#rotate").html("&nbsp;");
-    if (window.name=="cube3dg") setTimeout("checkRot()",100);
+    if ((window.name=="cube3dg")||(window.name=="cube3dh")) setTimeout("checkRot()",100);
     initCube();
 }
 function initCube() {
     let i,j;
-    for(a[0]=0,j=0;6>j;j++)for(i=1;17>i;i++)a[i+16*j]=j+1;
+    for(a[0]=0,j=0;6>j;j++)for(i=1;17>i;i++)a[i+16*j]=(j==0)?8:j+1;
     kiirRotLayer(wholecube,99);
     kiir();
     $(".mezo span").css("display",Disp);
@@ -184,10 +305,12 @@ function turn(a) {
 }
 function checkRot() {
     let rot,rote=0,s1,s2,t1,t2,lo="",newcolor="transparent"; 
-    if (window.name=="cube3dg") {
-        if (parent && parent.RotatesG.length>0) {
-            rot = regRot(parent.RotatesG.trim().split(" "));
-            parent.RotatesG = "";
+    if (parent && ((window.name=="cube3dg")||(window.name=="cube3dh"))) {
+        let rotbuf = (window.name=="cube3dg")?parent.RotatesG:parent.RotatesH;
+        if (rotbuf.length>0) {
+            rot = regRot(rotbuf.trim().split(" "));
+            if (window.name=="cube3dg") parent.RotatesG = "";
+            else                        parent.RotatesH = "";
             setRot(rot);
         }
     } /*
@@ -201,18 +324,20 @@ function checkRot() {
     if ((Pause==false) && (Rotates.length>0)) {
         rote = Rotates.shift();
         while (rote && (rote.charAt(0)=="*")) {
+            if (rote=="*fin") check33();
             if (rote.charAt(1)=="*") {      // step reset 
                 Comment = rote.slice(2);
                 check33(); turnN=1;}
             else if (rote.charAt(1)=="#") { // flushing important post #mmnn of 4x4
-                let kuro="#888", i=parseInt(rote.slice(2,4)), j=parseInt(rote.slice(4,6));
-                s1 = unfold(i," szin");
-                s2 = unfold(j," szin");
-                t1="#cubeFields .mezo"+ s1.slice(0,-6);
-                t2="#cubeFields .mezo"+ s2.slice(0,-6);
-                lo += '<div class="mezo'+s1+0+' field mezo" style="transform:'+$(t1).css('transform')+';"><span>'+ i +'</span></div>';
-                lo += '<div class="mezo'+s2+0+' field mezo" style="transform:'+$(t2).css('transform')+';"><span>'+ j +'</span></div>';
-                $(t1).css("background-color",newcolor); $(t2).css("background-color",newcolor);
+                let cn, n=2, lo="", kuro="#888";
+                while (n<rote.length-1) {
+                    cn = parseInt(rote.slice(n,n+2));
+                    s1 = unfold(cn," szin");
+                    t1="#cubeFields .mezo"+ s1.slice(0,-6);
+                    lo += '<div class="mezo'+s1+0+' field mezo" style="transform:'+$(t1).css('transform')+';"><span>'+ cn +'</span></div>';
+                    $(t1).css("background-color",newcolor);
+                    n += 2;
+                }
                 $("#rotLayer").html(lo); flush(200,4); setTimeout("checkRot()",1000); return; }
             else if (rote.charAt(1)=="+") { // virtual Y rotation convert 
                 RotSft = parseInt(rote.slice(2));} 
@@ -220,15 +345,15 @@ function checkRot() {
                 turnN -= parseInt(rote.slice(2));} 
             else if (rote.charAt(1)=="0") { // Cube setup without rotation
                 let i,j;
-                const rotS = "U,u,U2,Mu,mu,Mu2,F,f,F2,Mf,mf,Mf2,D,d,D2,Md,md,Md2,B,b,B2,Mb,mb,Mb2,R,r,R2,Mr,mr,Mr2,L,l,L2,Ml,ml,Ml2,X,x,Rw,rw,**".split(",");
-                for(a[0]=0,j=0;6>j;j++)for(i=1;17>i;i++)a[i+16*j]=j+1;
+                const rotS = "U,u,U2,Mu,mu,Mu2,F,f,F2,Mf,mf,Mf2,D,d,D2,Md,md,Md2,B,b,B2,Mb,mb,Mb2,R,r,R2,Mr,mr,Mr2,L,l,L2,Ml,ml,Ml2,X,x,Y,y,Z,z,Rw,rw,**".split(",");
+                if (rote.length==2) initCube();
                 while (Rotates.length>0) {
                     let rot = Rotates.shift();
                     let rand = rotS.indexOf(rot);if (rand<0) alert('Error '+rot);
                     0==rand&&uu(),1==rand&&ui(),2==rand&&u2(),3==rand&&Mu(),4==rand&&mu(),5==rand&&(mu(),mu()),6==rand&&ff(),7==rand&&fi(),8==rand&&(ff(),ff()),9==rand&&Mf(),10==rand&&mf(),11==rand&&(mf(),mf()),12==rand&&dd(),13==rand&&di(),14==rand&&(dd(),dd()),15==rand&&Md(),16==rand&&md(),17==rand&&(md(),md()),
                     18==rand&&bb(),19==rand&&bi(),20==rand&&(bb(),bb()),21==rand&&Mb(),22==rand&&mb(),23==rand&&(mb(),mb()),24==rand&&rr(),25==rand&&ri(),26==rand&&(rr(),rr()),27==rand&&Mr(),28==rand&&mr(),29==rand&&(mr(),mr()),30==rand&&ll(),31==rand&&li(),32==rand&&(ll(),ll()),33==rand&&Ml(),34==rand&&ml(),35==rand&&(ml(),ml()),
-                    36==rand&&(bor2(),bor()),37==rand&&bor(),38==rand&&(rr(),Mr()),39==rand&&(ri(),mr());    
-                    if (40==rand) break;    
+                    36==rand&&(bor2(),bor()),37==rand&&bor(),38==rand&&fd(),39==rand&&fd3(),40==rand&&(fd(),bor(),fd3()),41==rand&&(fd3(),bor(),fd()),42==rand&&(rr(),Mr()),43==rand&&(ri(),mr());    
+                    if (44==rand) break;    
                 }
                 kiirRotLayer(wholecube,99),kiir();
                 turnN=1;
@@ -301,27 +426,32 @@ function setRot(rot) {
     }
     Rotates = Rotates.concat(rotR);
 }
-const White=1,Orange=2,Green=3,Red=4,Blue=5,Yellow=6,ccoW=new Array(22,38,54,70,22),ccoY=new Array(22,70,54,38,22);
-const c=new Array(6,7,10,11,22,23,26,27,38,39,42,43,54,55,58,59,70,71,74,75,86,87,90,91);
-const e=new Array(72,76,21,25,69,73,56,60,40,44,53,57,37,41,24,28,2,3,67,66,8,12,51,50,14,15,34,35,5,9,18,19,94,95,79,78,88,92,62,63,82,83,46,47,85,89,31,30);
+const White=8,Orange=2,Green=3,Red=4,Blue=5,Yellow=6,ccoW=new Array(22,38,54,70,22),ccoY=new Array(22,70,54,38,22);
+const c=new Array(6,7,10,11,22,23,26,27,38,39,42,43,54,55,58,59,75,74,71,70,86,87,90,91);  // center
+const eg=new Array(72,21,76,25,69,56,73,60,40,53,44,57,37,24,41,28,
+                   2,67,3,66,8,51,12,50,14,34,15,35,5,18,9,19,
+                   94,79,95,78,88,62,92,63,82,46,83,47,85,31,89,30);                       // edge
+
 var YdF,YtF;
 function check33() {
     if (counter>0) return;
     let i,diff, Yd=0,Ye=0;
     YdF = 0;
     $("#solve3").attr('disabled',true);
-    for (i=0;i<24;i+=2) if (a[c[i]]!=a[c[i+1]]) return;
+    for (i=0;i<24;i+=4) if ((a[c[i]]!=a[c[i+1]])|| (a[c[i+1]]!=a[c[i+3]])) return;
     if (a[6]==White)       { for (i=0;i<4 ;i++)  diff=a[ccoW[i+1]]-a[ccoW[i]];if((diff!=1)&&(diff!=-3))return; }
     else if (a[6]==Yellow) { for (i=0;i<4 ;i++)  diff=a[ccoY[i+1]]-a[ccoY[i]];if((diff!=1)&&(diff!=-3))return; }
-//    else return;
-    for (i=0;i<46;i+=2) { if (a[e[i]]!=a[e[i+1]]) return;
-                          else if (a[e[i]]==a[6]) if (e[i]<16) Ye++;
-                                                  else if ((i>17) && (i<32)) Yd++,YtF=(10-(i-18)/4) & 3; }
+    for (i=0;i<48;i++)  { if (((i&3)==0)&&((a[eg[i]]!=a[eg[i+2]])||(a[eg[i+1]]!=a[eg[i+3]]))) return;
+                          else if (a[eg[i]]==a[6]) if (eg[i]<17) Ye++;  // UP面のedge色が中央と一致する数
+                                                   else if ((i>15) && (i<32)) {
+                                                       Yd++;  // 垂下色Edge一致数
+                                                       YtF = (7-(i/4).toFixed()) & 3; } // 垂下色EdgeのY軸最終回転位置
+    }
     $("#solve3").attr('disabled',false);
 //    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
-    if ((Yd+Ye==4)&&((Ye & 1)==1)) {
+    if ((Yd+Ye==8)&&((Ye & 2)==2)) { // TOP色Edgeペアが奇数か？
         $("#parity").attr('disabled',false);
-        YdF = Yd;
+        YdF = Yd/2;
     }
 }
 function next44() {
@@ -332,7 +462,7 @@ function next44() {
     if($("#solve3").prop('disabled')==false) {flush33(200);return; }
 
     let i,j=0,s1,s2,t1,t2,lo="",kuro="#888",div,newcolor="transparent";
-    for (i=0;i<24;i+=2) if (a[c[i]]!=a[c[i+1]]) {
+    for (i=0;i<24;i+=4) if ((a[c[i]]!=a[c[i+1]])|| (a[c[i+1]]!=a[c[i+3]])) {
         s1 = unfold(c[i]," szin");
         s2 = unfold(c[i+1]," szin");
         t1="#cubeFields .mezo"+ s1.slice(0,-6);
@@ -341,36 +471,13 @@ function next44() {
         lo += '<div class="mezo'+ s2+ 0 +' layer mezo" style="transform:'+$(t2).css('transform')+'"></div>';
         $(t1).css("background-color",newcolor); $(t2).css("background-color",newcolor);
     }
-    if (lo=="") for (i=0;i<48;i+=4) {
-        div = findSame(i,37,24);  // find same color post as left
-        if (div!="") lo += div, j += 1;
-        div = findSame(i,24,37);  // find same color post as left
-        if (div!="") lo += div, j += 1;
-        if (j>7) break;
-        div = findSame(i,14,34);  // find same color post as right
-        if (div!="") lo += div, j += 1;
-        div = findSame(i,34,14);  // find same color post as right
-        if (div!="") lo += div, j += 1;
-        if (j>7) break;
-    }
+    if (lo=="") { edgePair(); return; }
+
+    if (!navigator.userAgent.match(/iPhone|Android.+/)) speed=40,NxPaus=600;
+    if (cent6()) return;
+
     $("#rotLayer").html(lo);
     flush(200);
-}
-function findSame(i,p1,p2) {
-    let ri=0,s1,s2,t1,t2,lo="",kuro=9, newcolor="transparent";
-    if ((p1&0xfc)==(e[i]&0xfc)) kuro = 0;
-    if ((a[e[i+1]]==a[p1])&&(a[e[i+3]]==a[p2])) ri = i+1;
-    else if ((a[e[i]]==a[p1])&&(a[e[i+2]]==a[p2])) ri = i;
-    else return "";
-
-    s1 = unfold(e[ri]," szin");
-    s2 = unfold(e[ri+2]," szin");
-    t1="#cubeFields .mezo"+ s1.slice(0,-6);
-    t2="#cubeFields .mezo"+ s2.slice(0,-6);
-    lo += '<div class="mezo'+ s1 + kuro +' layer mezo" style="transform:'+$(t1).css('transform')+'"></div>';
-    lo += '<div class="mezo'+ s2 + kuro +' layer mezo" style="transform:'+$(t2).css('transform')+'"></div>';
-    $(t1).css("background-color",newcolor); $(t2).css("background-color",newcolor);
-    return lo;
 }
 function flush(tm,cnt=8) {
     counter++;
@@ -378,13 +485,14 @@ function flush(tm,cnt=8) {
         $("#rotLayer").toggle();
         cnt>counter?flush(tm,cnt):($("#rotLayer").html(""), kiir(),counter=0)},tm); // 
 }
-function flush33(tm,cnt=8) {
+function flush33(tm,cnt=8,id="#solve3") {
     counter++;
     setTimeout(function(){
-        $("#solve3").css('background-color',counter%2?'#ce4b42':'#ccc');
-        cnt>counter?flush33(tm,cnt):($("#solve3").css('background-color',""),counter=0)},tm); // 
+        $(id).css('background-color',counter%2?'#ce4b42':'#ccc');
+        cnt>counter?flush33(tm,cnt,id):($(id).css('background-color',""),counter=0)},tm); // 
 }
 function pythonSolve() {
+    Pause = true;
     window.open('python/computing.html',"Python",'height=140,width=480,left='+(window.screenX+300)+',dependent=yes,scrollbars=no');
     setTimeout('goPython()',100); 
 }
@@ -400,13 +508,12 @@ function goPython() {
     }
     else {    */
         let r=new Array(1,17,68,4,65,52,16,49,36,13,33,20,93,80,29,96,64,77,84,48,61,81,32,45);
-        let cx8=new Array(10,20,12,6,60,120,72,36);
-        let cx12=new Array(17,29,19,11,11,9,7,5,41,34,27,20);
+        let cx8=new Array(80,160,96,48,60,120,72,36);            // WOB,WRB,WGR,WGO,YBO,YBR,YGR,YGO  W=8
+        let cx12=new Array(17,29,19,11,53,44,35,26,41,34,27,20); // BO,BR,GR,GO,WB,WR,WG,WO,YB,YR,YG,YO  W=8
         let i, ix, dx, corner="[", corner_d="[", edge="[", edge_d="[", c0=new Array();
         preRot=""; if (a[6]!=White) for (i=0;(i<4)&&(a[6]!=White);i++) { preRot+=" X'"; bor(); }
                    if (i==4) { preRot="";for (i=0;(i<4)&&(a[6]!=White);i++) {preRot+=" Z'"; fd3(),bor(),fd(); }}
         for (i=0;(i<4)&&(a[38]!=Green);i++) {preRot+=" Y'"; fd3(); }
-//        kiirRotLayer(wholecube,99),kiir();
         for (i=0;i<24;i+=3) {
             c0[0]=a[r[i]],c0[1]=a[r[i+1]],c0[2]=a[r[i+2]];
             ix = cx8.indexOf(c0[0] * c0[1] * c0[2]); if (ix<0) alert("ix<0 in cx8");
@@ -415,11 +522,9 @@ function goPython() {
             corner_d += dx + ((i>20)?"]":",");
         }
         for (i=0;i<48;i+=4) {
-            c0[0]=a[e[i]]; c0[1]=a[e[i+2]];
+            c0[0]=a[eg[i]]; c0[1]=a[eg[i+1]];
             ix = cx12.indexOf(c0[0] * c0[1] + c0[0]+ c0[1]);
-            if (ix<0) alert("ix<0 in cx12"); 
-            if ((ix==3) && ((c0[0]==White) || (c0[1]==White))) ix = 4; 
-
+            if (ix<0) alert("ix<0 in cx12 on cube"+eg[i]+eg[i+1]); 
             if (((c0[0]==White) || (c0[0]==Yellow)) ||
                 (!((c0[1]==White) || (c0[1]==Yellow)) &&
                  ((c0[0]==Blue)  && (ix<2))          ||
@@ -433,11 +538,12 @@ function goPython() {
         W = window.open('https://mori1-hakua.tokyo/python/Cube2phase_Fast3.py?'+q ,"Python");
 //    }
     speed=40,NxPaus=500;
-    if (preRot!="") {
-        setRot(regRot(("! "+preRot.trim()).split(" ")));
-        setRot(regRot(preRot.trim().split(" ")));
+    if (preRot.length>0) {
+        let preRotA = regRot(preRot.trim().split(" "));
+        setRot(["*0*"]),setRot(["!",preRotA].flat(2)),setRot(["**",preRotA].flat(2)); // 
+        console.log(Rotates);
     }
-    Pause = false;
+    if (!navigator.userAgent.match(/iPhone|Android.+/)) Pause = false;
     setTimeout('ckPython()',100); 
 }
 async function ckPython() {
@@ -445,6 +551,7 @@ async function ckPython() {
         setTimeout('ckPython()',1000);
         return;
     }
+    Pause = false;
     let rot = await clipIn();
     navigator.clipboard.writeText("");
     $("#solve3").attr('disabled',true);
@@ -622,7 +729,7 @@ function scramble(){
 function scramble3(){
     let i,j,sym="";
     const rotS = "U,U',U2,F,F',F2,D,D',D2,B,B',B2,R,R',R2,L,L',L2".split(",");
-    for(a[0]=0,j=0;6>j;j++)for(i=1;17>i;i++)a[i+16*j]=j+1;
+    initCube();
     for(i=0;22>i;i++)rand=Math.floor(18*Math.random()),sym+=rotS[rand]+" ",
         0==rand&&uu(),1==rand&&ui(),2==rand&&u2(),3==rand&&ff(),4==rand&&fi(),5==rand&&(ff(),ff()),6==rand&&dd(),7==rand&&di(),8==rand&&(dd(),dd()),9==rand&&bb(),10==rand&&bi(),11==rand&&(bb(),bb()),12==rand&&rr(),13==rand&&ri(),14==rand&&(rr(),rr()),15==rand&&ll(),16==rand&&li(),17==rand&&l2();
     symset(sym);
@@ -630,7 +737,7 @@ function scramble3(){
 function scramble4(){
     let i,j,sym="";
     const rotS = "U,U',U2,u,u',u2,F,F',F2,f,f',f2,D,D',D2,d,d',d2,B,B',B2,b,b',b2,R,R',R2,r,r',r2,L,L',L2,l,l',l2".split(",");
-    for(a[0]=0,j=0;6>j;j++)for(i=1;17>i;i++)a[i+16*j]=j+1;
+    initCube();
     for(i=0;50>i;i++)rand=Math.floor(36*Math.random()),sym+=rotS[rand]+" ",
          0==rand&&uu(), 1==rand&&ui(), 2==rand&&u2(), 3==rand&&Mu(), 4==rand&&mu(), 5==rand&&(mu(),mu()), 6==rand&&ff(), 7==rand&&fi(), 8==rand&&(ff(),ff()), 9==rand&&Mf(),10==rand&&mf(),11==rand&&(mf(),mf()),12==rand&&dd(),13==rand&&di(),14==rand&&(dd(),dd()),15==rand&&Md(),16==rand&&md(),17==rand&&(md(),md()),
         18==rand&&bb(),19==rand&&bi(),20==rand&&(bb(),bb()),21==rand&&Mb(),22==rand&&mb(),23==rand&&(mb(),mb()),24==rand&&rr(),25==rand&&ri(),26==rand&&(rr(),rr()),27==rand&&Mr(),28==rand&&mr(),29==rand&&(mr(),mr()),30==rand&&ll(),31==rand&&li(),32==rand&&(ll(),ll()),33==rand&&Ml(),34==rand&&ml(),35==rand&&(ml(),ml());
