@@ -31,21 +31,21 @@ function colorEg(post) {
     return a[eg[idx]]*a[eg[idx+1]]+a[eg[idx]]+a[eg[idx+1]];
 }
 function edgePair() {
-    const pairRot="r' U L' U' r *ペア結成 *#1415343521257276 U *#14153435";
+    const pairRot="r' U L' U' r *Paired *#1415343521257276 U *#14153435";
     if ((Rotates.length>0)||(counter>0)) {
         setTimeout("edgePair()",1000);
         return true;
     }
     let post, target;
     if (colorEg(14)==colorEg(15)) { 
-        if (colorEg(8)==colorEg(12)) { Rotates.push("*次に期待"),turn("U"); return; }
+        if (colorEg(8)==colorEg(12)) { Rotates.push("*Next"),turn("U"); return; }
         else uu();
     } 
     if (colorEg(37)==colorEg(41)) {
         if (colorEg(15)==colorEg(3)) flush33(200,8,"#edgeEx");
-        else if (colorEg(40)!=colorEg(44)) Rotates.push("*次に期待"),turn("f");
-        else if (colorEg(46)!=colorEg(47)) Rotates.push("*次に期待"),turn("F");
-        else if (colorEg(69)!=colorEg(73)) Rotates.push("*次に期待"),turn("r");
+        else if (colorEg(40)!=colorEg(44)) Rotates.push("*Next"),turn("f");
+        else if (colorEg(46)!=colorEg(47)) Rotates.push("*Next"),turn("F");
+        else if (colorEg(69)!=colorEg(73)) Rotates.push("*Next"),turn("r");
         return;
     }
     Comment = "";
@@ -102,13 +102,13 @@ function cent6(color=White) {
     else if (color==Blue) {
         turn("X"),setTimeout("cent6("+Orange+")",500);}
     else if (color==Orange) {
-        Comment="中央寄せ完了！",Rotates.unshift("X");}  // ,setTimeout("cent6("+Green+")",500);}
+        Comment="Completed!",Rotates.unshift("X");}  // ,setTimeout("cent6("+Green+")",500);}
  
     return true;
 }
 function centr(Ccolor) {
     let i=true;
-    let cmnt="*中央寄せ("+"橙緑赤青黄白白".charAt(Ccolor-2)+")";
+    let cmnt="*Centerd("+"橙緑赤青黄白白".charAt(Ccolor-2)+")";
     
     if ((Rotates.length>0)||(counter>0)) {
         setTimeout("centr("+Ccolor+")",1000);
