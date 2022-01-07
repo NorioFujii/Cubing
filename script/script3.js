@@ -59,8 +59,8 @@ function edgePair() {
         post = edgeSrch(14, target, 3);
         edgePair(); return;
     }
-    if (opener && opener.document.getElementsByName('pythonQ')) 
-        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = pairRot;
+//    if (opener && opener.document.getElementsByName('pythonQ')) 
+//        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = pairRot;
     Rotates = Rotates.concat(regRot(pairRot.split(" ")));
     edgePair();return;  // 
 }
@@ -77,10 +77,10 @@ function edgeSrch(p1,c1,p3) {
     if (p2<0) alert('Pair edge not found');
     cmnt = "*#"+("0"+p3).slice(-2)+("0"+eg[p2]).slice(-2)+ " ";
     cmnt += p3==15?move15[p2]:move03[p2];
-    if (opener && opener.document.getElementsByName('pythonQ')) {
-        parent.ClipDT = cmnt.slice(7);
-        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = cmnt;
-    }
+//    if (opener && opener.document.getElementsByName('pythonQ')) {
+//        parent.ClipDT = cmnt.slice(7);
+//        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = cmnt;
+//    }
     Rotates = Rotates.concat(regRot(cmnt.split(" ")));
     return eg[p2];
 }
@@ -108,7 +108,7 @@ function cent6(color=White) {
 }
 function centr(Ccolor) {
     let i=true;
-    let cmnt="*Centerd("+"橙緑赤青黄白白".charAt(Ccolor-2)+")";
+    let cmnt="*Centered("+"橙緑赤青黄白白".charAt(Ccolor-2)+")";
     
     if ((Rotates.length>0)||(counter>0)) {
         setTimeout("centr("+Ccolor+")",1000);
