@@ -39,14 +39,17 @@ function edgePair() {
     let post, target;
     if (colorEg(14)==colorEg(15)) { 
         if (colorEg(8)==colorEg(12)) { Rotates.push("*Next"),turn("U"); return; }
-        else uu();
+        uu(); kiir();
     } 
     if (colorEg(37)==colorEg(41)) {
-        if (colorEg(15)==colorEg(3)) flush33(200,8,"#edgeEx");
-        else if (colorEg(40)!=colorEg(44)) Rotates.push("*Next"),turn("f");
-        else if (colorEg(46)!=colorEg(47)) Rotates.push("*Next"),turn("F");
-        else if (colorEg(69)!=colorEg(73)) Rotates.push("*Next"),turn("r");
-        return;
+        if (colorEg(15)==colorEg(3)) { flush33(200,8,"#edgeEx");return; }
+        if (colorEg(14)!=colorEg(15)) { fi(),kiir(); }
+        else {
+          if      (colorEg(40)!=colorEg(44)) Rotates.push("*Next"),turn("f");
+          else if (colorEg(46)!=colorEg(47)) Rotates.push("*Next"),turn("F");
+          else if (colorEg(69)!=colorEg(73)) Rotates.push("*Next"),turn("r");
+          return;
+        }
     }
     Comment = "";
     target = colorEg(37);
