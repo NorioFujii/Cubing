@@ -15,7 +15,7 @@ function parityAlt() {
                        if (eg[i]<17) Ye++;  // UP面のedge色が中央と一致する数
                        else if ((i>15) && (i<32)) {
                                Yd++;  // 垂下EdgeのUP色一致数
-                               YtF = ((i/4).toFixed()-4) & 3; } // 垂下色EdgeのY軸最終回転位置
+                               YtF = (2-(i%4)) & 3; } // 垂下色EdgeのY軸最終回転位置
     if (Yd==2) {
         while (YtF>0) fd(),YtF--,kiir();
         Rotates = Rotates.concat(regRot(PP));
@@ -454,7 +454,7 @@ function check33() {
                           else if (a[eg[i]]==a[6]) if (eg[i]<17) Ye++;  // UP面のedge色が中央と一致する数
                                                    else if ((i>15) && (i<32)) {
                                                        Yd++;  // 垂下色Edge一致数
-                                                       YtF = ((i/4).toFixed()-4) & 3; } // 垂下色EdgeのY軸最終回転位置
+                                                       YtF = (2-(i%4)) & 3;} // 垂下色EdgeのY軸最終回転位置
     }
     $("#solve3").attr('disabled',false);
 //    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
