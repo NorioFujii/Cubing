@@ -10,10 +10,16 @@ function parityAlt() {
     let PP = "r2,B2,U2,l,U2,r',U2,r,U2,F2,r,F2,l',B2,r2";
     let NP = "Rw,U2,X,Rw,U2,Rw,U2,Rw',U2,X',Rw,U2,Rw',U2,Rw,U2,Rw',U2,Rw'";
     $("#parity").attr('disabled',true);
-    if (YdF==1) {
-        while (YtF>0) fd(),YtF--;
-        Rotates = Rotates.concat(regRot(PP.split(",")));
-    } else Rotates = Rotates.concat(regRot(NP.split(",")));
+    let i,Ye=0,Yd=0;
+    for (i=0;i<48;i++) if (a[eg[i]]==a[6])
+                       if (eg[i]<17) Ye++;  // UP面のedge色が中央と一致する数
+                       else if ((i>15) && (i<32)) {
+                               Yd++;  // 垂下EdgeのUP色一致数
+                               YtF = ((i/4).toFixed()-4) & 3; } // 垂下色EdgeのY軸最終回転位置
+    if (Yd==2) {
+        while (YtF>0) fd(),YtF--,kiir();
+        Rotates = Rotates.concat(regRot(PP));
+    } else Rotates = Rotates.concat(regRot(NP));
 }
 function edgeExchg() {
     const ruflV="l2,U2,F2,l2,F2,U2,l2,**".split(","), ruflH="l2,B2,U2,l2,U2,B2,l2,**".split(",");
