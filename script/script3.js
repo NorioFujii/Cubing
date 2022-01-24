@@ -398,7 +398,7 @@ var Fix33=false, Fix44=false, Auto=true;
 function initnotscrambled(){
     let i,j;
     if (window.outerWidth<500) window.resizeTo(380,580);
-    else                       window.resizeTo(580,440);
+    else                       window.resizeTo(560,500);
     speed=80; if (NxPaus<1100) NxPaus=1000;
     if (turnN==16) NxPaus=1500;
     Disp="none"; Auto=true; Pause=false; Cool=0;
