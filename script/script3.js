@@ -594,7 +594,7 @@ const eg=new Array(72,21,76,25,69,56,73,60,40,53,44,57,37,24,41,28,
 var YdF,YtF,Yd,Ye;
 function check33() {
     if ((N==3)||(Counter>0)) return;
-    let i,diff, Yd=0,Ye=0;
+    let i,diff;
     $("#solve3").attr('disabled',true);
     $("#parity").attr('disabled',true);
     for (i=0;i<24;i+=4) if ((a[c[i]]!=a[c[i+1]])|| (a[c[i+1]]!=a[c[i+3]])) return;
