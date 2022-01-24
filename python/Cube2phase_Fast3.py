@@ -8,6 +8,7 @@ v1 = form.getfirst('value1') # nameがvalue1の値を取得
 v2 = form.getfirst('value2') # nameがvalue2の値を取得
 v3 = form.getfirst('value3') # nameがvalue3の値を取得
 v4 = form.getfirst('value4') # nameがvalue4の値を取得
+v5 = form.getfirst('value5') # nameがvalue4の値を取得
 estime = form.getlist('time') # nameがtimeの値を取得
 if estime==[]:
     estime = "2"
@@ -19,7 +20,8 @@ import sys, functools
 print = functools.partial(print, flush='True')
 print = functools.partial(print, end="\r")
 
-print ("Content-Type: text/html\n\n")
+print ("Content-Type: text/html\n")
+print ("Access-Control-Allow-Origin: *\n\n")
 print(
 """<!doctype html>\n
 <html><head>
@@ -58,6 +60,7 @@ solved_state = State(
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 )
+scrambled_state = solved_state
 
 # 18種類の1手操作を全部定義する
 moves = {
@@ -98,7 +101,6 @@ def scramble2state(scramble):
     """
     スクランブル文字列適用したstateを返す
     """
-    scrambled_state = solved_state
     for move_name in scramble.split(" "):
         move_state = moves[move_name]
         scrambled_state = scrambled_state.apply_move(move_state)
@@ -264,7 +266,7 @@ def index_to_e_ep(index):
     return eep
 
 import time
-print("Computing co_move_table<br>")
+# print("Computing co_move_table<br>")
 start = time.time()
 co_move_table = [[0] * len(move_names) for _ in range(NUM_CO)]
 for i in range(NUM_CO):
@@ -278,7 +280,7 @@ for i in range(NUM_CO):
         new_state = state.apply_move(moves[move_name])
         co_move_table[i][i_move] = co_to_index(new_state.co)
 
-print("Computing eo_move_table<br>")
+# print("Computing eo_move_table<br>")
 eo_move_table = [[0] * len(move_names) for _ in range(NUM_EO)]
 for i in range(NUM_EO):
     state = State(
@@ -291,7 +293,7 @@ for i in range(NUM_EO):
         new_state = state.apply_move(moves[move_name])
         eo_move_table[i][i_move] = eo_to_index(new_state.eo)
 
-print("Computing e_combination_table<br>")
+# print("Computing e_combination_table<br>")
 e_combination_table = [[0] * len(move_names) for _ in range(NUM_E_COMBINATIONS)]
 for i in range(NUM_E_COMBINATIONS):
     state = State(
@@ -306,7 +308,7 @@ for i in range(NUM_E_COMBINATIONS):
 
 move_names_ph2 = ["U", "U2", "U'", "D", "D2", "D'", "L2", "R2", "F2", "B2"]
 
-print("Computing cp_move_table<br>")
+# print("Computing cp_move_table<br>")
 if os.path.exists('cp_move.tbl'):
   with open("cp_move.tbl", "rb") as file:
     cp_move_table = pickle.load(file)
@@ -325,7 +327,7 @@ else:
   with open("cp_move.tbl", "wb") as file:
     pickle.dump(cp_move_table, file)
 
-print("Computing ud_ep_move_table<br>")
+# print("Computing ud_ep_move_table<br>")
 if os.path.exists('ud_ep_move.tbl'):
   with open("ud_ep_move.tbl", "rb") as file:
     ud_ep_move_table = pickle.load(file)
@@ -344,7 +346,7 @@ else:
   with open("ud_ep_move.tbl", "wb") as file:
     pickle.dump(ud_ep_move_table,file)
 
-print("Computing e_edge_permutation_move_table<br>")
+# print("Computing e_edge_permutation_move_table<br>")
 if os.path.exists('e_ep_move.tbl'):
   with open("e_ep_move.tbl", "rb") as file:
     e_ep_move_table = pickle.load(file)
@@ -363,7 +365,7 @@ else:
   with open("e_ep_move.tbl", "wb") as file:
     pickle.dump(e_ep_move_table,file)
 
-print("Computing co_eec_prune_table<br>")
+# print("Computing co_eec_prune_table<br>")
 if os.path.exists('co_eec_prune.tbl'):
   with open("co_eec_prune.tbl", "rb") as file:
     co_eec_prune_table = pickle.load(file)
@@ -373,8 +375,8 @@ else:
   distance = 0
   num_filled = 1
   while num_filled != NUM_CO * NUM_E_COMBINATIONS:
-    print(f"distance = {distance}")
-    print(f"num_filled = {num_filled}")
+#     print(f"distance = {distance}")
+#     print(f"num_filled = {num_filled}")
     for i_co in range(NUM_CO):
         for i_eec in range(NUM_E_COMBINATIONS):
             if co_eec_prune_table[i_co][i_eec] == distance:
@@ -388,7 +390,7 @@ else:
   with open("co_eec_prune.tbl", "wb") as file:
     pickle.dump(co_eec_prune_table,file)
 
-print("Computing eo_eec_prune_table<br>")
+# print("Computing eo_eec_prune_table<br>")
 if os.path.exists('eo_eec_prune.tbl'):
   with open("eo_eec_prune.tbl", "rb") as file:
     eo_eec_prune_table = pickle.load(file)
@@ -398,8 +400,8 @@ else:
   distance = 0
   num_filled = 1
   while num_filled != NUM_EO * NUM_E_COMBINATIONS:
-    print(f"distance = {distance}<br>")
-    print(f"num_filled = {num_filled}<br>")
+#     print(f"distance = {distance}<br>")
+#     print(f"num_filled = {num_filled}<br>")
     for i_eo in range(NUM_EO):
         for i_eec in range(NUM_E_COMBINATIONS):
             if eo_eec_prune_table[i_eo][i_eec] == distance:
@@ -413,7 +415,7 @@ else:
   with open("eo_eec_prune.tbl", "wb") as file:
     pickle.dump(eo_eec_prune_table,file)
 
-print("Computing cp_eep_prune_table<br>")
+# print("Computing cp_eep_prune_table<br>")
 if os.path.exists('cp_eep_prune.tbl'):
   with open("cp_eep_prune.tbl", "rb") as file:
     cp_eep_prune_table = pickle.load(file)
@@ -423,8 +425,8 @@ else:
   distance = 0
   num_filled = 1
   while num_filled != NUM_CP * NUM_E_EP:
-    print(f"distance = {distance}<br>")
-    print(f"num_filled = {num_filled}<br>")
+#     print(f"distance = {distance}<br>")
+#     print(f"num_filled = {num_filled}<br>")
     for i_cp in range(NUM_CP):
         for i_eep in range(NUM_E_EP):
             if cp_eep_prune_table[i_cp][i_eep] == distance:
@@ -438,7 +440,7 @@ else:
   with open("cp_eep_prune.tbl", "wb") as file:
     pickle.dump(cp_eep_prune_table,file)
 
-print("Computing udep_eep_prune_table<br>")
+# print("Computing udep_eep_prune_table<br>")
 if os.path.exists('udep_eep_prune.tbl'):
   with open("udep_eep_prune.tbl", "rb") as file:
     udep_eep_prune_table = pickle.load(file)
@@ -448,8 +450,8 @@ else:
   distance = 0
   num_filled = 1
   while num_filled != NUM_UD_EP * NUM_E_EP:
-    print(f"distance = {distance}<br>")
-    print(f"num_filled = {num_filled}<br>")
+#     print(f"distance = {distance}<br>")
+#     print(f"num_filled = {num_filled}<br>")
     for i_udep in range(NUM_UD_EP):
         for i_eep in range(NUM_E_EP):
             if udep_eep_prune_table[i_udep][i_eep] == distance:
@@ -517,10 +519,10 @@ class Search:
             # print(f"# Found phase 2 solution {" ".join(self.current_solution_ph2)} (length={len(self.current_solution_ph2)})<br>")
             solution = " ".join(self.current_solution_ph1) + " " + " ".join(self.current_solution_ph2)
             LastPast = time.time() - self.start
-            print(
-                f"Solution: {solution} "
-                f"({len(self.current_solution_ph1) + len(self.current_solution_ph2)} moves) "
-                f"in {LastPast:.5f} sec.<br>")
+#             print(
+#                 f"Solution: {solution} "
+#                 f"({len(self.current_solution_ph1) + len(self.current_solution_ph2)} moves) "
+#                 f"in {LastPast:.5f} sec.<br>")
             self.max_solution_length = len(self.current_solution_ph1) + len(self.current_solution_ph2) - 1
             if self.max_sol_length > len(solution):
                 self.best_solution = solution
@@ -593,37 +595,54 @@ class Search:
                 return True
             depth += 1
 
+
+solution = None
 LastPast = 0
 # if v1:
 #    print(f"v1は{v1[0:1]}で始まっている {eval('('+v1+','+v2+','+v3+','+v4+')')}")
+
 if v1 and v1[0:1]=="[":
     scrambled_state = eval('State('+v1+','+v2+','+v3+','+v4+')')
     print(scrambled_state)
     depth = 12 
-else:
-    scramble = v1 if v1 and v1!="" else "L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L"
-# scramble = "R' B' R2 L2 D' R2 U F2 L F U2 F U2 F2 D2 R2 B R2 F2 U2 D2"
+    v1 = v5
+scramble = ""
+if v1 and v1!="":
+    scramble = v1 
+if scramble!="":
+    scrambled_state = solved_state
+#    cp, co, ep, eo
     scrambled_state = scramble2state(scramble)
     depth = int(len(scramble.split(" "))/2+1) 
-search = Search(scrambled_state)
-start = time.time()
-solution = search.start_search(bgn_depth=4+depth, max_length=16+depth, timeout=estime)
+if   scrambled_state.cp == solved_state.cp \
+ and scrambled_state.co == solved_state.co \
+ and scrambled_state.ep == solved_state.ep \
+ and scrambled_state.eo == solved_state.eo :
+    print(f"Initiation State!<br>")
+    solution = False
+else:
+    search = Search(scrambled_state)
+    start = time.time()
+    solution = search.start_search(bgn_depth=4+depth, max_length=16+depth, timeout=estime)
 
-print(f"Finished! ({LastPast:.5f} sec.)<br>")
 if solution:
-    Steps = str(len(solution.split(" "))) + "steps"
+    turn = len(solution.split(" "))
+    Steps = str(turn) + "steps"
+    if turn<30 or LastPast>estime/4:
+        LastPast = estime
     print(f"<a name=\"last\"></a>Last Solution: **Solution {solution}")
+    estime *= 2
 else:
     Steps = "None"
     print("<a name=\"last\"></a>Solution not found.<br>")
-estime += 2
+    LastPast = estime
 print("<script type=text/javascript>"
       "  location.hash='last';"
-     f"  navigator.clipboard.writeText(\"*Solution_{LastPast:.2f}(s) {solution} *Fin\");"
-      "  setTimeout(\"RetOrClose()\",100);"
+     f"  if (window.name=='Python') navigator.clipboard.writeText(\"**Solution_{LastPast:.2f}(s) {solution} *Fin\");"
+      "  if (window.name=='Python') setTimeout(\"RetOrClose()\",100);"
       "function RetOrClose() {"
-     f"    if (({LastPast:.3f}<1.0) && (confirm('{Steps}: Retry more time range({LastPast:.3f}S)?')))"
+     f"    if (({LastPast:.3f}<{estime/8}) && (confirm('{Steps}: Retry more time range({LastPast:.3f}S)?')))"
      f" location.href=location.pathname+(location.search+' ').slice(0,location.search.indexOf('&time'))+\"&time={estime}\";"
-      "    else setTimeout(\"window.close()\",100);"
+      "    else setTimeout(\"window.opener.focus();window.close();\",100);"
       "}" 
-      "</script></body></html>")
+     f"</script><div id=\"solve\">**Solution_{LastPast:.2f}(s) {solution} *Fin</div></body></html>")
