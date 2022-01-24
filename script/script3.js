@@ -122,13 +122,13 @@ function cent6(color=White) {
     if (centr(color)) { turn(""); cent6(color); return; }
 
     if (color==White) {
-        turn("X2"),setTimeout("cent6("+Yellow+")",500);}
+        turn("X2"),Tid[Yellow]=setTimeout("cent6("+Yellow+")",500);}
     else if (color==Yellow) {
-        turn("z"),setTimeout("cent6("+Red+")",500);}
+        turn("z"),Tid[Red]=setTimeout("cent6("+Red+")",500);}
     else if (color==Red) {
-        turn("X"),setTimeout("cent6("+Blue+")",500);}
+        turn("X"),Tid[Blue]=setTimeout("cent6("+Blue+")",500);}
     else if (color==Blue) {
-        turn("X"),setTimeout("cent6("+Orange+")",500);}
+        turn("X"),Tid[Orange]=setTimeout("cent6("+Orange+")",500);}
     else if (color==Orange) {
         Comment="Completed!";
         turn("z");
@@ -389,7 +389,6 @@ var a=new Array(), s=new Array();
 var Maprote = new Map([["F","FLBR"], ["f","flbr"],["L","LBRF"], ["l","lbrf"],
                        ["B","BRFL"], ["b","brfl"],["R","RFLB"], ["r","rflb"],
                        ["M","MsmS"], ["m","mSMs"],["S","SmsM"], ["s","sMSm"]]);
-var Disp="none", Pause=false, Face="F", FaceF="", Counter=0;
 var N = 4; Disp="none", Face="F", FaceF="", Counter=0;
 var Comment="", Tid=new Array(9), turnN=1, ClipDT="", W=null;
 var Rotates = new Array();
@@ -506,7 +505,7 @@ function checkRot() {
                     turnN++;   
                     turnStart(dispRote(rot));
                 }
-                Counter = 0;  // Nomal rotation mode
+                Counter = 0;  // Normal rotation mode
                 kiirRotLayer(wholecube,99),kiir();
             } 
             else Comment = (Rotates.length==0)?"":rote.slice(1);  
@@ -757,6 +756,7 @@ function cloudGo(corner,corner_d,edge,edge_d) {
     });
 }
 function facerotate(a, tm) {
+    if (Counter<0) return;
     var w = tm * 10 * Counter;
     setTimeout(function(){
 11==a&&$("#rotLayer").css("transform","rotateY(-"+w+"deg)"),12==a&&$("#rotLayer").css("transform","rotateY("+w+"deg)"),
@@ -780,7 +780,7 @@ function turnStart(a){
         turnStart2(a.slice(0,2));
         return;
     }
-    0==Counter&&(
+    0>=Counter&&(
 "U"==a&&(kiirRotLayer(layeru,1),facerotate(11,1),uu()),"u"==a&&(kiirRotLayer(layeru,1),facerotate(12,1),ui()),
 "R"==a&&(kiirRotLayer(layerr,4),facerotate(41,1),rr()),"r"==a&&(kiirRotLayer(layerr,4),facerotate(42,1),ri()),
 "D"==a&&(kiirRotLayer(layerd,6),facerotate(61,1),dd()),"d"==a&&(kiirRotLayer(layerd,6),facerotate(62,1),di()),
@@ -801,7 +801,7 @@ function turnStart(a){
 "Rw"==a&&(kiirRotLayer(layerrw,10),facerotate(91,1),rr(),Mr()),"rw"==a&&(kiirRotLayer(layerrw,10),facerotate(92,1),ri(),mr()))
 }
 function turnStart2(a){
-    0==Counter&&(
+    0>=Counter&&(
 "U2"==a&&(kiirRotLayer(layeru,1),facerotate(11,2),u2()     ),"u2"==a&&(kiirRotLayer(layeru,1),facerotate(12,2),u2()  ),
 "R2"==a&&(kiirRotLayer(layerr,4),facerotate(41,2),ri2()    ),"r2"==a&&(kiirRotLayer(layerr,4),facerotate(42,2),ri2() ),
 "D2"==a&&(kiirRotLayer(layerd,6),facerotate(61,2),dd(),dd()),"d2"==a&&(kiirRotLayer(layerd,6),facerotate(62,2),di2() ),
