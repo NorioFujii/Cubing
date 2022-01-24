@@ -1,0 +1,47 @@
+
+.wrap {
+  margin: 80px auto 0px;
+  perspective: 900px;
+  perspective-origin: 50% 0%;
+  display: block;
+  height: 80px;
+  width: 88px;
+}
+.cube {
+        cursor: pointer;
+	position: relative;
+	width: 90px;
+	transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	
+	transform:  rotateX(-20deg) rotateY(340deg) rotateZ(0deg) translateX(0px) translateY(0px) translateZ(0px);
+	-moz-transform:  rotateX(-20deg) rotateY(340deg) rotateZ(0deg) translateX(0px) translateY(0px) translateZ(0px);
+	-webkit-transform:  rotateX(-20deg) rotateY(340deg) rotateZ(0deg) translateX(0px) translateY(0px) translateZ(0px);
+  
+}
+#rotLayer, #cubeFields {
+  transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+#rotLayer, #cubeFields {
+    transform: rotatey(0deg);
+    -moz-transform: rotatey(0deg);
+    -webkit-transform: rotatey(0deg);
+}
+.hiddenmezo {
+	display: none;
+}
+.mezo, .layer, .field {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 2px solid #202020;
+}
+.core {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    background-color: rgba(2, 2, 2, 1);
+}
