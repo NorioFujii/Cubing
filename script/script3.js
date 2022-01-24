@@ -144,7 +144,7 @@ function centr(Ccolor) {
     let cmnt="*Centered("+"橙緑赤青黄白白".charAt(Ccolor-2)+")";
     preRot = cmnt + NoRot;
     
-    if ((Rotates.length>0)||(counter>0)) {
+    if ((Rotates.length>0)||(Counter>0)) {
     } else {
         if ((Ccolor==White)||(Ccolor==Red)) {  // 白か赤で、TOP面ゼロなら
             let c1=Ccolor,kmax=0,ki=-1;
