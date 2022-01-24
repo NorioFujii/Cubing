@@ -335,12 +335,12 @@ function kiir(n=N){
 const CV3344 = [1,1,10,17,19,33,28,49,37,65,46,81];
 function creFaces(no,x,y,z,rotate,n=3) {
     let r="",d=n==4?26:30,i,j,x1,z1,y4,z4,udfbrl="",j1=0,clsM,clsN,no3;
-    rotate=="X(-90deg)"&&z<0&&(x1=26,y1=0,z1=0,x4=0,y4=0,z4=26, udfbrl="U");
-    rotate=="X(-90deg)"&&z>0&&(x1=26,y1=0,z1=0,x4=0,y4=0,z4=-26,udfbrl="D");
-    rotate=="Y(-90deg)"&&z<0&&(x1=0,y1=0,z1=26,x4=0,y4=26,z4=0, udfbrl="L");
-    rotate=="Y(-90deg)"&&z>0&&(x1=0,y1=0,z1=-26,x4=0,y4=26,z4=0,udfbrl="R");
-    rotate=="X(0deg)"&&  z>0&&(x1=26,y1=0,z1=0,x4=0,y4=26,z4=0, udfbrl="F");
-    rotate=="X(0deg)"&&  z<0&&(x1=-26,y1=0,z1=0,x4=0,y4=26,z4=0,udfbrl="B");
+    rotate=="X(-90deg)"&&z<0&&(x1=d,z1=0,y4=0,z4=d, udfbrl="U");
+    rotate=="X(-90deg)"&&z>0&&(x1=d,z1=0,y4=0,z4=-d,udfbrl="D");
+    rotate=="Y(-90deg)"&&z<0&&(x1=0,z1=d,y4=d,z4=0, udfbrl="L");
+    rotate=="Y(-90deg)"&&z>0&&(x1=0,z1=-d,y4=d,z4=0,udfbrl="R");
+    rotate=="X(0deg)"&&  z>0&&(x1=d,z1=0,y4=d,z4=0, udfbrl="F");
+    rotate=="X(0deg)"&&  z<0&&(x1=-d,z1=0,y4=d,z4=0,udfbrl="B");
     for (i=0;i<n;i++) {
         j1 = [0,4,12,0][i];
         for (j=0;j<n;j++) {  // M=1,2,4 5,6,8 13,14,16　…　j1+=j,ij=i*4+j1 
