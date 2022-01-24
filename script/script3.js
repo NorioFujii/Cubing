@@ -177,10 +177,11 @@ function cntrSrch(st,c1,save) {
     for (k=1;k<6;k++) {
         for (i=0,kk=0,j=1;i<4;i++,j*=2) kk += (a[cr[k*4+i]]==c1)?j:0;
         rot = " "+" LFRBD".charAt(k);
-        if ((kk%3==0)&&(save==" U2 ")&&((c1==White)||(c1==Red))) // 一気に左上がり縦戻しなし
+        if (((kk==4)||(kk==5)||(kk%3==0))&&(save==" U2 ")&&
+            ((c1==White)||(c1==Red))) // 一気に左上がり縦戻しなし
              { rot += (kk==3)?"'":((kk==9)?"2":"");
                roth = ["","U b","l","U' f","U2 r","l2"][k];
-               if (kk==6) rot = "";
+               if ((kk>3)&&(kk<7)) rot = "";
                rev = "";
         } else { 
                roth = ["","U f","r","U' b","U2 l","r2"][k];              // 右上がり
@@ -433,8 +434,8 @@ function waitFin(cnt=20) {
 
     if (Comment=="Fin") {
           console.log(log);
-          if (opener && opener.document.getElementsByName('pythonQ')) 
-               opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = log;
+//          if (opener && opener.document.getElementsByName('pythonQ')) 
+//               opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = log;
           for (i=0;i<9;i++) clearTimeout(Tid[i]);
           setTimeout('allTest();',cnt*100);
     }
