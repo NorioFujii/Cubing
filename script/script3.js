@@ -341,7 +341,7 @@ function creFaces(no,x,y,z,rotate,n=3) {
     rotate=="Y(-90deg)"&&z>0&&(x1=0,y1=0,z1=-26,x4=0,y4=26,z4=0,udfbrl="R");
     rotate=="X(0deg)"&&  z>0&&(x1=26,y1=0,z1=0,x4=0,y4=26,z4=0, udfbrl="F");
     rotate=="X(0deg)"&&  z<0&&(x1=-26,y1=0,z1=0,x4=0,y4=26,z4=0,udfbrl="B");
-    for (i=0;i<4;i++)
+    for (i=0;i<4;i++) {
         j1 = [0,4,12,0][i];
         for (j=0;j<n;j++) {  // M=1,2,4 5,6,8 13,14,16　…　j1+=j,ij=i*4+j1 
             let segs = " matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,"+(x+j*x1)+","+(y+i*y4)+","+(z+i*z4+j*z1)+",1) rotate"+rotate ;
