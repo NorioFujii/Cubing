@@ -44,12 +44,12 @@ function colorEg(post) {
     return a[eg[idx]]*a[eg[idx+1]]+a[eg[idx]]+a[eg[idx+1]];
 }
 function edgePair() {
-    const pairRot=NoRot+" r' U L' U' r * *ペア結成 *#1415343521257276 U"; //  *#14153435";
+    const pairRot=NoRot+" r' U L' U' r * *Pairing *#1415343521257276 U"; //  *#14153435";
     if ((Rotates.length>0)||(Counter>0)) {
         Tid[0] = setTimeout("edgePair()",1000);
         return true;
     }
-    if (Comment=="ペア結成") check33();
+    if (Comment=="Pairing") check33();
     if($("#solve3").prop('disabled')==false) {
         next44(); return;
     }
