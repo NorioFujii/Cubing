@@ -87,8 +87,8 @@ function edgePair() {
         post = edgeSrch(14, target, 3);
         edgePair(); return;
     }
-    if (opener && opener.document.getElementsByName('pythonQ')) 
-        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = pairRot;
+//    if (opener && opener.document.getElementsByName('pythonQ')) 
+//        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = pairRot;
     rote = pairRot + ((colorEg(8)==colorEg(12))?"2 ":" ") + "*#14153435";
     Rotates = Rotates.concat(regRot(rote.trim().split(" ")));
     edgePair();return;  // 
