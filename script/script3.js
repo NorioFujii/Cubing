@@ -115,7 +115,7 @@ function edgeSrch(p1,c1,p3) {
 }
 // const White=8,Orange=2,Green=3,Red=4,Blue=5,Yellow=6;
 function cent6(color=White) {
-    if ((Rotates.length>0)||(counter>0)) {
+    if ((Rotates.length>0)||(Counter>0)) {
         Tid[color] = setTimeout("cent6("+color+")",1000);
         return true;
     }
