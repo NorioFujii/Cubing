@@ -739,8 +739,8 @@ function cloudGo(corner,corner_d,edge,edge_d) {
         $("#solve4").attr('disabled',false);
         clearTimeout(Tid[0]);
         setTimeout("checkRot()",100);
-        if (opener && opener.document.getElementsByName('pythonQ')) 
-            opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = preRot+" "+rot.replace('**','*');
+//        if (opener && opener.document.getElementsByName('pythonQ')) 
+//            opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = preRot+" "+rot.replace('**','*');
         speed=40,NxPaus=500;
         if (preRot.length>0) {
             let preRotA = regRot(preRot.trim().split(" "));
