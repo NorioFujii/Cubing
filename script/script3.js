@@ -771,8 +771,8 @@ function facerotate(a, tm) {
 101==a&&$("#rotLayer").css("transform","rotateX("+w+"deg)"),102==a&&$("#rotLayer").css("transform","rotateX(-"+w+"deg)"),
 111==a&&$("#rotLayer").css("transform","rotateY(-"+w+"deg)"),112==a&&$("#rotLayer").css("transform","rotateY("+w+"deg)"),
 121==a&&$("#rotLayer").css("transform","rotateZ("+w+"deg)"),122==a&&$("#rotLayer").css("transform","rotateZ(-"+w+"deg)"),
-    counter++,10>counter?facerotate(a, tm):($("#rotLayer").html(""),$("#rotLayer").css("transform","rotateY(0deg)"),  //  
-    $("#rotLayer").css("transform-origin","50% 50%"),kiir(),counter=0,turnN+=1)},speed)}
+    Counter++,10>Counter?facerotate(a, tm):($("#rotLayer").html(""),$("#rotLayer").css("transform","rotateY(0deg)"),  //  
+    $("#rotLayer").css("transform-origin","50% 50%"),kiir(),Counter=0,turnN+=1)},speed)}
                                   
 function turnStart(a){
     if ((a.charAt(1)=="2")||(a.charAt(2)=="2")) {
