@@ -12,6 +12,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<SCRIPT SRC="script/script3.js"></SCRIPT>
 	<link rel="stylesheet" type="text/css" href="css/RBstyle3.css" />
+	<link rel="stylesheet" type="text/css" href="css/RBstyle44.css" id="dynaCSS" />
 	<title>3D Rubik's Cube Notation Widget floating</title>
 </head>
 <body onfocus="RotCopy('');" onunload="parent.swin=null;">
@@ -34,13 +35,13 @@
 		<button class="commandb" type=button onclick="initnotscrambled()">Reset</button>
 		<button class="commandb" type=button onclick="scramble()">3x3Scramble</button>
 		<button class="commandb" type=button onclick="pause()">Pause</button>
-	        <button class="commandb" type=button onclick="accel()" id="accelB">Speed</button>
-	        <button class="commandb" type=button onclick="quickIn(lang='en')">Rotate In (, or sp)</button>
-		<button class="commandb" type=button onclick="pythonSolve()" id="solve3" disabled>3x3 Solve</button>
-		<button class="commandb" type=button onclick="scramble4()">4x4Scramble </button>
-		<button class="commandb" type=button onclick="next44()">4x4Next</button>
+	        <button class="commandb" type=button onclick="accel()" onDBLclick="accel(usft=false)">Speed</button>
 		<button class="commandb" type=button onclick="parityAlt()" id="parity" disabled>4x4Parity Alt</button>
-		<button class="commandb" type=button onclick="edgeExchg()">4x4Exchange edges</button>
+		<button class="commandb" type=button onclick="pythonSolve()" id="solve3" disabled>3x3 Solve</button>
+		<button class="commandb" type=button onclick="edgeExchg()" id="edgeEx" disabled>Ex edges</button>
+	        <button class="commandb" type=button onclick="quickIn(lang='en')">Rotate In (, or sp)</button>
+	        <button class="commandb" type=button onclick="scramble4()">4x4Scramble </button>
+		<button class="commandb" type=button onclick="solve44()" id="solve4">4x4 Solve</button>
 	</div>
     </div>
     <div class="flex_test-item">
@@ -102,7 +103,7 @@
 		<div class="rotateZview">Z&#x21bb;</div>
 		<div class="rotateZiview">Z'&#x21bb;</div>
 	
-		<div class="commandExplain">Macro rotations:</div>
+		<div class="commandExplain" onDBLclick='allTest()'>Macro rotations:</div>
 		<div class="rotateMacro" onclick="RotCopy(&quot;R' U' F' U F R&quot;)">&#x21bb;&#x21bb;Ｍ</div>
 		<div class="rotateMacro" onclick="RotCopy(&quot;R' U' R U' R' U' 2R U' R U&quot;)">Left &#x21bb;&#x21bb;</div>
 		<div class="rotateMacro" onclick="RotCopy(&quot;L U L' U L U2 L' U&quot;)">Right &#x21bb;&#x21bb;</div>
