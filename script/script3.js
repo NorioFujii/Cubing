@@ -650,16 +650,16 @@ function next44() {
     flush(200);
 }
 function flush(tm,cnt=8) {
-    counter++;
+    Counter++;
     setTimeout(function(){
         $("#rotLayer").toggle();
-        cnt>counter?flush(tm,cnt):($("#rotLayer").html(""), kiir(),counter=0)},tm); // 
+        cnt>Counter?flush(tm,cnt):($("#rotLayer").html(""), kiir(),Counter=0)},tm); // 
 }
 function flushB(tm,cnt=8,id="#solve3") {
-    counter++;
+    Counter++;
     setTimeout(function(){
         $(id).css('background-color',counter%2?'#ce4b42':'#ccc');
-        cnt>counter?flushB(tm,cnt,id):($(id).css('background-color',""),counter=0)},tm); // 
+        cnt>Counter?flushB(tm,cnt,id):($(id).css('background-color',""),Counter=0)},tm); // 
 }
 function pythonSolve() {
     Pause = true;
@@ -756,7 +756,7 @@ function cloudGo(corner,corner_d,edge,edge_d) {
     });
 }
 function facerotate(a, tm) {
-    var w = tm * 10 * counter;
+    var w = tm * 10 * Counter;
     setTimeout(function(){
 11==a&&$("#rotLayer").css("transform","rotateY(-"+w+"deg)"),12==a&&$("#rotLayer").css("transform","rotateY("+w+"deg)"),
 21==a&&$("#rotLayer").css("transform","rotateX(-"+w+"deg)"),22==a&&$("#rotLayer").css("transform","rotateX("+w+"deg)"),
@@ -779,7 +779,7 @@ function turnStart(a){
         turnStart2(a.slice(0,2));
         return;
     }
-    0==counter&&(
+    0==Counter&&(
 "U"==a&&(kiirRotLayer(layeru,1),facerotate(11,1),uu()),"u"==a&&(kiirRotLayer(layeru,1),facerotate(12,1),ui()),
 "R"==a&&(kiirRotLayer(layerr,4),facerotate(41,1),rr()),"r"==a&&(kiirRotLayer(layerr,4),facerotate(42,1),ri()),
 "D"==a&&(kiirRotLayer(layerd,6),facerotate(61,1),dd()),"d"==a&&(kiirRotLayer(layerd,6),facerotate(62,1),di()),
@@ -800,7 +800,7 @@ function turnStart(a){
 "Rw"==a&&(kiirRotLayer(layerrw,10),facerotate(91,1),rr(),Mr()),"rw"==a&&(kiirRotLayer(layerrw,10),facerotate(92,1),ri(),mr()))
 }
 function turnStart2(a){
-    0==counter&&(
+    0==Counter&&(
 "U2"==a&&(kiirRotLayer(layeru,1),facerotate(11,2),u2()     ),"u2"==a&&(kiirRotLayer(layeru,1),facerotate(12,2),u2()  ),
 "R2"==a&&(kiirRotLayer(layerr,4),facerotate(41,2),ri2()    ),"r2"==a&&(kiirRotLayer(layerr,4),facerotate(42,2),ri2() ),
 "D2"==a&&(kiirRotLayer(layerd,6),facerotate(61,2),dd(),dd()),"d2"==a&&(kiirRotLayer(layerd,6),facerotate(62,2),di2() ),
