@@ -658,7 +658,7 @@ function flush(tm,cnt=8) {
 function flushB(tm,cnt=8,id="#solve3") {
     Counter++;
     setTimeout(function(){
-        $(id).css('background-color',counter%2?'#ce4b42':'#ccc');
+        $(id).css('background-color',Counter%2?'#ce4b42':'#ccc');
         cnt>Counter?flushB(tm,cnt,id):($(id).css('background-color',""),Counter=0)},tm); // 
 }
 function pythonSolve() {
