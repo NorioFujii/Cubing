@@ -358,9 +358,9 @@ function creFaces(no,x,y,z,rotate,n=3) {
 }            
 function kiirRotLayer(r,e,n=N){
     if (Counter<0) return;
-    let odiv, i, s, t, lo="", rr=new Set(r.flat(2));
+    let odiv, i, s, t, lo="", rr=r;
 
-    rr = ((n==3)&&(typeof(r[0]) == 'object'))? r[0]:Array.from(rr); 
+    if (typeof(r[0]) == 'object') rr = (n==3)?r[0]:r[0].concat(r.slice(1));
     for(i=0;i<rr.length;i++) {
         s = unfold(rr[i]," szin",n);
         t="#cubeFields .mezo"+ s.slice(0,-6);
@@ -744,7 +744,7 @@ function cloudGo(corner,corner_d,edge,edge_d) {
         speed=40,NxPaus=500;
         if (preRot.length>0) {
             let preRotA = regRot(preRot.trim().split(" "));
-            setRot(["*0c"]),setRot(["!",preRotA].flat(2)),setRot(["*",preRotA].flat(2)); // for View
+            setRot(["*0c"]),setRot(["!"].concat(preRotA)),setRot(["*"].concat(preRotA)); // for View
             console.log(Rotates);
         }
         if ((NoRot=="")&&(!navigator.userAgent.match(/iPhone|Android.+/))) Pause = false;
@@ -968,98 +968,11 @@ layermb=[ 5, 6, 7, 8,18,22,26,30,51,55,59,63,89,90,91,92],
 layerlw=[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32, 1, 5, 9,13,33,37,41,45,68,72,76,80,81,85,89,93, 2, 6,10,14,34,38,42,46,67,71,75,79,82,86,90,94],
 layerrw=[49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64, 4, 8,12,16,36,40,44,48,65,69,73,77,84,88,92,96, 3, 7,11,15,35,39,43,47,66,70,74,78,83,87,91,95],
 layer33=Array.from(new Set([].concat(layeru[0],layerl[0],layerf[0],layerr[0],layerb[0],layerd[0])));
-const getArraysDiff = (array01, array02) => {
-  const arr01 = [...new Set(array01)],
-        arr02 = [...new Set(array02)];
-  return [...arr01, ...arr02].filter(value => !arr01.includes(value) || !arr02.includes(value));
-}
-const wholecube=[[layer33],[...Array(96)].map((v, i)=> i+1)];
+const cubes44=[...[...Array(96)].map((v, i)=> i+1)].filter(function(value, index, array) {
+  return (!layer33.includes(value));
+});
+const wholecube=[layer33,...cubes44];
 
-function mousedragRotate(element){
-    let target; // Moving target
-    let e = element ;
-    if (typeof window.touchEvent === "undefined") {
-        $(e).mousedown(function (event) {
-            event.preventDefault();
-            target = $(e); // Moving target
-            $(target).data({
-                "down": true,
-                "move": false,
-                "x": event.pageX,
-                "y": event.pageY,
-                "nx": event.pageX,
-                "ny": event.pageY
-            });
-            return false
-        });
-        // link disable after move action
-        $(e).click(function (event) {
-            if ($(target).data("move")) {
-               return false
-            }
-        });
-        $(document).mouseup(function (event) {
-            $(target).data("down", false);
-            return false;
-        });
-        // event of global area
-        $(document).mousemove(function (event) {
-          if ($(target).data("down")) {
-            event.preventDefault();
-            $(target).data("nx", event.pageX);
-            $(target).data("ny", event.pageY);
-            return emove(1);
-          }
-        });
-    }
-    const Area1 = document.getElementsByClassName(e.slice(1))[0];
-    if (typeof window.touchEvent !== undefined) { 
-        Area1.addEventListener("touchstart", () => {
-            event.preventDefault();
-            target = $(e); // Moving target
-            $(target).data({
-                "down": true,
-                "move": false,
-                "x": event.changedTouches[0].pageX,
-                "y": event.changedTouches[0].pageY,
-                "nx": event.changedTouches[0].pageX,
-                "ny": event.changedTouches[0].pageY
-            });
-            return false
-        });
-        Area1.addEventListener("touchmove", () => {
-            if ($(target).data("down")) {
-                event.preventDefault();  // Suppless scroll
-                $(target).data("nx", event.changedTouches[0].pageX);
-                $(target).data("ny", event.changedTouches[0].pageY);
-            }
-        });
-        Area1.addEventListener("touchend", () => {
-            emove(5);
-            $(target).data("down", false);
-            return false;
-        });
-    }
-    function emove(dev) {
-        let diff_x = parseInt($(target).data("x") - $(target).data("nx"));
-        let diff_y = parseInt($(target).data("y") - $(target).data("ny")); 
-        $("#comment").html(diff_x + "," + diff_y);
-        if ((!$(target).data("move")) && (diff_x+diff_y!=0)) {
-            $(target).data("move", true);
-            $(target).data("x", $(target).data("nx"));
-            $(target).data("y", $(target).data("ny"));
-            cubex += diff_y / dev;
-            if ((FaceF!="")&&(cubex<-85))  cubex = -85;
-            if ((FaceF!="")&&(cubex> -5))  cubex =  -5;
-            cubey -= diff_x / dev;
-            if ((FaceF!="")&&(cubey<290))  cubey = 290;
-            if ((FaceF!="")&&(cubey>420))  cubey = 420; 
-            rotCubeXY();
-            $(target).data("move", false);
-        }
-        return false;
-    }
-}
 $(document).ready(function(){
     initnotscrambled(),
   $(".rotateU").mousedown(function(){  turn("U")}),
