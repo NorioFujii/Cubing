@@ -61,7 +61,7 @@ function edgePair() {
                else if (colorEg(5)!=colorEg(9)) Rotates.push("u");
                else if (colorEg(2)!=colorEg(3)) Rotates.push("U2");
                else Rotates.push("F");
-            } else  Rotates = Rotates.concat(["B","F","U","D"]);
+            } else  Rotates.push("BFUD".charAt(Math.floor(4*Math.random())));
         } else      Rotates.push("U");
         edgePair(); return;
     } 
@@ -515,20 +515,31 @@ function checkRot() {
         if (rote) {
             Urot = rote;
             Urote = dispRote(rote);
-            turnStart(Urote);
+            if (Urote) turnStart(Urote);
         }
     }
     Tid[0] = setTimeout("checkRot()",NxPaus);
 }
 function dispRote(rot) {
     let rote = rot;
+    if (Rotates[0]) {
+        if ((rot.length==1)&&(rot==Rotates[0])) {
+            rote = Rotates.shift() + "2";  // おまとめ回転なので纏める。
+            console.log('Joint '+rot+rot);
+        } else if ((rot+Rotates[0]=="Uu")||(rot+Rotates[0]=="uU")||(rot+Rotates[0]=="U2U2"))  {
+            let rot2 = Rotates.shift();  // 無駄な正逆回転なので捨てる。
+            console.log('Cut '+rot+rot2);
+            if (Rotates[0].charAt(0)!="*") rote = Rotates.shift();
+            else  return false;
+        }
+    }
     $("#turn").html(String(turnN));
-    if ((rot.charAt(0)=="M")||(rot.charAt(0)=="m")) 
-        $("#rotate").html(rot.charAt(0)=="m"?rot.charAt(1) +"'"+rot.slice(2):rot.slice(1));
+    if ((rote.charAt(0)=="M")||(rote.charAt(0)=="m")) 
+        $("#rotate").html(rote.charAt(0)=="m"?rot.charAt(1) +"'"+rote.slice(2):rote.slice(1));
     else {
-        $("#rotate").html((rot.charCodeAt(0) & 0x20)>0?String.fromCharCode(rot.charCodeAt(0) ^ 0x20)+"'"+rot.slice(1):rot);
-        let rotm = Maprote.get(rot.charAt(0));
-        rote = ((typeof rotm==='string')?rotm.charAt(RotSft):rot.charAt(0)) +rot.slice(1);
+        $("#rotate").html((rote.charCodeAt(0) & 0x20)>0?String.fromCharCode(rote.charCodeAt(0) ^ 0x20)+"'"+rote.slice(1):rote);
+        let rotm = Maprote.get(rote.charAt(0));
+        rote = ((typeof rotm==='string')?rotm.charAt(RotSft):rote.charAt(0)) +rote.slice(1);
     }
     return rote;
 }
