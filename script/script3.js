@@ -762,7 +762,7 @@ function cloudGo(corner,corner_d,edge,edge_d) {
       })
       .fail((data) => {
         console.log(data.responseText+"　Retry?");
-        goPython();
+        setTimeout("goPython()",3000);
       })
     });
 }
