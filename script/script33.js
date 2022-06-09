@@ -172,6 +172,7 @@ function checkRot(n=3) {
             setRot(rot);
         }
     }
+    else if (location.search=="?mode=clipin") setrot(clipin());
    /*  else if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
         if (opener && opener.Rotates.length>0) {
             rot = regRot(opener.Rotates.trim().split(" "));
