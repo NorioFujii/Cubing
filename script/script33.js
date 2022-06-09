@@ -172,13 +172,13 @@ function checkRot(n=3) {
             setRot(rot);
         }
     }
-    else if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
+   /*  else if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
         if (opener && opener.Rotates.length>0) {
             rot = regRot(opener.Rotates.trim().split(" "));
             opener.Rotates = "";
             setRot(rot);
         }
-    }
+    } */
     if ((Pause==false) && (Rotates.length>0)) {
         rote = Rotates.shift();
         while (rote && (rote.charAt(0)=="*")) {
@@ -302,7 +302,7 @@ function check33(n=3) {
                           else if (a[e[i]]==a[6]) if (e[i]<16) Ye++;
                                                   else if ((i>17) && (i<32)) Yd++,YtF=(10-(i-18)/4) & 3; }
     $("#solve3").attr('disabled',false);
-    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
+//    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
     if ((Yd+Ye==4)&&((Ye & 1)==1)) {
         $("#parity").attr('disabled',false);
         YdF = Yd;
@@ -441,8 +441,8 @@ async function ckPython() {
     setRot(regRot(rot.trim().split(" ")));
     clearTimeout(Tid);
     setTimeout("checkRot()",100);
-    if (opener && opener.document.getElementsByName('pythonQ')) 
-        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = preRot+" "+rot;
+//    if (opener && opener.document.getElementsByName('pythonQ')) 
+//        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = preRot+" "+rot;
  }
 function facerotate(a, tm) {
     var w = tm * 10 * Counter;
@@ -589,8 +589,8 @@ function symset(sym) {
     ClipDT = sym;
     kiirRotLayer(wholecube,99),kiir(3);
     if (opener) {
-        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = sym;
-        if (typeof opener.ClipDT!=="undefined") opener.ClipDT = sym;
+//        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = sym;
+//        if (typeof opener.ClipDT!=="undefined") opener.ClipDT = sym;
     }
     else $("#comment").html(sym);
 }
