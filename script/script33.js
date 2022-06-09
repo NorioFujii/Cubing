@@ -141,7 +141,8 @@ function initnotscrambled(n=3){
     else                       window.resizeTo(580,440);
     speed=80; if (NxPaus<1100) NxPaus=1000;
     if (turnN==16) NxPaus=1500;
-    Disp="none"; Pause=false; Face="F"; Comment="";RotSft=0;Rotates=[]; turnN=1; clearTimeout(Tid);
+    Disp="none"; Pause=false; Face="F"; Comment="";RotSft=0;Rotates=[]; turnN=1;
+    clearTimeout(Tid); Tid = null;
     $("#solve3").attr('disabled',false);
     $("#parity").attr('disabled',true);
     $("#comment").html("");  $("#turn").html("&nbsp;"); $("#rotate").html("&nbsp;");
