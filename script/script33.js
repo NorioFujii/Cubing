@@ -1,7 +1,6 @@
 function RotCopy(rot){
     if (location.search!="?mode=clipin") navigator.clipboard.writeText(rot);
-    clearTimeout(Tid);
-    setTimeout("checkRot();",100);
+    if (!Tid) Tid = setTimeout("checkRot();",100);
 }
 function rotCube(){
     let segs=" translate3d(0,0,0) rotateX("+cubex+"deg) rotateY("+cubey+"deg) rotateZ("+cubez+"deg)";
