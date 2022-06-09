@@ -224,7 +224,7 @@ async function checkRot(n=3) {
             rote = Rotates.shift();
         }
         $("#comment").html(Comment);
-        if (rote) {
+        if (rote && (rote!=" ")) {
             Urot = rote;
             $("#turn").html(String(turnN));
             $("#rotate").html((rote.charCodeAt(0) & 0x20)>0?String.fromCharCode(rote.charCodeAt(0) ^ 0x20)+"'"+rote.slice(1):rote);
