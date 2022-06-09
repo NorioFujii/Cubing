@@ -162,7 +162,7 @@ function turn(a) {
     clearTimeout(Tid);
     setTimeout("checkRot();check33();",100);
 }
-function checkRot(n=3) {
+async function checkRot(n=3) {
     let i,j;
     let rot,rote=0,s1,s2,t1,t2,lo="",newcolor="transparent"; 
     if (window.name=="cube3dg") {
@@ -172,14 +172,17 @@ function checkRot(n=3) {
             setRot(rot);
         }
     }
-    else if (location.search=="?mode=clipin") setRot(regRot((await clipIn()).split(" ")));
+    else if (location.search=="?mode=clipin") {
+        let clipdt = await clipIn();
+        setRot(regRot(clipdt.split(" ")));
+        
    /*  else if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
         if (opener && opener.Rotates.length>0) {
             rot = regRot(opener.Rotates.trim().split(" "));
             opener.Rotates = "";
             setRot(rot);
-        }
-    } */
+        } */
+    }
     if ((Pause==false) && (Rotates.length>0)) {
         rote = Rotates.shift();
         while (rote && (rote.charAt(0)=="*")) {
