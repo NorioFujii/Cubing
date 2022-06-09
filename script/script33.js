@@ -1,6 +1,5 @@
 function RotCopy(rot){
     if (location.search!="?mode=clipin") navigator.clipboard.writeText(rot);
-    setRot(regRot((rot + " **").split(" "))); // "*0 "+ 
     clearTimeout(Tid);
     setTimeout("checkRot();",100);
 }
