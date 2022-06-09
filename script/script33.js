@@ -249,6 +249,7 @@ async function clipIn() {
     return (await navigator.clipboard.readText()
     .then((text) => {
         console.log(text);
+        navigator.clipboard.writeText("");
         return (text);
     })
     .catch(err => {
