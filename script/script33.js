@@ -138,7 +138,7 @@ var RotSft = 0, Urot = "", Urote = "";
 
 function initnotscrambled(n=3){
     let i,j;
-    if (window.outerWidth<500) window.resizeTo(380,580);
+    if (window.outerWidth<500) window.resizeTo(380,800);
     else                       window.resizeTo(580,440);
     speed=80; if (NxPaus<1100) NxPaus=1000;
     if (turnN==16) NxPaus=1500;
