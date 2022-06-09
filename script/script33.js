@@ -173,6 +173,7 @@ async function checkRot(n=3) {
     }
     else if (location.search=="?mode=clipin") {
         let clipdt = await clipIn();
+        navigator.clipboard.writeText("");
         if (clipdt!="") setRot(regRot(clipdt.split(" ")));
         
    /*  else if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
@@ -248,7 +249,6 @@ async function clipIn() {
     return (await navigator.clipboard.readText()
     .then((text) => {
         console.log(text);
-        navigator.clipboard.writeText("");
         return (text);
     })
     .catch(err => {
