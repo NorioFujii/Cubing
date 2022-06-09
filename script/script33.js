@@ -1,6 +1,8 @@
 function RotCopy(rot){
     if (location.search!="?mode=clipin") navigator.clipboard.writeText(rot);
-    if (!Tid) Tid = setTimeout("checkRot();",100);
+    setRot(regRot((rot + " **").split(" "))); // "*0 "+ 
+    clearTimeout(Tid);
+    setTimeout("checkRot();",100);
 }
 function rotCube(){
     let segs=" translate3d(0,0,0) rotateX("+cubex+"deg) rotateY("+cubey+"deg) rotateZ("+cubez+"deg)";
@@ -161,62 +163,58 @@ function turn(a) {
     clearTimeout(Tid);
     setTimeout("checkRot();check33();",100);
 }
-async function checkRot(n=3) {
+function checkRot(n=3) {
     let i,j;
     let rot,rote=0,s1,s2,t1,t2,lo="",newcolor="transparent"; 
-    if (window.name=="cube3dg") {
-        if (parent && parent.RotatesG.length>0) {
+    if (parent && (window.name=="cube3dg")) {
+        if (parent.RotatesG.length>0) {
             rot = regRot(parent.RotatesG.trim().split(" "));
             parent.RotatesG = "";
             setRot(rot);
         }
     }
-    else if (location.search=="?mode=clipin") {
-        let clipdt = await clipIn();
-        navigator.clipboard.writeText("");
-        if (clipdt!="") setRot(regRot(clipdt.split(" ")));
-        
-   /*  else if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
+    else if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
         if (opener && opener.Rotates.length>0) {
             rot = regRot(opener.Rotates.trim().split(" "));
             opener.Rotates = "";
             setRot(rot);
-        } */
+        }
     }
     if ((Pause==false) && (Rotates.length>0)) {
-        rote = Rotates.shift();
+        if (Counter>0) rote = false;
+        else rote = Rotates.shift();
+
         while (rote && (rote.charAt(0)=="*")) {
             if (rote.charAt(1)=="*") {      // cube reset 
                 Comment = rote.slice(2);
                 check33(); turnN=1;}
-            else if (rote.charAt(1)=="#") { // flushing important post #mmnn
+            else if (rote.charAt(1)=="#") { // flushing important post #mmnn....
                 $("#comment").html(Comment);
-                let kuro="#888", i=parseInt(rote.slice(2,4)), j=parseInt(rote.slice(4,6));
-                s1 = unfold(i," szin");
-                s2 = unfold(j," szin");
-                t1="#cubeFields .mezo"+ s1.slice(0,-6);
-                t2="#cubeFields .mezo"+ s2.slice(0,-6);
-                lo += '<div class="mezo'+s1+0+' field mezo" style="transform:'+$(t1).css('transform')+';"><span>'+ i +'</span></div>';
-                lo += '<div class="mezo'+s2+0+' field mezo" style="transform:'+$(t2).css('transform')+';"><span>'+ j +'</span></div>';
-                $(t1).css("background-color",newcolor); $(t2).css("background-color",newcolor);
+                let cn, n=2, lo="", kuro="#888";
+                while (n<rote.length-1) {
+                    cn = parseInt(rote.slice(n,n+2));
+                    s1 = unfold(cn," szin",4);
+                    t1="#cubeFields .mezo"+ s1.slice(0,-6);
+                    lo += '<div class="mezo'+s1+0+' field mezo" style="transform:'+$(t1).css('transform')+
+                          ';"><span>'+ cn +'</span></div>';
+                    $(t1).css("background-color",newcolor);
+                    n += 2;
+                }
                 $("#rotLayer").html(lo); flush(200,4); setTimeout("checkRot(3)",1000); return; }
             else if (rote.charAt(1)=="+") { // virtual Y rotation convert 
                 RotSft = parseInt(rote.slice(2));} 
             else if (rote.charAt(1)=="-") { // Turn count decrement 
                 turnN -= parseInt(rote.slice(2));} 
             else if (rote.charAt(1)=="0") { // Cube setup without rotation
-                const rotS = "U,u,U2,F,f,F2,D,d,D2,B,b,B2,R,r,R2,L,l,L2,X,x,Y,y,Z,z,**".split(",");
                 if (rote.length==2) initCube(n);
+                Counter = -1;  // NO rotation mode
                 while (Rotates.length>0) {
                     let rot = Rotates.shift();
-                    let rand = rotS.indexOf(rot.charAt(1)=="2"?rot.toUpperCase():rot);
-                    0==rand&&uu(),1==rand&&ui(),2==rand&&(uu(),uu()),3==rand&&ff(),4==rand&&fi(),5==rand&&(ff(),ff()),
-                    6==rand&&dd(),7==rand&&di(),8==rand&&(dd(),dd()),9==rand&&bb(),10==rand&&bi(),11==rand&&(bb(),bb()),
-                    12==rand&&rr(),13==rand&&ri(),14==rand&&(rr(),rr()),15==rand&&ll(),16==rand&&li(),17==rand&&(ll(),ll()),
-                    18==rand&&(bor2(),bor()),19==rand&&bor(),20==rand&&fd(),21==rand&&(fd2(),fd()),
-                    22==rand&&(fd(),bor(),fd2(),fd()),23==rand&&(fd2(),fd(),bor(),fd());
-                    if (24==rand) break;    // ** is for only break.
+                    if (rot.charAt(0)=="*") break; 
+                    turnN++;   
+                    turnStart(dispRote(rot));
                 }
+                Counter = 0;  // Nomal rotation mode
                 kiirRotLayer(wholecube,99),kiir();
                 turnN=1;
             } 
@@ -224,7 +222,7 @@ async function checkRot(n=3) {
             rote = Rotates.shift();
         }
         $("#comment").html(Comment);
-        if (rote && (rote!=" ")) {
+        if (rote) {
             Urot = rote;
             $("#turn").html(String(turnN));
             $("#rotate").html((rote.charCodeAt(0) & 0x20)>0?String.fromCharCode(rote.charCodeAt(0) ^ 0x20)+"'"+rote.slice(1):rote);
@@ -236,11 +234,24 @@ async function checkRot(n=3) {
     }
     Tid = setTimeout("checkRot()",NxPaus);
 }
-function regRot(seq) {
+function dispRote(rot) {
+    let rote = rot;
+    $("#turn").html(String(turnN));
+    if ((rote.charAt(0)=="M")||(rote.charAt(0)=="m")) 
+        $("#rotate").html(rote.charAt(0)=="m"?rot.charAt(1) +"'"+rote.slice(2):rote.slice(1));
+    else {
+        $("#rotate").html((rote.charCodeAt(0) & 0x20)>0?String.fromCharCode(rote.charCodeAt(0) ^ 0x20)+"'"+rote.slice(1):rote);
+        let rotm = Maprote.get(rote.charAt(0));
+        rote = ((typeof rotm==='string')?rotm.charAt(RotSft):rote.charAt(0)) +rote.slice(1);
+    }
+    return rote;
+}
+function regRot(seq) { // 回転のprime表記を大文字・小文字系に変換する
     let seqR = seq.map(function (value, index, array) {
                return ((value.charCodeAt(0)<0x60)? 
                         (((value.charAt(1)=="'")||(value.charAt(2)=="'"))?
-                               (String.fromCharCode(value.charCodeAt(0) ^ 0x20)+(value.charAt(2)=="'"?value.charAt(1)+value.charAt(3):value.charAt(2))):value):
+                               (String.fromCharCode(value.charCodeAt(0) ^ 0x20)+(value.charAt(2)=="'"?
+                                                    value.charAt(1)+value.charAt(3):value.charAt(2))):value):
                         (value.charAt(1)=="'")?"m"+value.charAt(0):"M"+value);
                 });
     return seqR;
@@ -265,14 +276,14 @@ async function quickIn(lang="en") {
     else        RotatesText = window.prompt("区切（スペースorコンマ）の回転記号文字列を貼り付けてください。", clipdt);
     parent.ClipDT = RotatesText;
     window.resizeTo(340, wh);
-    if (RotatesText==null) rot = []; 
+    if (RotatesText==null) { rot = []; Auto = false; }
     else if (RotatesText.indexOf(",")>-1) rot = regRot(RotatesText.trim().split(","));
          else                             rot = regRot(RotatesText.trim().split(" "));
     setRot(rot);
     clearTimeout(Tid);
     setTimeout("checkRot()",100);
 }
-function setRot(rot) {
+function setRot(rot) {  // 回転列のリバース処理
     let rotR = rot;
     if (rot[0]=="!") {
         rot.shift();
@@ -306,59 +317,11 @@ function check33(n=3) {
                           else if (a[e[i]]==a[6]) if (e[i]<16) Ye++;
                                                   else if ((i>17) && (i<32)) Yd++,YtF=(10-(i-18)/4) & 3; }
     $("#solve3").attr('disabled',false);
-//    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
+    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
     if ((Yd+Ye==4)&&((Ye & 1)==1)) {
         $("#parity").attr('disabled',false);
         YdF = Yd;
     }
-}
-function next44(n=4) {
-    if ((n==3)||(Counter>0)) return;
-    if (Pause) {
-         accel(false);return;
-    }
-    if($("#solve3").prop('disabled')==false) {flush33(200);return; }
-
-    let i,j=0,s1,s2,t1,t2,lo="",kuro="#888",div,newcolor="transparent";
-    for (i=0;i<24;i+=2) if (a[c[i]]!=a[c[i+1]]) {
-        s1 = unfold(c[i]," szin",4);
-        s2 = unfold(c[i+1]," szin",4);
-        t1="#cubeFields .mezo"+ s1.slice(0,-6);
-        t2="#cubeFields .mezo"+ s2.slice(0,-6);
-        lo += '<div class="mezo'+ s1+ 0 +' layer mezo" style="transform:'+$(t1).css('transform')+'"></div>';
-        lo += '<div class="mezo'+ s2+ 0 +' layer mezo" style="transform:'+$(t2).css('transform')+'"></div>';
-        $(t1).css("background-color",newcolor); $(t2).css("background-color",newcolor);
-    }
-    if (lo=="") for (i=0;i<48;i+=4) {
-        div = findSame(i,37,24);  // find same color post as left
-        if (div!="") lo += div, j += 1;
-        div = findSame(i,24,37);  // find same color post as left
-        if (div!="") lo += div, j += 1;
-        if (j>7) break;
-        div = findSame(i,14,34);  // find same color post as right
-        if (div!="") lo += div, j += 1;
-        div = findSame(i,34,14);  // find same color post as right
-        if (div!="") lo += div, j += 1;
-        if (j>7) break;
-    }
-    $("#rotLayer").html(lo);
-    flush(200);
-}
-function findSame(i,p1,p2) {
-    let ri=0,s1,s2,t1,t2,lo="",kuro=9, newcolor="transparent";
-    if ((p1&0xfc)==(e[i]&0xfc)) kuro = 0;
-    if ((a[e[i+1]]==a[p1])&&(a[e[i+3]]==a[p2])) ri = i+1;
-    else if ((a[e[i]]==a[p1])&&(a[e[i+2]]==a[p2])) ri = i;
-    else return "";
-
-    s1 = unfold(e[ri]," szin",4);
-    s2 = unfold(e[ri+2]," szin",4);
-    t1="#cubeFields .mezo"+ s1.slice(0,-6);
-    t2="#cubeFields .mezo"+ s2.slice(0,-6);
-    lo += '<div class="mezo'+ s1 + kuro +' layer mezo" style="transform:'+$(t1).css('transform')+'"></div>';
-    lo += '<div class="mezo'+ s2 + kuro +' layer mezo" style="transform:'+$(t2).css('transform')+'"></div>';
-    $(t1).css("background-color",newcolor); $(t2).css("background-color",newcolor);
-    return lo;
 }
 function flush(tm,cnt=8) {
     Counter++;
@@ -366,15 +329,15 @@ function flush(tm,cnt=8) {
         $("#rotLayer").toggle();
         cnt>Counter?flush(tm,cnt):($("#rotLayer").html(""), kiir(),Counter=0)},tm); // 
 }
-function flush33(tm,cnt=8) {
+function flushB(tm,cnt=8,id="#solve3") {
     Counter++;
     setTimeout(function(){
-        $("#solve3").css('background-color',Counter%2?'#ce4b42':'#ccc');
-        cnt>Counter?flush33(tm,cnt):($("#solve3").css('background-color',""),Counter=0)},tm); // 
+        $(id).css('background-color',Counter%2?'#ce4b42':'#ccc');
+        cnt>Counter?flushB(tm,cnt,id):($(id).css('background-color',""),Counter=0)},tm); // 
 }
 function pythonSolve() {
     Pause = true;
-    window.open('python/computing.html',"Python",'height=140,width=480,left='+(window.screenX+300)+',dependent=yes,scrollbars=no');
+//    window.open('python/computing.html',"Python",'height=140,width=480,left='+(window.screenX+300)+',dependent=yes,scrollbars=no');
     setTimeout('goPython()',100); 
 }
 var preRot = "";
@@ -387,7 +350,7 @@ function goPython() {
             rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
         W = window.open('https://mori1-hakua.tokyo/python/Cube2phase_Fast2.py?value1='+rotation,"Python");
     }
-    else { */
+    else {  */
 // const White=1,Orange=2,Green=3,Red=4,Blue=5,Yellow=6
         let r=new Array(1,10,39,3,37,30,9,28,21,7,19,12,52,45,16,54,36,43,48,27,34,46,18,25);
         let e3=new Array(42,13,40,33,24,31,22,15,2,38,6,29,8,20,4,11,53,44,51,35,47,26,49,17); //W,Y,G,B優先
@@ -419,35 +382,55 @@ function goPython() {
             edge   += ix + ((i>21)?"]":",");
             edge_d += dx + ((i>21)?"]":",");
         }
-        let q = 'value1='+corner+'&value2='+corner_d+'&value3='+edge+'&value4='+edge_d;
+//        let q = 'value1='+corner+'&value2='+corner_d+'&value3='+edge+'&value4='+edge_d;
 //        alert(corner+','+corner_d+','+edge+','+edge_d);
-        W = window.open('https://mori1-hakua.tokyo/python/Cube2phase_Fast3.py?'+q ,"Python");
-//    } */
-    speed=40,NxPaus=500;
-    if (preRot.length>0) {
-        let preRotA = regRot(preRot.trim().split(" "));
-        setRot(["*0*"]),setRot(["!",preRotA].flat(2)),setRot(["**",preRotA].flat(2)); // 
-        console.log(Rotates);
-        alert(navigator.userAgent);
-    }
-    if (!navigator.userAgent.match(/iPhone|Android.+/)) Pause = false;
-    setTimeout('ckPython()',100); 
+//        W = window.open('https://mori1-hakua.tokyo/python/Cube2phase_Fast3.py?'+q ,"Python");
+//    } 
+    cloudGo(corner,corner_d,edge,edge_d);
+    $("#rotate").html("");
+    $("#comment").html("Cloud computing!");
+    flushB(200,8,"#comment");
 }
-async function ckPython() {
-    if (!W || !W.closed || (await clipIn()=="")) {
-        setTimeout('ckPython()',1000);
-        return;
-    }
-    Pause = false;
-    let rot = await clipIn();
-    navigator.clipboard.writeText("");
-    $("#solve3").attr('disabled',true);
-    setRot(regRot(rot.trim().split(" ")));
-    clearTimeout(Tid);
-    setTimeout("checkRot()",100);
-//    if (opener && opener.document.getElementsByName('pythonQ')) 
-//        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = preRot+" "+rot;
- }
+function cloudGo(corner,corner_d,edge,edge_d) {
+    $(function(){
+      $.ajax({
+        url:"https://mori1-hakua.tokyo/python/Cube2phase_Fast3.py",
+        type:"POST",
+//        async: false,
+        data: {'value1':corner, 'value2':corner_d, 'value3':edge, 'value4':edge_d },
+        dataType:"text",
+        timeout: 10000
+      })
+      .done((data) => {
+    //成功した場合の処理
+        Pause = false;
+        window.focus();
+        let rot = data.slice(data.indexOf('<div ')+16,data.indexOf('</div>'));
+        $("#solve3").attr('disabled',true);
+        if ((rot.indexOf('None *Fin')>0) && (NxPaus<800)) {
+            flushB(200,8,"#edgeEx");edgeExchg();
+            return;
+        }
+        setRot(regRot(rot.trim().split(" ")));
+        clearTimeout(Tid);
+        setTimeout("checkRot()",100);
+        if (opener && opener.document.getElementsByName('pythonQ')) 
+            opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = preRot+" "+rot.replace('**','*');
+        speed=40,NxPaus=500;
+        if (preRot.length>0) {
+            let preRotA = regRot(preRot.trim().split(" "));
+            setRot(["*0c"]),setRot(["!"].concat(preRotA)),setRot(["*"].concat(preRotA)); // for View
+            console.log(Rotates);
+        }
+        if ((NoRot=="")&&(!navigator.userAgent.match(/iPhone|Android.+/))) Pause = false;
+      })
+      .fail((data) => {
+    //失敗した場合の処理
+        console.log(data.responseText+"　Retry?");  //レスポンス文字列を表示(502を経験）
+        setTimeout("goPython()",3000);
+      })
+    });
+}
 function facerotate(a, tm) {
     var w = tm * 10 * Counter;
     setTimeout(function(){
@@ -593,8 +576,8 @@ function symset(sym) {
     ClipDT = sym;
     kiirRotLayer(wholecube,99),kiir(3);
     if (opener) {
-//        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = sym;
-//        if (typeof opener.ClipDT!=="undefined") opener.ClipDT = sym;
+        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = sym;
+        if (typeof opener.ClipDT!=="undefined") opener.ClipDT = sym;
     }
     else $("#comment").html(sym);
 }
