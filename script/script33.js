@@ -174,7 +174,7 @@ async function checkRot(n=3) {
     }
     else if (location.search=="?mode=clipin") {
         let clipdt = await clipIn();
-        setRot(regRot(clipdt.split(" ")));
+        if (clipdt!="") setRot(regRot(clipdt.split(" ")));
         
    /*  else if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
         if (opener && opener.Rotates.length>0) {
