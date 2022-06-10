@@ -135,7 +135,7 @@ var Maprote = new Map([["F","FLBR"], ["f","flbr"],["L","LBRF"], ["l","lbrf"],
 var Disp="none", Pause=false, Face="F", FaceF="", Counter=0;
 var Comment="", Tid=null, turnN=1, ClipDT="", W=null;
 var Rotates = new Array();
-var RotSft = 0, Urot = "", Urote = "";
+var RotSft = 0, Urot = "", Urote = "", NoRot = "";
 
 function initnotscrambled(n=3){
     let i,j;
