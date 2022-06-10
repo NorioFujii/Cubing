@@ -432,6 +432,7 @@ function cloudGo(corner,corner_d,edge,edge_d) {
     });
 }
 function facerotate(a, tm) {
+    if (Counter<0) return;
     var w = tm * 10 * Counter;
     setTimeout(function(){
 11==a&&$("#rotLayer").css("transform","rotateY(-"+w+"deg)"),12==a&&$("#rotLayer").css("transform","rotateY("+w+"deg)"),
@@ -455,7 +456,7 @@ function turnStart(a){
         turnStart2(a.slice(0,2));
         return;
     }
-    0==Counter&&(
+    0>=Counter&&(
 "U"==a&&(kiirRotLayer(layeru,1),facerotate(11,1),uu()),"u"==a&&(kiirRotLayer(layeru,1),facerotate(12,1),ui()),
 "R"==a&&(kiirRotLayer(layerr,4),facerotate(41,1),rr()),"r"==a&&(kiirRotLayer(layerr,4),facerotate(42,1),ri()),
 "D"==a&&(kiirRotLayer(layerd,6),facerotate(61,1),dd()),"d"==a&&(kiirRotLayer(layerd,6),facerotate(62,1),di()),
@@ -478,7 +479,7 @@ function turnStart(a){
 "Rw"==a&&(kiirRotLayer(layerrw,10),facerotate(91,1),rr(),Mr()),"rw"==a&&(kiirRotLayer(layerrw,10),facerotate(92,1),ri(),mr()))
 }
 function turnStart2(a){
-    0==Counter&&(
+    0>=Counter&&(
 "U2"==a&&(kiirRotLayer(layeru,1),facerotate(11,2),uu(),uu()),"u2"==a&&(kiirRotLayer(layeru,1),facerotate(12,2),uu(),uu()),
 "R2"==a&&(kiirRotLayer(layerr,4),facerotate(41,2),ri(),ri()),"r2"==a&&(kiirRotLayer(layerr,4),facerotate(42,2),ri(),ri()),
 "D2"==a&&(kiirRotLayer(layerd,6),facerotate(61,2),dd(),dd()),"d2"==a&&(kiirRotLayer(layerd,6),facerotate(62,2),di(),di()),
