@@ -173,7 +173,7 @@ function checkRot(n=3) {
             setRot(rot);
         }
     }
-    else if ((window.name=="cube3d") || (parent.swin==null) || (parent.swin.closed)) {
+    else if ((window.name=="cube3d") || (parent.swin!=null)) {
         if (opener && opener.Rotates.length>0) {
             rot = regRot(opener.Rotates.trim().split(" "));
             opener.Rotates = "";
@@ -317,7 +317,7 @@ function check33(n=3) {
                           else if (a[e[i]]==a[6]) if (e[i]<16) Ye++;
                                                   else if ((i>17) && (i<32)) Yd++,YtF=(10-(i-18)/4) & 3; }
     $("#solve3").attr('disabled',false);
-    if (opener && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
+    if (opener && (parent.swin!=null) && opener.ClipDT && (opener.ClipDT!="")) opener.ClipDT = "";
     if ((Yd+Ye==4)&&((Ye & 1)==1)) {
         $("#parity").attr('disabled',false);
         YdF = Yd;
@@ -343,14 +343,6 @@ function pythonSolve() {
 var preRot = "";
 function goPython() {
     let rotation = "";
-/*    if (opener && opener.ClipDT && (opener.ClipDT!="")) {
-        ClipDT = opener.ClipDT;
-        rotation = encodeURIComponent(ClipDT.trim());
-        if (rotation.charAt(0)=="*")
-            rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
-        W = window.open('https://mori1-hakua.tokyo/python/Cube2phase_Fast2.py?value1='+rotation,"Python");
-    }
-    else {  */
 // const White=1,Orange=2,Green=3,Red=4,Blue=5,Yellow=6
         let r=new Array(1,10,39,3,37,30,9,28,21,7,19,12,52,45,16,54,36,43,48,27,34,46,18,25);
         let e3=new Array(42,13,40,33,24,31,22,15,2,38,6,29,8,20,4,11,53,44,51,35,47,26,49,17); //W,Y,G,B優先
@@ -385,7 +377,6 @@ function goPython() {
 //        let q = 'value1='+corner+'&value2='+corner_d+'&value3='+edge+'&value4='+edge_d;
 //        alert(corner+','+corner_d+','+edge+','+edge_d);
 //        W = window.open('https://mori1-hakua.tokyo/python/Cube2phase_Fast3.py?'+q ,"Python");
-//    } 
     cloudGo(corner,corner_d,edge,edge_d);
     $("#rotate").html("");
     $("#comment").html("Cloud computing!");
@@ -414,7 +405,7 @@ function cloudGo(corner,corner_d,edge,edge_d) {
         setRot(regRot(rot.trim().split(" ")));
         clearTimeout(Tid);
         setTimeout("checkRot()",100);
-        if (opener && opener.document.getElementsByName('pythonQ')) 
+        if ((parent.swin!=null) && opener.document.getElementsByName('pythonQ')) 
             opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = preRot+" "+rot.replace('**','*');
         speed=40,NxPaus=500;
         if (preRot.length>0) {
@@ -576,7 +567,7 @@ function scramble4(){
 function symset(sym) {
     ClipDT = sym;
     kiirRotLayer(wholecube,99),kiir(3);
-    if (opener) {
+    if (parent.swin!=null)  {
         opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = sym;
         if (typeof opener.ClipDT!=="undefined") opener.ClipDT = sym;
     }
