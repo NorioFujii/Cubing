@@ -43,8 +43,8 @@ window.onload=function() {
                  let yy = value.slice(0,4);
                  if (yy.match(/\d{4}/)) {
                      if (value.slice(4,9)==",1,1,") // 年の始まり
-                          holY[yy-2000] = value.slice(4)+",";
-                     else holY[yy-2000] += value.slice(4)+",";
+                          holY[yy-2000] =  "(私)" + value.slice(4)+",";
+                     else holY[yy-2000] += "(私)" + value.slice(4)+",";
                  }
              });
          };
