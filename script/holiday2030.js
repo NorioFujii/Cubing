@@ -19,15 +19,10 @@ function noteDay(Target) {  // Target日付に対する本日、祝日、空文�
 }
 function findMrch(hday,cY) { // 3月１日の曜日が同じ既知の近年で探す
     for (let y = (holY[cY])?cY:30 ;y>10;y--)
-        if (new Date(cY+2000,2,1).getDay()==new Date(2000+y,2,1).getDay()) {
-            let hdayPos = holY[y].indexOf(hday);
-            let hdayEnd = hdayPos+hday.length;
-            let pre = "";
-            if (hdayPos>=0) {
-                if (holY[y].charAt(hdayEnd)=="私") pre = "(私)";
-                return pre + holY[y].slice(hdayEnd+2);
-            }
-         }
+        if (new Date(cY+2000,2,1).getDay()==new Date(2000+y,2,1).getDay())
+            if (holY[y].indexOf(hday)>=0) 
+                return holY[y].slice(holY[y].indexOf(hday)+hday.length+2);
+            else return "";
     return "";
 }
 var holY=new Array(),reader;
@@ -48,8 +43,8 @@ window.onload=function() {
                  let yy = value.slice(0,4);
                  if (yy.match(/\d{4}/)) {
                      if (value.slice(4,9)==",1,1,") // 年の始まり
-                          holY[yy-2000] =  value.slice(4)+",";
-                     else holY[yy-2000] += value.slice(4)+",";
+                          holY[yy-2000] =  "(私)" + value.slice(4)+",";
+                     else holY[yy-2000] += "(私)" + value.slice(4)+",";
                  }
              });
          };
